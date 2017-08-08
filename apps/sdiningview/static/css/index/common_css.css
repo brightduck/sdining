@@ -1,0 +1,89 @@
+.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12,
+nav,
+.row,
+h3,
+.input-group {
+  margin: 0;
+  padding: 0; }
+
+img {
+  width: 100%;
+  height: 100% !important; }
+
+#block {
+  width: 600px;
+  margin: 0 auto; }
+
+nav {
+  padding: 15px 20px;
+  color: white;
+  background: #558AD8 !important;
+  width: 100%; }
+  nav select {
+    padding-right: .2em;
+    font-size: 1.7em;
+    outline: none;
+    border: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border-bottom: 2px solid white; }
+  nav img {
+    width: 1.7em;
+    margin: -5px 0 0 -10px; }
+  nav input {
+    width: 240px;
+    color: #999;
+    background: white;
+    border-radius: 20px;
+    border: none;
+    line-height: 1.8;
+    font-size: 1.2em; }
+  nav .glyphicon-user {
+    font-size: 2.2em; }
+
+#slider .item {
+  height: 226px; }
+
+#main_nav {
+  margin-top: 20px; }
+  #main_nav ul {
+    border: none; }
+  #main_nav a {
+    letter-spacing: 1px;
+    color: black;
+    border: none; }
+    #main_nav a img {
+      width: 56px; }
+    #main_nav a p {
+      font-size: 1.2em;
+      line-height: 2.4; }
+
+#content .tab-content {
+  background: white; }
+  #content .tab-content .tab-pane {
+    padding: 8px 12px;
+    padding-top: 0;
+    box-shadow: 0 2px 6px #bfbfbf; }
+    #content .tab-content .tab-pane .show {
+      margin-bottom: 10px; }
+      #content .tab-content .tab-pane .show .row {
+        margin: 0;
+        padding: 8px 12px;
+        border-radius: 5px;
+        overflow: hidden; }
+        #content .tab-content .tab-pane .show .row h3 {
+          border-left: 4px solid #558AD8;
+          margin: 20px 0;
+          padding-left: 8px; }
+        #content .tab-content .tab-pane .show .row .col-xs-7 {
+          padding: 0 12px; }
+        #content .tab-content .tab-pane .show .row .col-xs-3 {
+          height: 120px; }
+          #content .tab-content .tab-pane .show .row .col-xs-3 img {
+            border-radius: 5px; }
+
+img {
+  position: relative;
+  -webkit-filter: contrast(137%) brightness(80%) saturate(113%) sepia(35%) grayscale(13%);
+  filter: contrast(137%) brightness(80%) saturate(113%) sepia(35%) grayscale(13%); }
