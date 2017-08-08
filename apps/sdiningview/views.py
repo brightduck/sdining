@@ -35,9 +35,14 @@ class IndexView(TemplateView):
 
 
 class APIBannerListView(generics.ListAPIView):
+    """
+    Return the banner list
+    """
     queryset = Banner.objects.all()
     serializer_class = BannerSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+
 
 
 @api_view(['GET'])

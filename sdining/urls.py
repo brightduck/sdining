@@ -17,11 +17,16 @@ urlpatterns = [
     url(r'^mvcapi/food/$', businessviews.APIFoodListView.as_view(), name='food_list_api'),
     url(r'^mvcapi/food/(?P<pk>[0-9]+)/$', businessviews.APIFoodDetailView.as_view(), name='food_detail_api'),
     url(r'^mvcapi/business/$', businessviews.APIBusinessListView.as_view(), name='business_list_api'),
-    url(r'^mvcapi/business/(?P<pk>[0-9]+)/$', businessviews.APIBusinessDetailView.as_view(), name='business_detail_api'),
+    url(r'^mvcapi/business/(?P<pk>[0-9]+)/$', businessviews.APIBusinessDetailView.as_view(),
+        name='business_detail_api'),
 
     url(r'admin/', include(xadmin.site.urls)),
 
     url(r'^media/(?P<path>.*)', serve, {"document_root": settings.MEDIA_ROOT}),
+
+    url(r'^mvcapi/', include('rest_framework.urls',
+                               namespace='rest_framework')),
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
