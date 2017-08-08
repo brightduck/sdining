@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load mvctags %}
 
+`
 {% block title %}
     首页
 {% endblock %}
@@ -44,10 +46,10 @@
         <div class="container-fluid" style="">
             <div class="navbar-form col-xs-5">
                 <label for="select" class="sr-only control-label">Selects</label>
-                <select class="form-control" id="select">
-                    <option>全部</option>
-                    <option>楚园食堂</option>
-                    <option>汉园食堂</option>
+                <select class="form-control" id="select" onchange="javascript:location.href=this.value;">
+                    <option value="?position=3" {% if request.GET.position == '3' %}selected="selected"{% endif %}>全部</option>
+                    <option value="?position=1" {% if request.GET.position == '1' %}selected="selected"{% endif %}>楚园食堂</option>
+                    <option value="?position=2" {% if request.GET.position == '2' %}selected="selected"{% endif %}>汉园食堂</option>
                 </select>
             </div>
             <div class="navbar-form col-xs-7 pull-right">
@@ -112,93 +114,53 @@
         </div>
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade col-xs-12 in active" id="recommend">
+                {% for business in recommend_list %}
                 <div class="media">
-                    <img class="col-xs-4" src="{% static 'img/1.jpg' %}" alt="">
+                    <img class="col-xs-4" src="media/{{ business.business.image }}" alt="">
                     <div class="media-body">
-                        <h4 class="media-heading">遇见咖喱</h4>
+                        <h4 class="media-heading">{{ business.business.name }}</h4>
                         <br>
-                        <span>人均消费 10 元</span>
+                        <span>人均消费 {{ business.business.average }} 元</span>
                     </div>
                 </div>
                 <hr>
-                <div class="media">
-                    <img class="col-xs-4" src="{% static 'img/1.jpg' %}" alt="">
-                    <div class="media-body">
-                        <h4 class="media-heading">遇见咖喱</h4>
-                        <br>
-                        <span>人均消费 10 元</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="media">
-                    <img class="col-xs-4" src="{% static 'img/1.jpg' %}" alt="">
-                    <div class="media-body">
-                        <h4 class="media-heading">遇见咖喱</h4>
-                        <br>
-                        <span>人均消费 10 元</span>
-                    </div>
-                </div>
-                <hr>
+                {% endfor %}
             </div>
             <div class="tab-pane fade col-xs-12" id="meals">
+                {% business_type_filter business_list 1 as meal_list %}
+                {% for business in meal_list %}
                 <div class="media">
-                    <img class="col-xs-4" src="{% static 'img/1.jpg' %}" alt="">
+                    <img class="col-xs-4" src="media/{{ business.image }}" alt="">
                     <div class="media-body">
-                        <h4 class="media-heading">遇见咖喱</h4>
+                        <h4 class="media-heading">{{ business.name }}</h4>
                         <br>
-                        <span>人均消费 10 元</span>
+                        <span>人均消费 {{ business.average }} 元</span>
                     </div>
                 </div>
                 <hr>
-                <div class="media">
-                    <img class="col-xs-4" src="{% static 'img/1.jpg' %}" alt="">
-                    <div class="media-body">
-                        <h4 class="media-heading">遇见咖喱</h4>
-                        <br>
-                        <span>人均消费 10 元</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="media">
-                    <img class="col-xs-4" src="{% static 'img/1.jpg' %}" alt="">
-                    <div class="media-body">
-                        <h4 class="media-heading">遇见咖喱</h4>
-                        <br>
-                        <span>人均消费 10 元</span>
-                    </div>
-                </div>
-                <hr>
+                {% endfor %}
             </div>
             <div class="tab-pane fade col-xs-12" id="drink">
+                {% business_type_filter business_list 2 as drink_list %}
+                {% for business in drink_list %}
                 <div class="media">
-                    <img class="col-xs-4" src="{% static 'img/1.jpg' %}" alt="">
+                    <img class="col-xs-4" src="media/{{ business.image }}" alt="">
                     <div class="media-body">
-                        <h4 class="media-heading">遇见咖喱</h4>
+                        <h4 class="media-heading">{{ business.name }}</h4>
                         <br>
-                        <span>人均消费 10 元</span>
+                        <span>人均消费 {{ business.average }} 元</span>
                     </div>
                 </div>
                 <hr>
-                <div class="media">
-                    <img class="col-xs-4" src="{% static 'img/1.jpg' %}" alt="">
-                    <div class="media-body">
-                        <h4 class="media-heading">遇见咖喱</h4>
-                        <br>
-                        <span>人均消费 10 元</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="media">
-                    <img class="col-xs-4" src="{% static 'img/1.jpg' %}" alt="">
-                    <div class="media-body">
-                        <h4 class="media-heading">遇见咖喱</h4>
-                        <br>
-                        <span>人均消费 10 元</span>
-                    </div>
-                </div>
-                <hr>
+                {% endfor %}
             </div>
         </div>
     </div>
     <!--shownav-->
+
+    <script>
+        function changeposition(id) {
+            alert(id)
+        }
+    </script>
 {% endblock %}

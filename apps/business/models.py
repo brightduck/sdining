@@ -7,8 +7,9 @@ from account.models import User
 class Business(models.Model):
     user = models.OneToOneField(User, verbose_name="账号")
     name = models.CharField(max_length=50, verbose_name="商家名称")
-    position = models.IntegerField(choices=((1, "楚原食堂"), (2, "汉源食堂"), (3, "全部")), verbose_name="位置")
+    position = models.IntegerField(choices=((1, "楚原食堂"), (2, "汉源食堂")), verbose_name="位置")
     floor = models.IntegerField(choices=((1, "一楼"), (2, "二楼")), verbose_name="楼层")
+    type = models.IntegerField(choices=((1, "餐品"), (2, "饮品")), verbose_name="商家类型")
     image = models.ImageField(upload_to='bimg/%Y/%m/%d', storage=ImgStorage(), blank=True, verbose_name="商家图片")
     average = models.IntegerField(default=10, verbose_name="人均消费")
     num_like = models.IntegerField(default=0, verbose_name="点赞数")
@@ -40,7 +41,7 @@ class Business(models.Model):
 class Food(models.Model):
     business = models.ForeignKey(Business, related_name='foodlist', verbose_name="商家")
     name = models.CharField(max_length=20, verbose_name="商品名")
-    image = models.ImageField(upload_to='fimg/%Y/%m/%d', storage=ImgStorage(), blank=True, verbose_name="商品图片")
+    image = models.ImageField(upload_to='fimg/%Y/%m/%d', storage=ImgStorage(), blank=True, null=True, verbose_name="商品图片")
     price = models.IntegerField(verbose_name="价格")
     can_reserve = models.BooleanField(default=True, verbose_name="可否预约")
 

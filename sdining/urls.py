@@ -14,7 +14,8 @@ urlpatterns = [
 
 
     url(r'^mvcapi/banner_list/$', mainviews.APIBannerListView.as_view(), name='banner_list_api'),
-    url(r'^mvcapi/food_list/$', businessviews.APIFoodListView.as_view(), name='food_list_api'),
+    url(r'^mvcapi/food/$', businessviews.APIFoodListView.as_view(), name='food_list_api'),
+    url(r'^mvcapi/food/(?P<pk>[0-9]+)/$', businessviews.APIFoodDetailView.as_view(), name='food_detail_api'),
 
     url(r'admin/', include(xadmin.site.urls)),
 

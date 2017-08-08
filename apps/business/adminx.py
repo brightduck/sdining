@@ -8,6 +8,7 @@ class BusinessAdmin:
     list_display = (
         'name',
         'user',
+        'type',
         'is_open'
     )
 
@@ -17,6 +18,7 @@ class BusinessAdmin:
 
     list_filter = (
         'floor',
+        'type',
         'position',
     )
 
@@ -26,6 +28,7 @@ class BusinessAdmin:
                      'user',
                      'name',
                      'position',
+                     'type',
                      'floor',
                      'image',
                      'average',

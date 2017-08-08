@@ -1,6 +1,7 @@
 from django.db import models
 
 from storage.storage import ImgStorage
+from business.models import Business
 
 
 class Banner(models.Model):
@@ -13,4 +14,15 @@ class Banner(models.Model):
 
     class Meta:
         verbose_name = "首页幻灯片"
+        verbose_name_plural = verbose_name
+
+
+class Recommend(models.Model):
+    business = models.OneToOneField(Business, verbose_name="商家")
+
+    def __str__(self):
+        return self.business.name
+
+    class Meta:
+        verbose_name = "推荐商家"
         verbose_name_plural = verbose_name

@@ -1,7 +1,7 @@
 import xadmin
 from xadmin import views
 
-from .models import Banner
+from .models import Banner, Recommend
 
 
 # Base Settings
@@ -20,7 +20,12 @@ class BannerAdmin:
     pass
 
 
+class RecommendAdmin:
+    pass
+
+
 xadmin.site.register(views.BaseAdminView, BaseSetting)
 xadmin.site.register(views.CommAdminView, GlobalSettings)
 
 xadmin.site.register(Banner, BannerAdmin)
+xadmin.site.register(Recommend, RecommendAdmin)

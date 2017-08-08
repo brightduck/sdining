@@ -7,6 +7,7 @@ class FoodSerializer(serializers.ModelSerializer):
         model = Food
         fields = (
             'business',
+            'pk',
             'name',
             'image',
             'price',
