@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^$', mainviews.IndexView.as_view(), name='index'),
 
     url(r'^mvcapi/$', mainviews.api_root, name='api_list'),
-    url(r'^mvcapi/banner_list/$', mainviews.APIBannerListView.as_view(), name='banner_list_api'),
+    url(r'^mvcapi/banner/$', mainviews.APIBannerListView.as_view(), name='banner_list_api'),
     url(r'^mvcapi/food/$', businessviews.APIFoodListView.as_view(), name='food_list_api'),
     url(r'^mvcapi/food/(?P<pk>[0-9]+)/$', businessviews.APIFoodDetailView.as_view(), name='food_detail_api'),
     url(r'^mvcapi/business/$', businessviews.APIBusinessListView.as_view(), name='business_list_api'),
