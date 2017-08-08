@@ -7,9 +7,9 @@ from account.models import User
 class Business(models.Model):
     user = models.OneToOneField(User, verbose_name="账号")
     name = models.CharField(max_length=50, verbose_name="商家名称")
-    position = models.IntegerField(choices=((1, "楚原食堂"), (2, "汉源食堂")), verbose_name="位置")
+    position = models.IntegerField(choices=((1, "楚原食堂"), (2, "汉源食堂")), verbose_name="位置", db_index=True)
     floor = models.IntegerField(choices=((1, "一楼"), (2, "二楼")), verbose_name="楼层")
-    type = models.IntegerField(choices=((1, "餐品"), (2, "饮品")), verbose_name="商家类型")
+    type = models.IntegerField(choices=((1, "餐品"), (2, "饮品")), verbose_name="商家类型", db_index=True)
     image = models.ImageField(upload_to='bimg/%Y/%m/%d', storage=ImgStorage(), blank=True, verbose_name="商家图片")
     average = models.IntegerField(default=10, verbose_name="人均消费")
     num_like = models.IntegerField(default=0, verbose_name="点赞数")
