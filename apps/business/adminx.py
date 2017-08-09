@@ -35,7 +35,7 @@ class BusinessAdmin:
                      'num_like')
         ),
         Side(
-            Fieldset('状态',
+            Fieldset('状态控制',
                      'is_open'
                      ),
         ),
