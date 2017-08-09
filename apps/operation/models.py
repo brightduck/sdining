@@ -32,7 +32,6 @@ class Order(models.Model):
             # print(e)
             pass
 
-
     def remove_from_order_list(self):
         try:
             obj = BusinessOrderList.objects.get(business=self.food.business)
@@ -43,6 +42,10 @@ class Order(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+        if self.is_accept:
+            self.date_create = timezone.now()
+            super(Order, self).save()
+            self.save_to_business_order_list()
         if self.is_done:
             self.date_done = timezone.now()
             self.remove_from_order_list()
@@ -50,15 +53,12 @@ class Order(models.Model):
             self.abnormalorder.order = self
             self.abnormalorder.save()
         super(Order, self).save()
-        if self.is_accept:
-            self.date_create = timezone.now()
-            self.save_to_business_order_list()
 
     def get_business_user(self):
         return self.food.business.user
 
     def __str__(self):
-        return '{} 预定 {}'.format(self.user.username, self.food.name)
+        return '{} 预定 {} at {}'.format(self.user.username, self.food.name, self.date_create.strftime('%m-%d %H:%I'))
 
     class Meta:
         verbose_name = "订单"

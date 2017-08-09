@@ -7,6 +7,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'utils'))
 
 SECRET_KEY = 'ze&1j4lvfs&(!*q)hj(^%dff2!2w5ik0*oxy3g=7*h6xf17-2$'
 
+# Will be ENCRYPT when push the project in Github
+
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -103,5 +105,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
+APPID = 200513914
 
+# Will be ENCRYPT when push the project in Github
 
+APPKEY = 'WHXYOPENAPIKEY'
+
+# Will be ENCRYPT when push the project in Github
+
+REDIRECT_URI = 'http://sdiningtest.site:8000/oauth/qq/check'

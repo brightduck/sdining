@@ -3,13 +3,11 @@ from django.contrib.auth.models import AbstractUser
 
 from .validators import PhonenumberValidator
 
+
 class User(AbstractUser):
     qq = models.CharField(max_length=15, unique=True, verbose_name="QQ号")
     phonenumber = models.CharField(max_length=11, validators=[PhonenumberValidator()], verbose_name="手机号")
     creditrank = models.IntegerField(default=100, verbose_name="信用级别")
-
-    def get_order_list(self):
-        pass
 
     def save(self, *args, **kwargs):
         if not self.email:
@@ -17,5 +15,7 @@ class User(AbstractUser):
         super(User, self).save()
 
 
-
+class OAuthQQ(models.Model):
+    user = models.ForeignKey(User)
+    qq_openid = models.CharField(max_length=64)
 

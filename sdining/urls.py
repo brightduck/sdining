@@ -8,6 +8,7 @@ import xadmin
 
 from sdiningview import views as mainviews
 from business import views as businessviews
+from account import views as accountviews
 
 urlpatterns = [
     url(r'^$', mainviews.IndexView.as_view(), name='index'),
@@ -26,6 +27,8 @@ urlpatterns = [
 
     url(r'^mvcapi/', include('rest_framework.urls',
                                namespace='rest_framework')),
+
+    url(r'^oauth/qq/check/$', accountviews.qq_login, name='qq_check'),
 
 ]
 

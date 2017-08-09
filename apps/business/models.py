@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from storage.storage import ImgStorage
 from account.models import User
@@ -44,7 +45,12 @@ class Food(models.Model):
     image = models.ImageField(upload_to='fimg/%Y/%m/%d', storage=ImgStorage(), blank=True, null=True,
                               verbose_name="商品图片")
     price = models.IntegerField(verbose_name="价格")
-    can_reserve = models.BooleanField(default=True, verbose_name="可否预约")
+    can_reserve = models.BooleanField(default=False, verbose_name="可否预约")
+
+    def clean(self):
+        if self.can_reserve:
+            if not self.business.is_open:
+                raise ValidationError({'can_reserve': "此食物所属商家目前不接受预约"})
 
     def __str__(self):
         return self.name
