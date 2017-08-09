@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from account.models import User
 from business.models import Food, Business
 
+
 def business_is_open_validator(value):
     food = get_object_or_404(Food, pk=value)
     if not food.business.is_open:
@@ -27,20 +28,31 @@ class Order(models.Model):
         try:
             obj, created = BusinessOrderList.objects.get_or_create(business=self.food.business)
             obj.orders.add(self)
-        except:
+        except Exception as e:
+            # print(e)
+            pass
+
+
+    def remove_from_order_list(self):
+        try:
+            obj = BusinessOrderList.objects.get(business=self.food.business)
+            obj.orders.remove(self)
+        except Exception as e:
+            # print(e)
             pass
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        if self.is_accept:
-            self.date_create = timezone.now()
-            self.save_to_business_order_list()
         if self.is_done:
             self.date_done = timezone.now()
+            self.remove_from_order_list()
         if self.is_abnormal:
             self.abnormalorder.order = self
             self.abnormalorder.save()
         super(Order, self).save()
+        if self.is_accept:
+            self.date_create = timezone.now()
+            self.save_to_business_order_list()
 
     def get_business_user(self):
         return self.food.business.user
