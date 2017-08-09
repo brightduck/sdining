@@ -26,6 +26,7 @@ class Order(models.Model):
     def save_to_business_order_list(self):
         try:
             obj, created = BusinessOrderList.objects.get_or_create(business=self.food.business)
+            obj.orders.add(self)
         except:
             pass
 
