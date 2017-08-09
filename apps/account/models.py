@@ -8,6 +8,8 @@ class User(AbstractUser):
     phonenumber = models.CharField(max_length=11, validators=[PhonenumberValidator()], verbose_name="手机号")
     creditrank = models.IntegerField(default=100, verbose_name="信用级别")
 
+    def get_order_list(self):
+        pass
 
     def save(self, *args, **kwargs):
         if not self.email:

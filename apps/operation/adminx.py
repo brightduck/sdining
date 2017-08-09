@@ -1,7 +1,7 @@
 import xadmin
 from xadmin.layout import Fieldset, Main, Side
 
-from .models import Order, AbnormalOrder
+from .models import Order, AbnormalOrder, BusinessOrderList
 
 
 class OrderAdmin:
@@ -59,5 +59,9 @@ class AbnormalOrderAdmin:
     pass
 
 
+class BusinessOrderListAdmin:
+    pass
+
 xadmin.site.register(Order, OrderAdmin)
 xadmin.site.register(AbnormalOrder, AbnormalOrderAdmin)
+xadmin.site.register(BusinessOrderList, BusinessOrderListAdmin)

@@ -53,7 +53,9 @@ class FoodAdmin:
         'name',
         'can_reserve',
     )
-
+    list_filter = (
+        'business',
+    )
     form_layout = (
         Main(
             Fieldset('基本信息',

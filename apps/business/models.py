@@ -41,7 +41,8 @@ class Business(models.Model):
 class Food(models.Model):
     business = models.ForeignKey(Business, related_name='foodlist', verbose_name="商家")
     name = models.CharField(max_length=20, verbose_name="商品名")
-    image = models.ImageField(upload_to='fimg/%Y/%m/%d', storage=ImgStorage(), blank=True, null=True, verbose_name="商品图片")
+    image = models.ImageField(upload_to='fimg/%Y/%m/%d', storage=ImgStorage(), blank=True, null=True,
+                              verbose_name="商品图片")
     price = models.IntegerField(verbose_name="价格")
     can_reserve = models.BooleanField(default=True, verbose_name="可否预约")
 
