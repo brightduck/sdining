@@ -6,7 +6,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
-from account.views import qq_login
 from business.models import Business
 from .serializers import BannerSerializer
 from .models import Banner, Recommend
@@ -21,9 +20,7 @@ class IndexView(TemplateView):
         kwargs['recommend_list'] = Recommend.objects.all()
         return kwargs
     def get(self, request, *args, **kwargs):
-        url = qq_login(request)
         context = self.get_context_data(**kwargs)
-        context['auth_url'] = url
         if request.GET.get('position', '') == '1':
             context['business_list'] = context['business_list'].filter(position=1)
             context['recommend_list'] = context['recommend_list'].filter(business__position=1)

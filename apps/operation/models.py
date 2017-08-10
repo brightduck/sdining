@@ -23,6 +23,7 @@ class Order(models.Model):
     is_accept = models.BooleanField(default=False, verbose_name="订单是否接受")
     is_done = models.BooleanField(default=False, verbose_name='订单是否完成')
     is_abnormal = models.BooleanField(default=False, verbose_name="订单是否是异常订单")
+    is_push = models.BooleanField(default=False, verbose_name="订单是否已推送")
 
     def save_to_business_order_list(self):
         try:

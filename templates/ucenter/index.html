@@ -8,6 +8,7 @@
           name="viewport">
     <title>用户个人界面</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/userstyle.css' %}">
+    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 
 <body>
@@ -139,6 +140,11 @@
         window.location.href="{% url 'orderdone' %}?id="+ id;
     }
 
+    {% if not request.user.is_authenticated %}
+    $(document).ready(function () {
+        window.location.href="{{ auth_url|safe }}";
+    })
+    {% endif %}
 </script>
 
 </body>

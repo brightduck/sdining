@@ -45,6 +45,7 @@ class OrderAdmin:
                 'is_accept',
                 'is_done',
                 'is_abnormal',
+                'is_push',
             )
         )
     )

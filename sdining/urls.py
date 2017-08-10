@@ -34,6 +34,8 @@ urlpatterns = [
     url(r'^qq/login/$', accountviews.qq_login, name='qqlogin'),
     url(r'^qq/check/$', accountviews.qq_check, name='qqcheck'),
 
+    url(r'^logout/$', accountviews.LogoutView.as_view(), name='logout'),
+
 
 ]
 

@@ -112,3 +112,10 @@ APPKEY = 'WHXYOPENAPIKEY'
 # Will be ENCRYPT when push the project in Github
 
 REDIRECT_URI = 'http://sdiningtest.site:8000/qq/check/'
+
+WRAPPER_MINUTE = 20
+
+MUST_PUSH_ORDER_TIME = [
+    '11,05',
+    '16,20',
+]
