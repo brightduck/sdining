@@ -1,6 +1,6 @@
 import xadmin
 
-from .models import OAuthQQProfile
+from .models import OAuthQQProfile, Accesstoken
 
 
 class OAuthQQProfileAdmin:
@@ -8,3 +8,4 @@ class OAuthQQProfileAdmin:
 
 
 xadmin.site.register(OAuthQQProfile, OAuthQQProfileAdmin)
+xadmin.site.register(Accesstoken)

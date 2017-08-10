@@ -15,7 +15,7 @@
 <article>
     <div class="inbody1">
         <div class="inbody1-1">
-            <img src="/media/{{ user.avatar }}">
+            <img src="{{ user.avatar }}">
         </div>
         <div class="inbody1-2">
             <ul>
@@ -53,7 +53,7 @@
                 {% if not request.GET.s or request.GET.s == 'now' %}
                     {% for order in user.get_now_order_list %}
                     <p>
-                        <button class="button1" type="button" onclick="doneorder({{ order.pk }})">已取餐</button>
+                        <button class="button1" type="button" onclick="doneorder({{ order.pk }})" style="cursor: pointer">已取餐</button>
                     </p>
                     {% endfor %}
                 {% endif %}
@@ -134,9 +134,11 @@
 </article>
 
 <script>
+
     function doneorder(id) {
         window.location.href="{% url 'orderdone' %}?id="+ id;
     }
+
 </script>
 
 </body>

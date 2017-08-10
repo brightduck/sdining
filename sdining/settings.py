@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'reversion',
-
 ]
 
 MIDDLEWARE = [
@@ -112,4 +111,4 @@ APPKEY = 'WHXYOPENAPIKEY'
 
 # Will be ENCRYPT when push the project in Github
 
-REDIRECT_URI = 'http://sdiningtest.site:8000/oauth/qq/check'
+REDIRECT_URI = 'http://sdiningtest.site:8000/qq/check/'

@@ -61,6 +61,7 @@ class Order(models.Model):
         return '{} 预定 {} at {}'.format(self.user.username, self.food.name, self.date_create.strftime('%m-%d %H:%I'))
 
     class Meta:
+        ordering = ['-date_done']
         verbose_name = "订单"
         verbose_name_plural = verbose_name
 

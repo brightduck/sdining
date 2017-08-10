@@ -222,5 +222,12 @@
     <footer style="height: 80px">
     </footer>
 </div>
+<script>
+    {% if not request.user.is_authenticated %}
+    $(document).ready(function () {
+        window.location.href="{{ auth_url|safe }}";
+    })
+    {% endif %}
+</script>
 </body>
 </html>

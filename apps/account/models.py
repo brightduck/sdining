@@ -6,8 +6,6 @@ from storage.storage import ImgStorage
 
 
 class User(AbstractUser):
-    qq = models.CharField(max_length=15, unique=True, verbose_name="QQ号")
-    phonenumber = models.CharField(max_length=11, validators=[PhonenumberValidator()], verbose_name="手机号")
     avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='avatar/base_avatar.png', storage=ImgStorage(),
                                verbose_name="头像")
     creditrank = models.IntegerField(default=100, verbose_name="信用级别")
@@ -27,16 +25,21 @@ class User(AbstractUser):
             self.email = '{}@qq.com'.format(self.username)
         super(User, self).save()
 
+class Accesstoken(models.Model):
+    access_token = models.CharField(max_length=200)
+    date_create = models.DateTimeField(auto_now_add=True)
+
 
 class OAuthQQProfile(models.Model):
     user = models.OneToOneField(User, verbose_name="用户")
-    qq_openid = models.CharField(max_length=64, blank=True)
+    qq_openid = models.CharField(max_length=100, blank=True)
+    access_token = models.CharField(max_length=100, blank=True)
     nickname = models.CharField(max_length=256, blank=True, verbose_name="昵称")
-    sex = models.IntegerField(choices=((1, "男"), (2, "女"), (3, "未知")), verbose_name="性别", default=1)
+    sex = models.IntegerField(choices=((1, "男"), (2, "女"), (0, "未知")), verbose_name="性别", default=1)
     stuid = models.CharField(max_length=20, verbose_name="学号", blank=True)
 
     def __str__(self):
-        return 'QQ: {} nickname: {}'.format(self.user.qq, self.nickname)
+        return self.user.username
 
     class Meta:
         verbose_name = "QQ个人信息"
