@@ -1,0 +1,143 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta id="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1,  user-scalable=no,minimal-ui"
+          name="viewport">
+    <title>用户个人界面</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/userstyle.css' %}">
+</head>
+
+<body>
+
+<article>
+    <div class="inbody1">
+        <div class="inbody1-1">
+            <img src="/media/{{ user.avatar }}">
+        </div>
+        <div class="inbody1-2">
+            <ul>
+                <li>用户名：{{ user.oauthqqprofile.nickname }}</li>
+                <li>性别：{{ user.oauthqqprofile.get_sex_display }}</li>
+                <li>学号：{{ user.oauthqqprofile.stuid }}</li>
+            </ul>
+        </div>
+    </div>
+</article>
+<article>
+    <div class="inbody2-1">
+        <div class="dingdan">
+            <p>订单信息</p>
+        </div>
+        <hr>
+        <div class="ddxx">
+            <div class="weiding">
+                <a class="but {% if not request.GET.s or request.GET.s == 'now' %}aactive{% endif %}"
+                   href="?s=now">进行中</a>
+                {% if not request.GET.s or request.GET.s == 'now' %}
+                    {% for order in user.get_now_order_list %}
+                        <p>{{ order.food.name }}</p>
+                    {% endfor %}
+                {% endif %}
+                {% if request.GET.s == 'history' %}
+                    {% for order in user.get_done_order_list|slice:"5" %}
+                        <p>{{ order.food.name }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="yiding">
+                <a class="but {% if request.GET.s == 'history' %}aactive{% endif %}" href="?s=history">已完成</a>
+                {% if not request.GET.s or request.GET.s == 'now' %}
+                    {% for order in user.get_now_order_list %}
+                    <p>
+                        <button class="button1" type="button" onclick="doneorder({{ order.pk }})">已取餐</button>
+                    </p>
+                    {% endfor %}
+                {% endif %}
+                {% if request.GET.s == 'history' %}
+                    {% for order in user.get_done_order_list|slice:"5" %}
+                        <p>{{ order.date_done }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <hr>
+        </div>
+        <hr>
+    </div>
+    <hr>
+</article>
+<article>
+    <div class="inbody3-1">
+        <ul class="inbody3-2">
+            <li class="tu1">
+                <div class="wdsc">
+                    <a class="choose" style="width: 100%" href="#">
+                        <div class="aa">
+                            <a href="#">我的收藏</a>
+                            <span><a href="#">></a></span>
+                        </div>
+                    </a>
+                    <hr>
+                </div>
+            </li>
+            <li class="tu1">
+                <div class="wdsc">
+                    <a class="choose" href="#">
+                        <div class="aa">
+                            <a href="#">我的评价</a>
+                            <span><a href="#">></a></span>
+                        </div>
+                    </a>
+                    <hr>
+                </div>
+
+            </li>
+            <li class="tu1">
+                <div class="wdsc">
+                    <a class="choose" href="#">
+                        <div class="aa">
+                            <a href="#">我的礼券</a>
+                            <span><a href="#">></a></span>
+                        </div>
+                    </a>
+                    <hr>
+                </div>
+            </li>
+            <li class="tu1">
+                <div class="wdsc">
+                    <a class="choose" href="#">
+                        <div class="aa">
+                            <a href="#">联系我们</a>
+                            <span><a href="#">></a></span>
+                        </div>
+                    </a>
+                    <hr>
+                </div>
+
+            </li>
+            <li class="tu1">
+                <div class="wdsc">
+                    <a class="choose" href="#">
+                        <div class="aa">
+                            <a href="#">使用协议</a>
+                            <span><a href="#">></a></span>
+                        </div>
+                    </a>
+                    <hr>
+                </div>
+            </li>
+        </ul>
+    </div>
+</article>
+
+<script>
+    function doneorder(id) {
+        window.location.href="{% url 'orderdone' %}?id="+ id;
+    }
+</script>
+
+</body>
+</html>

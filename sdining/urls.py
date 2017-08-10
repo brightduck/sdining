@@ -3,14 +3,17 @@ from django.views.static import serve
 from django.conf import settings
 
 from rest_framework.urlpatterns import format_suffix_patterns
-
 import xadmin
 
 from sdiningview import views as mainviews
 from business import views as businessviews
+from ucenter import views as ucenterviews
 
 urlpatterns = [
     url(r'^$', mainviews.IndexView.as_view(), name='index'),
+
+    url(r'^ucenter/$', ucenterviews.CustomerUcenterView.as_view(), name='ucenterindex'),
+    url(r'^ucenter/done/$', ucenterviews.order_is_done, name='orderdone'),
 
     url(r'^mvcapi/$', mainviews.api_root, name='api_list'),
     url(r'^mvcapi/banner/$', mainviews.APIBannerListView.as_view(), name='banner_list_api'),

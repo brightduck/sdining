@@ -16,12 +16,14 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="{% static 'css/index/common_css.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/index/main.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="block">
 
+
     <!--title_top-->
-    <nav>
+    <header>
         <div class="row">
             <div class="col-xs-3">
                 <select class="canteen" title="canteen" onchange="javascript:location.href=this.value;">
@@ -38,19 +40,19 @@
             </div>
 
             <div class="col-xs-6 text-center">
-                <form action="." method="get">
+                <form action="" method="get">
                     {% csrf_token %}
                     <label for="q"></label>
-                    <input class="text-center" type="search" autocomplete="off" name="q" value="武院特色热干面" onfocus="this.value=''" id="q">
+                    <input class="text-center" id="q" type="search" name="q" value="武院特色热干面" onfocus="this.value=''">
                     <input type="submit" style="display: none">
                 </form>
             </div>
 
-            <div class="col-xs-3  text-right">
+            <div class="col-xs-3  text-right" style="cursor: pointer" onclick="location.href={% url 'ucenterindex' %}">
                 <span class="glyphicon glyphicon-user"></span>
             </div>
         </div>
-    </nav>
+    </header>
 
     <!--slider-->
     <div id="slider">
@@ -122,94 +124,98 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active canteen" id="food_fine">
+                        <div class="row">
+                            <h3 class="title">精品推荐</h3>
+                        </div>
                         {% for business in recommend_list %}
-                            {% if forloop.first %}
-                                <div class="show">
-                                    <div class="row">
-                                        <h3>精品推荐</h3>
-                                        <div class="col-xs-3">
-                                            <img src="media/{{ business.business.image }}" alt="">
-                                        </div>
-                                        <div class="col-xs-7">
-                                            <h4>{{ business.business.name }}</h4>
-                                            <span>
-                                        人均消费：{{ business.business.average }}元
-                                    </span>
-                                        </div>
-                                        <div class="col-xs-2">
-                                            <a href=""></a>
-                                        </div>
+                            <a href="">
+                                <div class="show row ">
+                                    <div class="col-xs-3">
+                                        <img src="media/{{ business.business.image }}" alt="">
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <h4>{{ business.business.name }}</h4>
+                                        <span>
+                                        <p>特色菜：{% for food in business.business.special.foods.all %}
+                                            {{ food.name }}
+                                            {% empty %}
+                                            {% for food in business.business.foodlist.all|slice:"3" %}
+                                                {{ food.name }}
+                                            {% endfor %}
+                                        {% endfor %}</p>
+                                        <span><p class="text-right">人均消费：{{ business.business.average }}元</p></span>
+                                </span>
                                     </div>
                                 </div>
-                                <hr>
-                            {% else %}
-                                <div class="show">
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <img src="media/{{ business.business.image }}" alt="">
-                                        </div>
-                                        <div class="col-xs-7">
-                                            <h4>{{ business.business.name }}</h4>
-                                            <span>
-                                        人均消费：{{ business.business.average }}元
-                                    </span>
-                                        </div>
-                                        <div class="col-xs-2">
-                                            <a href=""></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                            {% endif %}
+                            </a>
+                            <hr>
                         {% endfor %}
                     </div>
 
                     <div role="tabpanel" class="tab-pane canteen" id="food_eat">
-                        {% business_type_filter business_list 1 as meals_list %}
-                        {% for business in meals_list %}
-                            <div class="show">
-                                <div class="row">
+                        <div class="row">
+                            <h3 class="title">美味餐点</h3>
+                        </div>
+                        {% business_type_filter business_list 1 as meal_list %}
+                        {% for business in meal_list %}
+                            <a href="">
+                                <div class="show row ">
                                     <div class="col-xs-3">
                                         <img src="media/{{ business.image }}" alt="">
                                     </div>
-                                    <div class="col-xs-7">
-                                        <h3>{{ business.name }}</h3>
+                                    <div class="col-xs-9">
+                                        <h4>{{ business.name }}</h4>
                                         <span>
-                                        人均消费：{{ business.average }}元
-                                    </span>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <a href=""></a>
+                                        <p>特色菜：{% for food in business.special.foods.all %}
+                                            {{ food.name }}
+                                            {% empty %}
+                                            {% for food in business.foodlist.all|slice:"3" %}
+                                                {{ food.name }}
+                                            {% endfor %}
+                                        {% endfor %}
+                                            </p>
+                                        <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
+                                </span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
+                            <hr>
                         {% endfor %}
                     </div>
 
                     <div role="tabpanel" class="tab-pane canteen" id="food_drink">
+                        <div class="row">
+                            <h3 class="title">饮品精选</h3>
+                        </div>
                         {% business_type_filter business_list 2 as drink_list %}
                         {% for business in drink_list %}
-                            <div class="show">
-                                <div class="row">
+                            <a href="">
+                                <div class="show row ">
                                     <div class="col-xs-3">
                                         <img src="media/{{ business.image }}" alt="">
                                     </div>
-                                    <div class="col-xs-7">
-                                        <h3>{{ business.name }}</h3>
+                                    <div class="col-xs-9">
+                                        <h4>{{ business.name }}</h4>
                                         <span>
-                                        人均消费：{{ business.average }}元
-                                    </span>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <a href=""></a>
+                                        <p>特色菜：{% for food in business.special.foods.all %}
+                                            {{ food.name }}
+                                            {% empty %}
+                                            {% for food in business.foodlist.all|slice:"3" %}
+                                                {{ food.name }}
+                                            {% endfor %}
+                                        {% endfor %}
+                                            </p>
+                                        <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
+                                </span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
 
                 </div>
             </div>
+        </div>
     </main>
 
     <!--footer-->

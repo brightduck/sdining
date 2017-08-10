@@ -1,7 +1,7 @@
 import xadmin
 from xadmin.layout import Fieldset, Main, Side
 
-from .models import Business, Food
+from .models import Business, Food, Special
 
 
 class BusinessAdmin:
@@ -77,5 +77,9 @@ class FoodAdmin:
             pass
         return qs
 
+class SpecialAdmin:
+    pass
+
 xadmin.site.register(Business, BusinessAdmin)
 xadmin.site.register(Food, FoodAdmin)
+xadmin.site.register(Special)

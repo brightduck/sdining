@@ -1,5 +1,5 @@
 import json
-import urllib, urllib3
+import urllib
 from urllib import parse
 
 
@@ -19,7 +19,6 @@ class OAuthQQ(object):
         url = 'https://api.uni.qq.com/connect/oauth2/authorize?{}'.format(parse.urlencode(params))
         return url
 
-
     def get_open_id(self, code):
         params = {
             'grant_type': 'authorization_code',
@@ -29,6 +28,3 @@ class OAuthQQ(object):
         }
         url = 'https://api.uni.qq.com/sns/oauth2/access_token?{}'.format(parse.urlencode(params))
         return url
-
-
-

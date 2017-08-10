@@ -25,6 +25,10 @@ class Business(models.Model):
             for item in self.foodlist.all():
                 item.can_reserve = False
                 item.save()
+        elif self.is_open:
+            for item in self.foodlist.all():
+                item.can_reserve = True
+                item.save()
         super(Business, self).save()
 
     def delete(self, using=None, keep_parents=False):
@@ -57,4 +61,16 @@ class Food(models.Model):
 
     class Meta:
         verbose_name = "食物"
+        verbose_name_plural = verbose_name
+
+
+class Special(models.Model):
+    business = models.OneToOneField(Business, verbose_name="商家", related_name='special')
+    foods = models.ManyToManyField(Food, verbose_name="食物")
+
+    def __str__(self):
+        return self.business.name
+
+    class Meta:
+        verbose_name = "特色菜"
         verbose_name_plural = verbose_name
