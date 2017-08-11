@@ -1,0 +1,122 @@
+{% load staticfiles %}
+{% load mvctags %}
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta id="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1,  user-scalable=no,minimal-ui"
+          name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/business.css' %}">
+    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <title>商家个人中心</title>
+</head>
+<body>
+<article>
+    <div class="inbody1">
+        <div class="inbody1-1">
+            <img src="/media/{{ user.business.image }}">
+        </div>
+        <div class="inbody1-2">
+            <ul>
+                <li>商家名称：{{ user.business }}</li>
+                <li>商家位置：{{ user.business.get_position_display }} {{ user.business.get_floor_display }}</li>
+            </ul>
+        </div>
+        <button onclick="window.location.href='{% url 'changestatus' %}'" style="cursor: pointer">
+            {% if user.business.is_open %}关闭{% else %}开启{% endif %}预约
+        </button>
+    </div>
+</article>
+<article>
+    <div class="order">
+        <div class="order-info">
+            <p>订单信息</p>
+        </div>
+        <div class="order-ing">
+
+            <div class="order-dcl">
+                <a class="order-a {% if not request.GET.s or request.GET.s == 'pending' %}aactive{% endif %}"
+                   href="?s=pending">待处理</a>
+            </div>
+
+            <div class="order-jxz">
+                <a class="order-a {% if request.GET.s == 'now' %}aactive{% endif %}" href="?s=now">进行中</a>
+            </div>
+
+            <div class="order-ywc">
+                <a class="order-a {% if request.GET.s == 'done' %}aactive{% endif %}" href="?s=done">已完成</a>
+            </div>
+        </div>
+        <!--是否确认接单-->
+        <div class="order-list">
+            {% if not request.GET.s or request.GET.s == 'pending' %}
+                {% get_pending_order_list user.business as pending_list %}
+                {% for order in pending_list %}
+                    <div class="order-list1">
+                        <div class="order-list-z">
+                            <p>{{ order.food.name }}</p>
+                        </div>
+                        <div class="order-list-y">
+                            <button type="button"
+                                    onclick="window.location.href='{% url 'accept_or_deny' %}?op=accept&opk={{ order.pk }}'">
+                                接受订单
+                            </button>
+                            <button type="button"
+                                    onclick="window.location.href='{% url 'accept_or_deny' %}?op=deny&opk={{ order.pk }}'">
+                                拒绝订单
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% elif request.GET.s == 'now' %}
+                {% for order in user.business.order_list.orders.all %}
+                    <div class="order-list1">
+                        <div class="order-list-z">
+                            <p>{{ order.food.name }}</p>
+                        </div>
+                        <div class="order-list-y">
+                            创建时间：{{ order.date_create }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% elif request.GET.s == 'done' %}
+                {% get_done_order_list user.business as done_list %}
+                {% for order in done_list %}
+                    <div class="order-list1">
+                        <div class="order-list-z">
+                            <p>{{ order.food.name }}</p>
+                        </div>
+                        <div class="order-list-y">
+                            完成时间：{{ order.date_done }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</article>
+<artlice>
+    <div class="business-info">
+        <ul class="business-to">
+            <a class="business-link" href="#">
+                <li class="business-li">
+                    <a class="teammaker" href="{% url 'about' %}">关于我们</a>
+                    <span calss="business-span"><a href="{% url 'about' %}">></a></span>
+                </li>
+            </a>
+            <a class="business-link" href="#">
+                <li class="business-li">
+                    <a class="teammaker" href="{% url 'agree' %}">使用协议</a>
+                    <span calss="business-span"><a href="{% url 'agree' %}">></a></span>
+                </li>
+            </a>
+        </ul>
+    </div>
+</artlice>
+
+
+</body>
+</html>

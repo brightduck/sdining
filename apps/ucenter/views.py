@@ -1,7 +1,8 @@
 from django.views.generic import TemplateView
-from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from account.views import qq_login
 from operation.models import Order
@@ -10,14 +11,29 @@ NOTFOUNDMESSAGE = '跟你说了不要瞎点，你就是不听，好了捏，你�
 一烦就出错，你说你乱点个锤子'
 
 
-class CustomerUcenterView( TemplateView):
-    login_url = '/admin/'
+class CustomerUcenterView(TemplateView):
     template_name = 'ucenter/index.html'
 
     def get(self, request, *args, **kwargs):
+        try:
+            if not request.user.usertype:
+                return HttpResponseRedirect(reverse('businessucenterindex'))
+        except:
+            pass
         context = self.get_context_data(**kwargs)
         auth_url = qq_login()
         context['auth_url'] = auth_url
+        return self.render_to_response(context)
+
+
+class BusinessUcenterView(LoginRequiredMixin, TemplateView):
+    template_name = 'ucenter/business_index.html'
+    raise_exception = True
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.usertype:
+            return HttpResponseRedirect(reverse('ucenterindex'))
+        context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
 
 
@@ -33,3 +49,43 @@ def order_is_done(request):
         return HttpResponseRedirect(reverse('ucenterindex'))
     except:
         return HttpResponseNotFound(NOTFOUNDMESSAGE)
+
+
+@login_required(login_url='/admin/')
+def changeopen(request):
+    if request.user.usertype:
+        return HttpResponseForbidden()
+    else:
+        b = request.user.business
+        b.is_open = not b.is_open
+        b.save()
+        return HttpResponseRedirect(reverse('businessucenterindex'))
+
+
+@login_required(login_url='/admin/')
+def accept_or_deny(request):
+    if request.user.usertype:
+        return HttpResponseForbidden()
+    else:
+        op = request.GET.get('op')
+        try:
+            opk = int(request.GET.get('opk'))
+            b = request.user.business
+            o = Order.objects.get(pk=opk, food__business=b)
+        except:
+            return HttpResponseNotFound(NOTFOUNDMESSAGE)
+        if op == 'accept':
+            o.is_accept = True
+            o.save()
+        elif op == 'deny':
+            o.delete()
+
+        return HttpResponseRedirect(reverse('businessucenterindex'))
+
+
+class AboutmeView(TemplateView):
+    template_name = 'utils/about.html'
+
+
+class AgreeView(TemplateView):
+    template_name = 'utils/agree.html'

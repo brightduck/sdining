@@ -8,13 +8,19 @@ import xadmin
 from sdiningview import views as mainviews
 from business import views as businessviews
 from ucenter import views as ucenterviews
+from ucenter import indev as indeviews
 from account import views as accountviews
 
 urlpatterns = [
     url(r'^$', mainviews.IndexView.as_view(), name='index'),
 
     url(r'^ucenter/$', ucenterviews.CustomerUcenterView.as_view(), name='ucenterindex'),
+    url(r'^ucenter/about/$', ucenterviews.AboutmeView.as_view(), name='about'),
+    url(r'^ucenter/agree/$', ucenterviews.AgreeView.as_view(), name='agree'),
     url(r'^ucenter/done/$', ucenterviews.order_is_done, name='orderdone'),
+    url(r'^ucenter/business/$', ucenterviews.BusinessUcenterView.as_view(), name='businessucenterindex'),
+    url(r'^ucenter/business/change/$', ucenterviews.changeopen, name='changestatus'),
+    url(r'^ucenter/business/aord/$', ucenterviews.accept_or_deny, name='accept_or_deny'),
 
     url(r'^mvcapi/$', mainviews.api_root, name='api_list'),
     url(r'^mvcapi/banner/$', mainviews.APIBannerListView.as_view(), name='banner_list_api'),
@@ -23,19 +29,20 @@ urlpatterns = [
     url(r'^mvcapi/business/$', businessviews.APIBusinessListView.as_view(), name='business_list_api'),
     url(r'^mvcapi/business/(?P<pk>[0-9]+)/$', businessviews.APIBusinessDetailView.as_view(),
         name='business_detail_api'),
+    url(r'^mvcapi/', include('rest_framework.urls',
+                             namespace='rest_framework')),
 
     url(r'admin/', include(xadmin.site.urls)),
 
     url(r'^media/(?P<path>.*)', serve, {"document_root": settings.MEDIA_ROOT}),
 
-    url(r'^mvcapi/', include('rest_framework.urls',
-                               namespace='rest_framework')),
-
     url(r'^qq/login/$', accountviews.qq_login, name='qqlogin'),
     url(r'^qq/check/$', accountviews.qq_check, name='qqcheck'),
-
     url(r'^logout/$', accountviews.LogoutView.as_view(), name='logout'),
 
+    url(r'^indev/collect/$', indeviews.MycollectView.as_view(), name='mycollect'),
+    url(r'^indev/comment/$', indeviews.MycommentView.as_view(), name='mycomment'),
+    url(r'^indev/vouchers/$', indeviews.Myvouchers.as_view(), name='myvouchers'),
 
 ]
 

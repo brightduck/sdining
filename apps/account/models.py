@@ -6,9 +6,9 @@ from storage.storage import ImgStorage
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='avatar/base_avatar.png', storage=ImgStorage(),
-                               verbose_name="头像")
+    avatar = models.URLField(blank=True, verbose_name="头像")
     creditrank = models.IntegerField(default=100, verbose_name="信用级别")
+    usertype = models.IntegerField(choices=((0, "商家"), (1, "用户")), verbose_name="用户类型", default=1)
 
     def get_now_order_list(self):
         '''

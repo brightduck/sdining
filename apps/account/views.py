@@ -32,6 +32,7 @@ def qq_check(request):
     oauth_qq = OAuthQQ(settings.APPID, settings.APPKEY, settings.REDIRECT_URI)
     try:
         openid, access_token = oauth_qq.get_open_id_and_token(code)
+        print(openid, access_token)
     except:
         return HttpResponseRedirect(reverse('ucenterindex'))
     time.sleep(0.05)
@@ -46,10 +47,13 @@ def qq_check(request):
             user_profile = oauth_qq.get_user_profile(openid)
         except:
             return HttpResponseRedirect(reverse('ucenterindex'))
-        u = User.objects.create(avatar=user_qq_profile['headimgurl'], username=user_qq_profile['openid'])
-        qprofile = OAuthQQProfile.objects.create(user=u, qq_openid=openid, access_token=access_token,
+        try:
+            u = User.objects.create_user(avatar=user_qq_profile['headimgurl'], username=user_qq_profile['openid'], password=access_token)
+            qprofile = OAuthQQProfile.objects.create(user=u, qq_openid=openid, access_token=access_token,
                                                  nickname=user_qq_profile['nickname'],
                                                  sex=user_qq_profile['sex'], stuid=user_profile['school_no'])
+        except:
+            return HttpResponseRedirect('/admin/')
         login(request, qprofile.user)
         return HttpResponseRedirect(reverse('ucenterindex'))
 

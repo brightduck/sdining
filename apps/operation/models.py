@@ -59,7 +59,10 @@ class Order(models.Model):
         return self.food.business.user
 
     def __str__(self):
-        return '{} 预定 {} at {}'.format(self.user.username, self.food.name, self.date_create.strftime('%m-%d %H:%I'))
+        if self.date_create:
+            return '{} 预定 {} at {}'.format(self.user.username, self.food.name, self.date_create.strftime('%m-%d %H:%I'))
+        else:
+            return '{} 预定 {}'.format(self.user.username, self.food.name)
 
     class Meta:
         ordering = ['-date_done']

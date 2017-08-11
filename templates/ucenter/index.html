@@ -77,8 +77,8 @@
                 <div class="wdsc">
                     <a class="choose" style="width: 100%" href="#">
                         <div class="aa">
-                            <a href="#">我的收藏</a>
-                            <span><a href="#">></a></span>
+                            <a href="{% url 'mycollect' %}">我的收藏</a>
+                            <span><a href="{% url 'mycollect' %}">></a></span>
                         </div>
                     </a>
                     <hr>
@@ -88,31 +88,8 @@
                 <div class="wdsc">
                     <a class="choose" href="#">
                         <div class="aa">
-                            <a href="#">我的评价</a>
-                            <span><a href="#">></a></span>
-                        </div>
-                    </a>
-                    <hr>
-                </div>
-
-            </li>
-            <li class="tu1">
-                <div class="wdsc">
-                    <a class="choose" href="#">
-                        <div class="aa">
-                            <a href="#">我的礼券</a>
-                            <span><a href="#">></a></span>
-                        </div>
-                    </a>
-                    <hr>
-                </div>
-            </li>
-            <li class="tu1">
-                <div class="wdsc">
-                    <a class="choose" href="#">
-                        <div class="aa">
-                            <a href="#">联系我们</a>
-                            <span><a href="#">></a></span>
+                            <a href="{% url 'mycomment' %}">我的评价</a>
+                            <span><a href="{% url 'mycomment' %}">></a></span>
                         </div>
                     </a>
                     <hr>
@@ -123,8 +100,31 @@
                 <div class="wdsc">
                     <a class="choose" href="#">
                         <div class="aa">
-                            <a href="#">使用协议</a>
-                            <span><a href="#">></a></span>
+                            <a href="{% url 'myvouchers' %}">我的礼券</a>
+                            <span><a href="{% url 'myvouchers' %}">></a></span>
+                        </div>
+                    </a>
+                    <hr>
+                </div>
+            </li>
+            <li class="tu1">
+                <div class="wdsc">
+                    <a class="choose" href="#">
+                        <div class="aa">
+                            <a href="{% url 'about' %}">关于我们</a>
+                            <span><a href="{% url 'about' %}">></a></span>
+                        </div>
+                    </a>
+                    <hr>
+                </div>
+
+            </li>
+            <li class="tu1">
+                <div class="wdsc">
+                    <a class="choose" href="#">
+                        <div class="aa">
+                            <a href="{% url 'agree' %}">使用协议</a>
+                            <span><a href="{% url 'agree' %}">></a></span>
                         </div>
                     </a>
                     <hr>

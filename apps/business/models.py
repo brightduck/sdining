@@ -35,6 +35,9 @@ class Business(models.Model):
         self.image.delete()
         super(Business, self).save()
 
+    def get_pending_order_list(self):
+        pass
+
     def __str__(self):
         return self.name
 
