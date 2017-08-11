@@ -38,6 +38,7 @@ urlpatterns = [
 
     url(r'^qq/login/$', accountviews.qq_login, name='qqlogin'),
     url(r'^qq/check/$', accountviews.qq_check, name='qqcheck'),
+    url(r'^qq/authguide/$', accountviews.AuthGuideView.as_view(), name='authguide'),
     url(r'^logout/$', accountviews.LogoutView.as_view(), name='logout'),
 
     url(r'^indev/collect/$', indeviews.MycollectView.as_view(), name='mycollect'),

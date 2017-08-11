@@ -4,7 +4,7 @@ import ssl
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth import login, logout
-from django.views.generic.base import View
+from django.views.generic.base import View, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
 
@@ -26,8 +26,6 @@ def qq_check(request):
     :param request: request object
     :return: to ucenter router
     '''
-    if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('ucenterindex'))
     code = request.GET.get('code')
     oauth_qq = OAuthQQ(settings.APPID, settings.APPKEY, settings.REDIRECT_URI)
     try:
@@ -35,6 +33,8 @@ def qq_check(request):
         print(openid, access_token)
     except:
         return HttpResponseRedirect(reverse('ucenterindex'))
+    if not oauth_qq.get_user_status(openid) in [2, 4]:
+        return HttpResponseRedirect(reverse('authguide'))
     time.sleep(0.05)
     qprofile = OAuthQQProfile.objects.filter(qq_openid=openid)
 
@@ -62,3 +62,10 @@ class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect('/')
+
+
+class AuthGuideView(TemplateView):
+    template_name = 'auth/guide.html'
+
+
+

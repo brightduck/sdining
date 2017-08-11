@@ -57,9 +57,9 @@ class OAuthQQ(object):
         result = json.load(response)
         return (result['openid'], result['access_token'])
 
-    def get_user_status(self, access_token, openid):
+    def get_user_status(self, openid):
         params = {
-            'access_token': access_token,
+            'access_token': self.get_access_token(),
             'openid': openid
         }
         url = 'https://api.uni.qq.com/cgi-bin/certfans/status?{}'.format(parse.urlencode(params))
