@@ -64,4 +64,10 @@
 
 项目总体完成度80%
 
-### That's all for DAY 5
+## DAY 6 项目进度
+
+自动化商家认证步骤
+
+修改了并简化了一些逻辑
+
+### That's all for DAY 6
