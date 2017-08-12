@@ -12,6 +12,7 @@ class OAuthQQ(object):
     For QQ OAuth2.0 Auto Login
     '''
     context = ssl._create_unverified_context()
+
     def __init__(self, appid, appkey, redirect_uri):
         self.appid = appid
         self.appkey = appkey
@@ -56,6 +57,15 @@ class OAuthQQ(object):
         response = request.urlopen(url, context=self.context)
         result = json.load(response)
         return (result['openid'], result['access_token'])
+
+    def from_token_get_openid(self, access_token):
+        params = {
+            'access_token': access_token
+        }
+        url = 'https://api.uni.qq.com/sns/oauth2/openid?{}'.format(parse.urlencode(params))
+        response = request.urlopen(url, context=self.context)
+        result = json.load(response)
+        return result['openid']
 
     def get_user_status(self, openid):
         params = {

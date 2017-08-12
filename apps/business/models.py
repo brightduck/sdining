@@ -19,8 +19,6 @@ class Business(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        self.user.is_staff = True
-        self.user.save()
         if not self.is_open:
             for item in self.foodlist.all():
                 item.can_reserve = False

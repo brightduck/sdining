@@ -25,11 +25,17 @@ def get_banner():
 
 @register.simple_tag
 def get_pending_order_list(business_obj):
-    return Order.objects.filter(food__business=business_obj, is_accept=False)
+    try:
+        return Order.objects.filter(food__business=business_obj, is_accept=False)
+    except:
+        return None
 
 @register.simple_tag
 def get_done_order_list(business_obj):
-    return Order.objects.filter(food__business=business_obj, is_done=True)[:5]
+    try:
+        return Order.objects.filter(food__business=business_obj, is_done=True)[:5]
+    except:
+        return None
 
 @register.filter
 def crenumlist(value):

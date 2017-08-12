@@ -56,10 +56,13 @@ def changeopen(request):
     if request.user.usertype:
         return HttpResponseForbidden()
     else:
-        b = request.user.business
-        b.is_open = not b.is_open
-        b.save()
-        return HttpResponseRedirect(reverse('businessucenterindex'))
+        try:
+            b = request.user.business
+            b.is_open = not b.is_open
+            b.save()
+            return HttpResponseRedirect(reverse('businessucenterindex'))
+        except:
+            return HttpResponseNotFound(NOTFOUNDMESSAGE)
 
 
 @login_required(login_url='/admin/')

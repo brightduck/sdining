@@ -39,7 +39,7 @@
                 {% block login_form %}
                     <div class="panel-heading">
                         {% block login_heading %}
-                            <h2 class="form-signin-heading">商家认证</h2>
+                            <h2 class="form-signin-heading">后台管理</h2>
                         {% endblock %}
                     </div>
                     <div class="panel-body">
@@ -53,7 +53,7 @@
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                                     <input class="form-control input-lg" id="id_username" maxlength="254"
-                                           name="username" type="text" placeholder="授权号">
+                                           name="username" type="text" placeholder="账号">
                                 </div>
                                 {% for error in form.username.errors %}
                                     <p id="error_{{ forloop.counter }}_{{ field.auto_id }}"
@@ -67,7 +67,7 @@
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
                                     <input class="form-control input-lg" id="id_password" name="password"
-                                           type="password" placeholder="授权密码">
+                                           type="password" placeholder="密码">
                                 </div>
                                 {% for error in form.password.errors %}
                                     <p id="error_{{ forloop.counter }}_{{ field.auto_id }}"
@@ -87,13 +87,6 @@
         </form>
 
     </div> <!-- /container -->
-    <div class="container "  style="margin-top: 10%">
-        <div class="alert alert-dismissible alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4>温馨提示：</h4>
-            <p>若您未获得开发团队授权账号，请联系开发团队线下认证授权</p>
-        </div>
-    </div>
 
     <script>
         document.getElementById('id_username').focus()
