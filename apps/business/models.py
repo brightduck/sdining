@@ -8,7 +8,7 @@ from account.models import User
 class Business(models.Model):
     user = models.OneToOneField(User, verbose_name="账号")
     name = models.CharField(max_length=50, verbose_name="商家名称")
-    position = models.IntegerField(choices=((1, "楚原食堂"), (2, "汉源食堂")), verbose_name="位置", db_index=True)
+    position = models.IntegerField(choices=((1, "楚园食堂"), (2, "汉园食堂")), verbose_name="位置", db_index=True)
     floor = models.IntegerField(choices=((1, "一楼"), (2, "二楼")), verbose_name="楼层")
     type = models.IntegerField(choices=((1, "餐品"), (2, "饮品")), verbose_name="商家类型", db_index=True)
     image = models.ImageField(upload_to='bimg/%Y/%m/%d', storage=ImgStorage(), blank=True, verbose_name="商家图片")
@@ -74,4 +74,37 @@ class Special(models.Model):
 
     class Meta:
         verbose_name = "特色菜"
+        verbose_name_plural = verbose_name
+
+class Authapply(models.Model):
+    '''
+    For Business Auth Apply
+    '''
+    user = models.OneToOneField(User, verbose_name="申请者")
+    name = models.CharField(max_length=100, verbose_name="商家名称")
+    position = models.IntegerField(choices=((1, "楚园食堂"), (2, "汉园食堂")), verbose_name="位置")
+    floor = models.IntegerField(choices=((1, "一楼"), (2, "二楼")), verbose_name="楼层")
+    type = models.IntegerField(choices=((1, "餐品"), (2, "饮品")), verbose_name="商家类型")
+    date_apply = models.DateTimeField(auto_now_add=True, verbose_name="申请时间")
+
+    is_passed = models.BooleanField(default=False, verbose_name="是否通过")
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.is_passed:
+            self.user.is_active = True
+            self.user.save()
+            try:
+                Business.objects.create(user=self.user, name=self.name, position=self.position,
+                                                  floor=self.floor,
+                                                  type=self.type)
+            except:
+                pass
+        super(Authapply, self).save()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "商家认证申请"
         verbose_name_plural = verbose_name

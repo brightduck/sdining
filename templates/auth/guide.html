@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1,  user-scalable=no,minimal-ui" name="viewport">
+<link rel="stylesheet" type="text/css" href="{% static 'css/auth/guide.css' %}">
+<title>引导界面</title>
+</head>
+<body>
+<div class="window">
+	<div class="button1">
+		<button type="button">
+			<span>我是学生</span>
+		</button>
+	</div>
+	<div class="button2">
+		<button type="button" onclick="window.location.href='{% url 'auth' %}'">
+			<span>我是商家</span>
+		</button>
+	</div>
+</div>
+</body>
+</html>

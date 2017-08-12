@@ -33,11 +33,13 @@ class BusinessUcenterView(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         if self.request.user.usertype:
             return HttpResponseRedirect(reverse('ucenterindex'))
+        if not self.request.user.is_active:
+            return HttpResponseRedirect(reverse('authguide'))
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
 
 
-@login_required(login_url='/admin/')
+@login_required(login_url='/ucenter/')
 def order_is_done(request):
     oid = request.GET.get('id', '')
     if not oid:
@@ -51,7 +53,7 @@ def order_is_done(request):
         return HttpResponseNotFound(NOTFOUNDMESSAGE)
 
 
-@login_required(login_url='/admin/')
+@login_required(login_url='/ucenter/')
 def changeopen(request):
     if request.user.usertype:
         return HttpResponseForbidden()
@@ -65,7 +67,7 @@ def changeopen(request):
             return HttpResponseNotFound(NOTFOUNDMESSAGE)
 
 
-@login_required(login_url='/admin/')
+@login_required(login_url='/ucenter/')
 def accept_or_deny(request):
     if request.user.usertype:
         return HttpResponseForbidden()

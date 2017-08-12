@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block extheader %}
+    <style>
+        #panel-login {
+            max-width: 350px;
+        }
+
+        #panel-login .controls {
+            padding: 0px 15px 15px !important;
+        }
+
+        #panel-login .alert-block {
+            padding: 0px;
+        }
+
+        #panel-login .alert-block ul {
+            margin: 10px 15px;
+            padding-left: 0px;
+        }
+
+        #panel-login .alert-block ul li {
+            list-style-type: none;
+        }
+    </style>
+    <link href="{% static 'xadmin/css/xadmin.main.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block title %}
+    商家认证
+{% endblock %}
+
+{% block body %}
+    <body class="login">
+
+    <div class="container" style="margin-top: 10%">
+
+        <form action="{% url 'auth' %}" method="post" id="login-form">
+            <div class="panel panel-default panel-single" id="panel-login">
+                {% csrf_token %}
+                <div class="panel-heading">
+
+                    <h2 class="form-signin-heading">商家认证</h2>
+
+                </div>
+                <div class="panel-body">
+
+                    <div id="div_id_name" class="row {% if form.name.errors %}has-error{% endif %}">
+                        <div class="controls clearfix">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                <input class="form-control input-lg" id="id_name" maxlength="254"
+                                       name="name" type="text" placeholder="商家名称">
+                            </div>
+                            {% for error in form.name.errors %}
+                                <p class="text-danger help-block">{{ error|escape }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div id="div_id_position" class="row {% if form.position.errors %}has-error{% endif %}">
+                        <div class="controls clearfix">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                <select class="form-control" id="id_position" name="position">
+                                    <option value="" selected="selected">请选择食堂</option>
+                                    <option value="1">楚园食堂</option>
+                                    <option value="2">汉园食堂</option>
+                                </select>
+                            </div>
+                            {% for error in form.position.errors %}
+                                <p class="text-danger help-block">{{ error|escape }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="div_id_floor" content="row {% if form.floor.errors %}has-error{% endif %}">
+                        <div content="controls clearfix">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                <select class="form-control" id="id_floor" name="floor">
+                                    <option value="" selected="selected">请选择楼层</option>
+                                    <option value="1">一楼</option>
+                                    <option value="2">二楼</option>
+                                </select>
+                            </div>
+                            {% for error in form.floor.errors %}
+                                <p class="text-danger help-block">{{ error|escape }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="div_id_type" content="row {% if form.type.errors %}has-error{% endif %}">
+                        <div content="controls clearfix">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                <select class="form-control" id="id_type" name="type">
+                                    <option value="" selected="selected">请选择类型</option>
+                                    <option value="1">餐品</option>
+                                    <option value="2">饮品</option>
+                                </select>
+                            </div>
+                            {% for error in form.type.errors %}
+                                <p class="text-danger help-block">{{ error|escape }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="this_is_the_login_form" value="1"/>
+                    <input type="hidden" name="next" value="/admin/"/>
+                    <br>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+
+                </div>
+
+            </div>
+        </form>
+
+    </div> <!-- /container -->
+    {% if success %}
+    <div class="container " style="margin-top: 10%">
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p>{{ success }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    </body>
+{% endblock %}

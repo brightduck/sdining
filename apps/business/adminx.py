@@ -1,7 +1,7 @@
 import xadmin
 from xadmin.layout import Fieldset, Main, Side
 
-from .models import Business, Food, Special
+from .models import Business, Food, Special, Authapply
 
 
 class BusinessAdmin:
@@ -80,6 +80,43 @@ class FoodAdmin:
 class SpecialAdmin:
     pass
 
+class AuthapplyAdmin:
+    list_display = (
+        'name',
+        'position',
+        'type',
+        'is_passed',
+        'date_apply'
+    )
+
+    list_filter = (
+        'position',
+        'type',
+        'floor',
+        'date_apply'
+    )
+
+    form_layout = (
+        Main(
+          Fieldset(
+              '申请内容',
+              'user',
+              'name',
+              'position',
+              'floor',
+              'type',
+              'date_apply'
+          ),
+        ),
+        Side(
+            Fieldset(
+                '状态控制',
+                'is_passed',
+            )
+        )
+    )
+
 xadmin.site.register(Business, BusinessAdmin)
 xadmin.site.register(Food, FoodAdmin)
 xadmin.site.register(Special)
+xadmin.site.register(Authapply, AuthapplyAdmin)

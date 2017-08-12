@@ -9,6 +9,8 @@ class User(AbstractUser):
     avatar = models.URLField(blank=True, verbose_name="头像")
     creditrank = models.IntegerField(default=100, verbose_name="信用级别")
     usertype = models.IntegerField(choices=((0, "商家"), (1, "用户")), verbose_name="用户类型", default=1)
+    phonenumber = models.CharField(max_length=11, blank=True, verbose_name="联系方式")
+    truename = models.CharField(max_length=30, blank=True, verbose_name="真实姓名")
 
     def get_now_order_list(self):
         '''
@@ -24,6 +26,7 @@ class User(AbstractUser):
         if not self.email:
             self.email = '{}@qq.com'.format(self.username)
         super(User, self).save()
+
 
 class Accesstoken(models.Model):
     access_token = models.CharField(max_length=200)
@@ -44,3 +47,5 @@ class OAuthQQProfile(models.Model):
     class Meta:
         verbose_name = "QQ个人信息"
         verbose_name_plural = verbose_name
+
+

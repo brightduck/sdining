@@ -121,3 +121,7 @@ MUST_PUSH_ORDER_TIME = [
 ]
 
 DEFAULT_PASSWORD ='123321'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+]
