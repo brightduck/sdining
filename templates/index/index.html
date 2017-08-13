@@ -40,10 +40,10 @@
             </div>
 
             <div class="col-xs-6 text-center">
-                <form action="" method="get">
-                    {% csrf_token %}
+                <form action="{% url 'haystack_search' %}" method="get">
                     <label for="q"></label>
-                    <input class="text-center" id="q" type="search" name="q" value="武院特色热干面" onfocus="this.value=''">
+                    <input class="text-center" id="q" type="search" name="q" value="武院特色热干面" onfocus="this.value=''"
+                           required>
                     <input type="submit" style="display: none">
                 </form>
             </div>

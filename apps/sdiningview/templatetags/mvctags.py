@@ -5,6 +5,7 @@ from operation.models import Order
 register = template.Library()
 
 from sdiningview.models import Banner
+from business.models import Business, Food
 
 
 @register.simple_tag
@@ -43,3 +44,8 @@ def crenumlist(value):
         return range(value)
     except (TypeError, ValueError):
         return [0]
+
+
+@register.filter
+def is_business_or_food(obj):
+    return isinstance(obj, Business)

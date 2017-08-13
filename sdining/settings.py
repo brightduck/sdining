@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'sdiningview',
     'ucenter',
     # utils
+    'haystack',
     'rest_framework',
     'xadmin',
     'crispy_forms',
@@ -120,8 +121,19 @@ MUST_PUSH_ORDER_TIME = [
     '16,20',
 ]
 
-DEFAULT_PASSWORD ='123321'
+DEFAULT_PASSWORD = '123321'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
 ]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'CNbackends.whoosh_cn_backends.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

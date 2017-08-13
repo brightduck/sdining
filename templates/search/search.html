@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load mvctags %}
+
+{% block title %}
+    搜索
+{% endblock %}
+
+{% block extheader %}
+
+{% endblock %}
+
+{% block body %}
+    <body>
+    {% if query %}
+        <h3>搜索关键字：{{ query }}</h3>
+        <hr>
+        <h4>商家结果：</h4>
+        <ul>
+            {% for result in page.object_list %}
+                {% if result.object|is_business_or_food %}
+                    <li>{{ result.object.name }}</li>
+                {% endif %}
+            {% empty %}
+                无结果
+            {% endfor %}
+        </ul>
+        <hr>
+        <h4>食物结果：</h4>
+        <ul>
+            {% for result in page.object_list %}
+                {% if not result.object|is_business_or_food %}
+                    <li>{{ result.object.name }}</li>
+                {% endif %}
+            {% empty %}
+                无结果
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <br>
+    <main>
+        <h1>此页面开发中</h1>
+    </main>
+    </body>
+{% endblock %}

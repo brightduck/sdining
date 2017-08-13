@@ -1,0 +1,5 @@
+{{ object.name }}
+
+{% for food in object.foodlist.all %}
+{{ food.name }}
+{% endfor %}
