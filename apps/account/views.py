@@ -60,27 +60,22 @@ def qq_check(request):
             pass
         finally:
             return HttpResponseRedirect(reverse('authguide'))
-    qprofile = OAuthQQProfile.objects.filter(qq_openid=openid)
 
-    if qprofile:
-        login(request, qprofile[0].user)
+    try:
+        user_qq_profile = oauth_qq.get_user_qq_profile(openid)
+        user_profile = oauth_qq.get_user_profile(openid)
+    except Exception:
         return HttpResponseRedirect(reverse('ucenterindex'))
-    else:
-        try:
-            user_qq_profile = oauth_qq.get_user_qq_profile(openid)
-            user_profile = oauth_qq.get_user_profile(openid)
-        except Exception:
-            return HttpResponseRedirect(reverse('ucenterindex'))
-        try:
-            u = User.objects.create_user(avatar=user_qq_profile['headimgurl'], username=user_qq_profile['openid'],
-                                         password=access_token)
-            qprofile = OAuthQQProfile.objects.create(user=u, qq_openid=openid, access_token=access_token,
-                                                     nickname=user_qq_profile['nickname'],
-                                                     sex=user_qq_profile['sex'], stuid=user_profile['school_no'])
-        except Exception:
-            return HttpResponseForbidden()
-        login(request, qprofile.user)
-        return HttpResponseRedirect(reverse('ucenterindex'))
+    try:
+        u = User.objects.create_user(avatar=user_qq_profile['headimgurl'], username=user_qq_profile['openid'],
+                                     password=access_token)
+        qprofile = OAuthQQProfile.objects.create(user=u, qq_openid=openid, access_token=access_token,
+                                                 nickname=user_qq_profile['nickname'],
+                                                 sex=user_qq_profile['sex'], stuid=user_profile['school_no'])
+    except Exception:
+        return HttpResponseForbidden()
+    login(request, qprofile.user)
+    return HttpResponseRedirect(reverse('ucenterindex'))
 
 
 class LogoutView(LoginRequiredMixin, View):
@@ -96,8 +91,8 @@ class AuthGuideView(LoginRequiredMixin, TemplateView):
     template_name = 'auth/guide.html'
 
 
-def my_key(group, request):
-    return request.META['REMOTE_ADDR'] + request.POST['username']
+# def my_key(group, request):
+#     return request.META['REMOTE_ADDR'] + request.POST['username']
 
 
 class AuthView(LoginRequiredMixin, TemplateView):
@@ -118,12 +113,17 @@ class AuthView(LoginRequiredMixin, TemplateView):
             return HttpResponseForbidden()
         authapply_form = BusinessApplyForm(data=request.POST)
         if authapply_form.is_valid():
-            newauthapply = authapply_form.save(commit=False)
-            newauthapply.user = request.user
-            newauthapply.save()
-            return render(request, 'auth/auth.html', {
-                'success': "您提交的申请正在审核中"
-            })
+            try:
+                newauthapply = authapply_form.save(commit=False)
+                newauthapply.user = request.user
+                newauthapply.save()
+                return render(request, 'auth/auth.html', {
+                    'success': "您提交的申请正在审核中"
+                })
+            except:
+                return render(request, 'auth/auth.html', {
+                    'error': "请不要重复提交"
+                })
         else:
             return render(request, 'auth/auth.html', {
                 'form': authapply_form,
