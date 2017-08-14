@@ -1,0 +1,120 @@
+#block {
+    width: 600px;
+    margin: 0 auto;
+}
+
+.nav, .row, .input-group,
+h4, h3, a, p {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+hr {
+    margin: 0;
+}
+
+div[class*="col-"] {
+    padding: 0;
+}
+
+select {
+    outline: none;
+    border: none;
+    background: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+input {
+    border: none;
+}
+
+header {
+    color: white;
+    background: #558AD8;
+    padding: 17px 20px;
+    height: 75px;
+}
+
+header a {
+    color: white;
+}
+
+header span {
+    font-size: 2.1em;
+}
+
+header select {
+    font-size: 1.9em;
+}
+
+ul {
+    border: none !important;
+}
+
+a {
+    color: black;
+}
+
+.title {
+    border-left: 4px solid #558AD8;
+    padding-left: 8px;
+    font-size: 1.7em;
+    line-height: 1;
+    margin: 3px 0;
+}
+
+hr {
+    border-color: #efefef;
+}
+
+h4 {
+    font-size: 1.7em;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    line-height: 1.5;
+}
+
+.glyphicon-menu-left, .glyphicon-user {
+    font-size: 2.7em;
+}
+
+.btn-lg {
+    font-size: 1.9em;
+}
+
+main {
+    box-shadow: 0 2px 6px #bfbfbf;
+    margin: 17px 20px;
+    padding: 17px 20px;
+    border-radius: 0 6px;
+}
+
+main p {
+    font-size: 1.7em;
+    line-height: 3;
+}
+
+#buy {
+    padding: 17px 20px;
+}
+
+#buy p {
+    line-height: 1.5;
+    color: #8c8c8c;
+}
+
+hr {
+    margin: 20px 0;
+}
+
+button {
+    margin-top: 60px;
+    box-shadow: 0 2px 6px #bfbfbf;
+}

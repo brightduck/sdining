@@ -64,6 +64,19 @@
                         </div>
                     </div>
 
+                    <div id="div_id_phonenumber" class="row {% if form.phonenumber.errors %}has-error{% endif %}">
+                        <div class="controls clearfix">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                <input class="form-control input-lg" id="id_phonenumber" maxlength="11"
+                                       name="phonenumber" type="text" placeholder="联系方式">
+                            </div>
+                            {% for error in form.phonenumber.errors %}
+                                <p class="text-danger help-block">{{ error|escape }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
                     <div id="div_id_position" class="row {% if form.position.errors %}has-error{% endif %}">
                         <div class="controls clearfix">
                             <div class="input-group input-group-lg">

@@ -128,22 +128,25 @@
                             <h3 class="title">精品推荐</h3>
                         </div>
                         {% for business in recommend_list %}
-                            <a href="">
+                            <a href="{% url 'businessdetail' business.business.pk %}">
                                 <div class="show row ">
                                     <div class="col-xs-3">
                                         <img src="media/{{ business.business.image }}" alt="">
                                     </div>
                                     <div class="col-xs-9">
-                                        <h4>{{ business.business.name }}</h4>
+                                        <h4>{{ business.business.name }}&nbsp;&nbsp;
+                                            {% if not business.business.is_open %}
+                                                <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
+                                            {% endif %}</h4>
                                         <span>
                                         <p>特色菜：{% for food in business.business.special.foods.all %}
                                             {{ food.name }}
-                                            {% empty %}
+                                        {% empty %}
                                             {% for food in business.business.foodlist.all|slice:"3" %}
                                                 {{ food.name }}
                                             {% endfor %}
                                         {% endfor %}</p>
-                                        <span><p class="text-right">人均消费：{{ business.business.average }}元</p></span>
+                                            <span><p class="text-right">人均消费：{{ business.business.average }}元</p></span>
                                 </span>
                                     </div>
                                 </div>
@@ -158,23 +161,25 @@
                         </div>
                         {% business_type_filter business_list 1 as meal_list %}
                         {% for business in meal_list %}
-                            <a href="">
+                            <a href="{% url 'businessdetail' business.pk %}">
                                 <div class="show row ">
                                     <div class="col-xs-3">
                                         <img src="media/{{ business.image }}" alt="">
                                     </div>
                                     <div class="col-xs-9">
-                                        <h4>{{ business.name }}</h4>
+                                        <h4>{{ business.name }}&nbsp;&nbsp;{% if not business.is_open %}
+                                            <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
+                                        {% endif %}</h4>
                                         <span>
                                         <p>特色菜：{% for food in business.special.foods.all %}
                                             {{ food.name }}
-                                            {% empty %}
+                                        {% empty %}
                                             {% for food in business.foodlist.all|slice:"3" %}
                                                 {{ food.name }}
                                             {% endfor %}
                                         {% endfor %}
                                             </p>
-                                        <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
+                                            <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
                                 </span>
                                     </div>
                                 </div>
@@ -189,23 +194,26 @@
                         </div>
                         {% business_type_filter business_list 2 as drink_list %}
                         {% for business in drink_list %}
-                            <a href="">
+                            <a href="{% url 'businessdetail' business.pk %}">
                                 <div class="show row ">
                                     <div class="col-xs-3">
                                         <img src="media/{{ business.image }}" alt="">
                                     </div>
                                     <div class="col-xs-9">
-                                        <h4>{{ business.name }}</h4>
+                                        <h4>{{ business.name }}&nbsp;&nbsp;{% if not business.is_open %}
+                                            <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
+                                        {% endif %}</h4>
                                         <span>
                                         <p>特色菜：{% for food in business.special.foods.all %}
                                             {{ food.name }}
-                                            {% empty %}
+                                        {% empty %}
                                             {% for food in business.foodlist.all|slice:"3" %}
                                                 {{ food.name }}
                                             {% endfor %}
                                         {% endfor %}
                                             </p>
-                                        <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
+
+                                            <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
                                 </span>
                                     </div>
                                 </div>

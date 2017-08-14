@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!doctype html>
 <html>
 <head>
@@ -25,15 +26,14 @@ p{
 h1{
     border-bottom: 1px solid grey;
     padding: 30px;
-    font-size: 
 }
 </style>
 </head>
 
 <body style="height:100vh">
 <div class="for-logo">
-    <img id="the-logo" src="http://wenwen.soso.com/p/20090321/20090321195145-250286336.jpg" 
-                    alt="加载失败"  style="max-width:100%"/>
+    <img id="the-logo" src="{% static 'img/indev.jpg' %}"
+         alt="加载失败" style="max-width:100%"/>
 </div>
 <div>
     <p>后台哥哥加班优化中...</p>

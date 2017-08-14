@@ -1,0 +1,86 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=600px">
+    <link rel="shortcut icon" href="#" type="image/x-icon"/>
+
+    <meta name="format-detection" content="telephone=no">
+    <title>智慧食堂</title>
+    <!-- juqery -->
+    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--css-->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/index/common_css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/operation/buy.css' %}">
+
+</head>
+
+<body>
+<div id="block">
+    <header>
+        <div class="row">
+            <div class="col-xs-3">
+                <a class="glyphicon glyphicon-menu-left" href="{% url 'businessdetail' businesspk %}"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>预约详情</span>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="row">
+            <p>您预约的商品：</p>
+            <div class="col-xs-6"><p>菜品名称</p></div>
+            <div class="col-xs-3"><p>份数</p></div>
+            <div class="col-xs-3"><p>金额</p></div>
+        </div>
+        <div id="buy">
+            {% for food in food_list %}
+                <div class="row">
+                    <div class="col-xs-6"><p>{{ food.name }}</p></div>
+                    <div class="col-xs-3"><p>1份</p></div>
+                    <div class="col-xs-3"><p>{{ food.price }}元</p></div>
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-6"><p>总计</p></div>
+            <div class="col-xs-3"></div>
+            <div class="col-xs-3"><p>{{ pricesum }}元</p></div>
+        </div>
+    </main>
+
+
+    <div class="text-center">
+        <button type="button" class="btn btn-success btn-lg" onclick="submit()">提交订单</button>
+    </div>
+</div>
+
+<script>
+    function submit() {
+        $.post("{% url 'showorder' %}", {confirm: 1, csrfmiddlewaretoken: '{{ csrf_token }}'},
+            function (data) {
+                if (data['status'] === 1) {
+                    alert("您的订单已成功提交，商家确认接单后可以前往个人中心查看以及确认收货");
+                    window.location.href = "/";
+                }
+                else if (data['status'] === 0) {
+                    alert("提交预约失败，该商家可能目前未开启预约");
+                    window.location.href = "/";
+                }
+                else {
+                    alert("商家并不能预约餐饮");
+                    window.location.href = "/";
+                }
+            }
+            , "json");
+    }
+</script>
+</body>
+</html>

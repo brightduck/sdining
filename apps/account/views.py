@@ -117,6 +117,9 @@ class AuthView(LoginRequiredMixin, TemplateView):
                 newauthapply = authapply_form.save(commit=False)
                 newauthapply.user = request.user
                 newauthapply.save()
+                newauthapply.user.phonenumber = authapply_form.cleaned_data['phonenumber']
+                newauthapply.user.save()
+
                 return render(request, 'auth/auth.html', {
                     'success': "您提交的申请正在审核中"
                 })

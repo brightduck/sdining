@@ -38,6 +38,26 @@ margin-left:-30px;
 	flex:1 2 50%;
 	padding-top:5px;
 }
+
+.inbody1-3 {
+    flex: 1 1 10%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.inbody1-3 button {
+    background-color: rgba(117, 181, 160, 1.00);
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    border: none;
+    width: 90px;
+}
+
+.inbody1-3 button:hover {
+    font-size: 16px;
+}
 .inbody1-2 li
 {
 	list-style-type: none;
@@ -164,8 +184,4 @@ button
 }
 .business-info a:hover{
 	font-size:17px;
-}
-
-.aactive {
-    font-size: 20px;
 }

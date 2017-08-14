@@ -10,9 +10,16 @@ from business import views as businessviews
 from ucenter import views as ucenterviews
 from ucenter import indev as indeviews
 from account import views as accountviews
+from operation import views as operationviews
 
 urlpatterns = [
     url(r'^$', mainviews.IndexView.as_view(), name='index'),
+
+    url(r'^business/(?P<pk>[0-9]+)/$', businessviews.BusinessDetailView.as_view(), name='businessdetail'),
+
+    url(r'^operation/makeorder/$', operationviews.makeorder, name='makeorder'),
+    url(r'^operation/removeorder/$', operationviews.removeorder, name='removeorder'),
+    url(r'^operation/showorder/$', operationviews.ShowOrderView.as_view(), name='showorder'),
 
     url(r'^ucenter/$', ucenterviews.CustomerUcenterView.as_view(), name='ucenterindex'),
     url(r'^ucenter/about/$', ucenterviews.AboutmeView.as_view(), name='about'),

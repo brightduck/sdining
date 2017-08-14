@@ -25,9 +25,11 @@
                 <li>商家位置：{{ user.business.get_position_display }} {{ user.business.get_floor_display }}</li>
             </ul>
         </div>
-        <button onclick="window.location.href='{% url 'changestatus' %}'" style="cursor: pointer">
-            {% if user.business.is_open %}关闭{% else %}开启{% endif %}预约
-        </button>
+        <div class="inbody1-3">
+            <button onclick="window.location.href='{% url 'changestatus' %}'" style="cursor: pointer">
+                {% if user.business.is_open %}关闭{% else %}开启{% endif %}预约
+            </button>
+        </div>
     </div>
 </article>
 <article>

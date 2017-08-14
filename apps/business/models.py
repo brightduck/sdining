@@ -36,6 +36,9 @@ class Business(models.Model):
     def get_pending_order_list(self):
         pass
 
+    def get_food_list(self):
+        return self.foodlist.all()
+
     def __str__(self):
         return self.name
 

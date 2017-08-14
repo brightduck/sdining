@@ -1,0 +1,118 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=600px">
+    <link rel="shortcut icon" href="#" type="image/x-icon"/>
+
+    <meta name="format-detection" content="telephone=no">
+    <title>智慧食堂</title>
+    <!-- juqery -->
+    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--css-->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/index/common_css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/business/detail.css' %}">
+
+</head>
+
+<body>
+<div id="block">
+    <header>
+        <div class="row">
+            <div class="col-xs-3">
+                <a class="glyphicon glyphicon-menu-left" href="{% url 'index' %}"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>{{ business.name }}</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="row">
+            <img src="/media/{{ business.image }}" alt="">
+        </div>
+    </main>
+
+    <div class="row">
+        <h2 class="text-center">菜单列表</h2>
+        <div class="row" style="height: 23px;background:rgba(0,0,0,0.04)"></div>
+    </div>
+    <div id="menu">
+        <div class="row">
+            <table class="table text-center">
+                {% for food in business.get_food_list %}
+                    <tr>
+                        <td>{{ food.name }}</td>
+                        <td>{{ food.price }}RMB</td>
+                        <td><a onclick="cut(pk={{ food.pk }})"><span
+                                class="glyphicon glyphicon-minus-sign"></span></a><span
+                                id="foodnum{{ food.pk }}">0</span>
+                            <a class="add" onclick="add(pk={{ food.pk }})" style="cursor: pointer"><span
+                                    class="glyphicon glyphicon-plus-sign"></span></a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center" style="position: fixed;bottom: 0">
+        <button type="button" class="btn btn-success btn-lg" onclick="submitorder()">预约点餐</button>
+    </div>
+</div>
+
+<script>
+    function submitorder() {
+        window.location.href = "{% url 'showorder' %}";
+    }
+
+    function add(pk) {
+        numtag = $('#foodnum' + pk);
+        num = parseInt(numtag.text());
+        if (num >= 1) {
+            alert("一次只能预约一份该食物");
+            return;
+        }
+        numtag.text(num + 1);
+        $.post("{% url 'makeorder' %}", {
+                businesspk: {{ business.pk }},
+                foodpk: pk,
+                num: num + 1,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            function (data) {
+                if (data['status'] !== 1) {
+                    alert("提交失败");
+                }
+            }
+            , "json");
+    }
+
+    function cut(pk) {
+        numtag = $('#foodnum' + pk);
+        num = parseInt(numtag.text());
+        if (num === 0) {
+            alert("已经是最小份数");
+            return;
+        }
+        numtag.text(num - 1);
+        $.post("{% url 'removeorder' %}", {
+                businesspk: {{ business.pk }},
+                foodpk: pk,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            function (data) {
+                if (data['status'] !== 1) {
+                    alert("提交失败");
+                }
+            }
+            , "json");
+    }
+</script>
+</body>
+</html>
