@@ -9,7 +9,7 @@ SECRET_KEY = 'ze&1j4lvfs&(!*q)hj(^%dff2!2w5ik0*oxy3g=7*h6xf17-2$'
 
 # Will be ENCRYPT when push the project in Github
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -150,5 +150,7 @@ CACHES = {
         }
     }
 }
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
