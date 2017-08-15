@@ -112,7 +112,7 @@ APPKEY = 'WHXYOPENAPIKEY'
 
 # Will be ENCRYPT when push the project in Github
 
-REDIRECT_URI = 'http://niangliang.me:8080/qq/check/'
+REDIRECT_URI = 'http://106.15.195.58:8080/qq/check/'
 
 WRAPPER_MINUTE = 20
 
@@ -139,3 +139,16 @@ HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 LOGIN_URL = '/ucenter/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache', #文件方式
+        'LOCATION': os.path.join(BASE_DIR, 'cache'),
+        'TIMEOUT': 600,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
+        }
+    }
+}
+
+

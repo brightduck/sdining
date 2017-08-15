@@ -68,7 +68,7 @@ def qq_check(request):
         return HttpResponseRedirect(reverse('ucenterindex'))
     try:
         u = User.objects.create_user(avatar=user_qq_profile['headimgurl'], username=user_qq_profile['openid'],
-                                     password=access_token)
+                                     password=access_token, truename=user_profile['name'])
         qprofile = OAuthQQProfile.objects.create(user=u, qq_openid=openid, access_token=access_token,
                                                  nickname=user_qq_profile['nickname'],
                                                  sex=user_qq_profile['sex'], stuid=user_profile['school_no'])
@@ -106,9 +106,6 @@ class AuthView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
     def post(self, request):
-        '''
-                Business Auth
-                '''
         if request.user.is_active:
             return HttpResponseForbidden()
         authapply_form = BusinessApplyForm(data=request.POST)
