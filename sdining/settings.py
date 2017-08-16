@@ -9,7 +9,7 @@ SECRET_KEY = 'ze&1j4lvfs&(!*q)hj(^%dff2!2w5ik0*oxy3g=7*h6xf17-2$'
 
 # Will be ENCRYPT when push the project in Github
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -112,7 +112,7 @@ APPKEY = 'WHXYOPENAPIKEY'
 
 # Will be ENCRYPT when push the project in Github
 
-REDIRECT_URI = 'http://106.15.195.58:8080/qq/check/'
+REDIRECT_URI = 'http://106.15.195.58/qq/check/'
 
 WRAPPER_MINUTE = 20
 

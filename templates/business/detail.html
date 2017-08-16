@@ -48,9 +48,9 @@
             <table class="table text-center">
                 {% for food in business.get_food_list %}
                     <tr>
-                        <td>{{ food.name }}</td>
-                        <td>{{ food.price }}RMB</td>
-                        <td><a onclick="cut(pk={{ food.pk }})"><span
+                        <td class="">{{ food.name }}</td>
+                        <td>{{ food.price }} 元</td>
+                        <td class=""><a onclick="cut(pk={{ food.pk }})"><span
                                 class="glyphicon glyphicon-minus-sign"></span></a><span
                                 id="foodnum{{ food.pk }}">0</span>
                             <a class="add" onclick="add(pk={{ food.pk }})" style="cursor: pointer"><span
@@ -67,7 +67,18 @@
 </div>
 
 <script>
+
     function submitorder() {
+        numtag = [];
+        {% for food in business.get_food_list %}
+            numtag.push($('#foodnum{{ food.pk }}'));
+        {% endfor %}
+        let s = 0;
+        numtag.forEach((t) => { if(t === 1){s += 1} });
+        if (s === 0){
+            alert("您还未预约食物");
+            return;
+        }
         window.location.href = "{% url 'showorder' %}";
     }
 
@@ -75,7 +86,7 @@
         numtag = $('#foodnum' + pk);
         num = parseInt(numtag.text());
         if (num >= 1) {
-            alert("一次只能预约一份该食物");
+            alert("亲一次只能点一个");
             return;
         }
         numtag.text(num + 1);

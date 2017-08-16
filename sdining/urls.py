@@ -14,7 +14,7 @@ from account import views as accountviews
 from operation import views as operationviews
 
 urlpatterns = [
-    url(r'^$', cache_page(60 * 15)(mainviews.IndexView.as_view()), name='index'),
+    url(r'^$', mainviews.IndexView.as_view(), name='index'),
 
     url(r'^business/(?P<pk>[0-9]+)/$', businessviews.BusinessDetailView.as_view(), name='businessdetail'),
 
