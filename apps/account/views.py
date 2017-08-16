@@ -8,7 +8,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 
-from ratelimit.decorators import ratelimit
 from .qqapi import OAuthQQ
 from .models import User, OAuthQQProfile
 from .forms import BusinessApplyForm

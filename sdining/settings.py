@@ -9,7 +9,7 @@ SECRET_KEY = 'ze&1j4lvfs&(!*q)hj(^%dff2!2w5ik0*oxy3g=7*h6xf17-2$'
 
 # Will be ENCRYPT when push the project in Github
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -106,19 +106,27 @@ MEDIA_URL = '/media/'
 
 APPID = 200513914
 
-# Will be ENCRYPT when push the project in Github
+# Will be ENCRYPT when push the project to Github
 
 APPKEY = 'WHXYOPENAPIKEY'
 
-# Will be ENCRYPT when push the project in Github
+# Will be ENCRYPT when push the project to Github
+
+TEMPLATE_ID = 'af40aca07db111e7be1d54520092a308'
 
 REDIRECT_URI = 'http://106.15.195.58/qq/check/'
 
-WRAPPER_MINUTE = 20
+WRAPPER_MINUTE = 0
+# if the WRAPPER_MINUTE = 0 that's means real-time push
 
-MUST_PUSH_ORDER_TIME = [
-    '11,05',
-    '16,20',
+ORDER_TIME_ONE = [
+    '10,50',
+    '11,50'
+]
+
+ORDER_TIME_TWO = [
+    '15,50',
+    '16,50'
 ]
 
 DEFAULT_PASSWORD = '123321'
@@ -152,5 +160,7 @@ CACHES = {
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+TEMPLATE_BUTTON_URI = 'http://106.15.195.58/ucenter/business/'
 
 

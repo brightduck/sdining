@@ -97,3 +97,17 @@ class OAuthQQ(object):
         response = request.urlopen(url, context=self.context)
         result = json.load(response)
         return result
+
+    def send_message_from_template(self, postdata):
+        params = {
+            'access_token': self.get_access_token(),
+        }
+        data = json.dumps(postdata)
+        data = bytes(data, 'utf-8')
+
+        url = 'https://api.uni.qq.com/cgi-bin/message/template/send?{}'.format(parse.urlencode(params))
+        response = request.urlopen(url, data, context=self.context)
+        result = json.load(response)
+        return result
+
+

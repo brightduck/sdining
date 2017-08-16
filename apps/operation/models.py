@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 
 from account.models import User
 from business.models import Food, Business
+from .wrapper import wrapper_order_list
 
 
 def business_is_open_validator(value):
@@ -24,6 +25,9 @@ class Order(models.Model):
     is_done = models.BooleanField(default=False, verbose_name='订单是否完成')
     is_abnormal = models.BooleanField(default=False, verbose_name="订单是否是异常订单")
     is_push = models.BooleanField(default=False, verbose_name="订单是否已推送")
+
+    def get_openid(self):
+        return self.food.business.user.username
 
     def save_to_business_order_list(self):
         try:
@@ -54,6 +58,12 @@ class Order(models.Model):
             self.abnormalorder.order = self
             self.abnormalorder.save()
         super(Order, self).save()
+        if not self.is_accept and self.is_push == False:
+            try:
+                wrapper_order_list(order_obj=self)
+            except:
+                pass
+
 
     def get_business_user(self):
         return self.food.business.user
