@@ -74,7 +74,7 @@
                     </div>
                 {% endfor %}
             {% elif request.GET.s == 'now' %}
-                {% for order in user.business.order_list.orders.all %}
+                {% for order in user.get_businessuser_now_order %}
                     <div class="order-list1">
                         <div class="order-list-z">
                             <p>{{ order.food.name }}</p>

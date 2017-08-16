@@ -23,15 +23,13 @@ def push(openid):
             }
         }
     }
-    postdata = json.dumps(data)
-    postdata = bytes(postdata, 'utf-8')
 
-    oauth_qq.send_message_from_template(postdata=postdata)
+    oauth_qq.send_message_from_template(postdata=data)
     return True
 
 
 def wrapper_order_list(order_obj):
-    minterval = settings.WRAPPER_MINUTE
+    interval = settings.WRAPPER_MINUTE
 
     # order_list = Order.objects.filter(is_accept=False, food__business=business_obj, is_push=False)
 
@@ -48,11 +46,12 @@ def wrapper_order_list(order_obj):
         # return False
 
     if check_time(timezone.now().strftime("%H,%M")):
-        if not minterval:
+        if not interval:
             if push(openid=order_obj.get_openid()):
                 order_obj.is_push = True
                 order_obj.save()
         else:
+
             pass
     else:
         pass

@@ -114,3 +114,5 @@ class BusinessOrderList(models.Model):
     class Meta:
         verbose_name = "商家订单列表"
         verbose_name_plural = verbose_name
+
+

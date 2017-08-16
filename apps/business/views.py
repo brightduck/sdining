@@ -26,11 +26,6 @@ class APIFoodListView(generics.ListAPIView):
 
 
 class FoodIsOwnerOrSuperuserOrReadOnly(permissions.BasePermission):
-    '''
-    For APIFoodDetailView
-    A simple permission control for FoodAPI
-    '''
-
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True

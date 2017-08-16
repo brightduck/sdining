@@ -27,6 +27,10 @@ class User(AbstractUser):
             self.email = '{}@qq.com'.format(self.username)
         super(User, self).save()
 
+    def get_businessuser_now_order(self):
+
+        return self.business.order_list.orders.all().order_by('-date_create')
+
 
 class Accesstoken(models.Model):
     access_token = models.CharField(max_length=200)
