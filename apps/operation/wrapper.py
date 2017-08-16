@@ -1,11 +1,8 @@
 import json
-import ssl
-from urllib import request, parse
 
 from django.utils import timezone
 from django.conf import settings
 
-from .models import BusinessOrderList, Order
 from account.qqapi import OAuthQQ
 
 
