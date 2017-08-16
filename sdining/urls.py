@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^mvcapi/', include('rest_framework.urls',
                              namespace='rest_framework')),
 
-    url(r'admin/', include(xadmin.site.urls)),
+    url(r'^admin/', include(xadmin.site.urls)),
 
     url(r'^search/', include('haystack.urls')),
 
