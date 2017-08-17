@@ -47,7 +47,7 @@ class Order(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        if self.is_accept:
+        if self.is_accept and not self.is_done:
             self.date_create = timezone.now()
             super(Order, self).save()
             self.save_to_business_order_list()

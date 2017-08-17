@@ -42,8 +42,6 @@ urlpatterns = [
 
     url(r'^admin/', include(xadmin.site.urls)),
 
-    url(r'^search/', include('haystack.urls')),
-
     url(r'^media/(?P<path>.*)', serve, {"document_root": settings.MEDIA_ROOT}),
 
     url(r'^qq/login/$', accountviews.qq_login, name='qqlogin'),

@@ -9,7 +9,7 @@ SECRET_KEY = 'ze&1j4lvfs&(!*q)hj(^%dff2!2w5ik0*oxy3g=7*h6xf17-2$'
 
 # Will be ENCRYPT when push the project in Github
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'sdiningview',
     'ucenter',
     # utils
-    'haystack',
     'rest_framework',
     'xadmin',
     'crispy_forms',
@@ -135,22 +134,11 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
 ]
 
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'CNbackends.whoosh_cn_backends.WhooshEngine',
-        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
-    },
-}
-
-HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
-
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
-
 LOGIN_URL = '/ucenter/'
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache', #文件方式
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',  # 文件方式
         'LOCATION': os.path.join(BASE_DIR, 'cache'),
         'TIMEOUT': 600,
         'OPTIONS': {
@@ -161,6 +149,4 @@ CACHES = {
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-TEMPLATE_BUTTON_URI = 'http://106.15.195.58/ucenter/business/'
-
-
+TEMPLATE_BUTTON_URI = 'http://106.15.195.58/ucenter/'

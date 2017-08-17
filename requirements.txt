@@ -8,7 +8,6 @@ Django==1.10.5
 django-cors-headers==2.1.0
 django-crispy-forms==1.6.1
 django-formtools==2.0
-django-haystack==2.6.1
 django-reversion==2.0.9
 djangorestframework==3.6.3
 future==0.16.0
@@ -27,4 +26,3 @@ requests==2.18.3
 six==1.10.0
 uritemplate==3.0.0
 urllib3==1.22
-Whoosh==2.7.4

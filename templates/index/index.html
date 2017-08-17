@@ -7,8 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=600px">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>智慧食堂</title>
+    <meta name="format-detection" content="telephone=no">
     <link rel="shortcut icon" href="#" type="image/x-icon"/>
+    <title>智慧食堂</title>
     <!-- juqery -->
     <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -40,9 +41,9 @@
             </div>
 
             <div class="col-xs-6 text-center">
-                <form action="{% url 'haystack_search' %}" method="get">
-                    <label for="q"></label>
-                    <input class="text-center" id="q" type="search" name="q" value="武院特色热干面" onfocus="this.value=''"
+                <form action="{% url 'index' %}" method="get">
+                    <label for="show"></label>
+                    <input id="show" class="text-center" type="search" name="q" value="{% if is_search %}{{ is_search }}{% else %}武汉热干面{% endif %}" onfocus="this.value=''"
                            required>
                     <input type="submit" style="display: none">
                 </form>
@@ -54,91 +55,120 @@
         </div>
     </header>
 
-    <!--slider-->
-    <div id="slider">
-        <div class="row">
-            <div id="carousel-example-generic" class="carousel slide col-xs-12" data-ride="carousel">
-                <!-- Indicators -->
-                {% get_banner as banner_list %}
-                <ol class="carousel-indicators">
-                    {% for id in banner_list|length|crenumlist %}
-                        {% if id == 0 %}
-                            <li data-target="#carousel-example-generic" data-slide-to="{{ id }}" class="active"></li>
-                        {% else %}
-                            <li data-target="#carousel-example-generic" data-slide-to="{{ id }}"></li>
-                        {% endif %}
-                    {% endfor %}
-                </ol>
-
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    {% for banner in banner_list %}
-                        {% if forloop.first %}
-                            <div class="item active ">
-                                <img src="media/{{ banner.image }}" alt="{{ banner.alttext }}">
-                            </div>
-                        {% else %}
-                            <div class="item ">
-                                <img src="media/{{ banner.image }}" alt="{{ banner.alttext }}">
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+    <div id="search" style="display: none">
+        <p class="text-center" id="cantent_search">匹配商家</p>
+        {% for business in search_list %}
+            <a href="{% url 'businessdetail' business.pk %}">
+                <div class="show row ">
+                    <div class="col-xs-3">
+                        <img src="/media/{{ business.image }}" alt="">
+                    </div>
+                    <div class="col-xs-9">
+                        <h4>{{ business.name }}</h4>
+                        <span>
+                                        <p>特色菜：{% for food in business.special.foods.all %}
+                                            {{ food.name }}
+                                        {% empty %}
+                                            {% for food in business.foodlist.all|slice:"3" %}
+                                                {{ food.name }}
+                                            {% endfor %}
+                                        {% endfor %}</p>
+                                        <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
+                                </span>
+                    </div>
                 </div>
-
-            </div>
-        </div>
+            </a>
+        {% endfor %}
     </div>
 
-    <!--content-->
-    <main>
-        <div class="row" id="main_nav">
-            <div class="col-xs-12">
-                <!-- Nav tabs -->
-                <ul class="nav-tabs nav text-center" role="tablist">
-                    <li class="col-xs-4 active" role="presentation">
-                        <a href="#food_fine" aria-controls="home" role="tab" data-toggle="tab">
-                            <img class="filter" src="{% static 'img/logo1.png' %}" alt="">
-                            <p class="text-center">精品推荐</p>
-                        </a>
-                    </li>
-                    <li class="col-xs-4" role="presentation">
-                        <a href="#food_eat" aria-controls="profile" role="tab" data-toggle="tab">
-                            <img class="filter" src="{% static 'img/logo2.png' %}" alt="">
-                            <p class="text-center">餐品类</p>
-                        </a>
-                    </li>
-                    <li class="col-xs-4" role="presentation">
-                        <a href="#food_drink" aria-controls="messages" role="tab" data-toggle="tab">
-                            <img class="filter" src="{% static 'img/logo3.png' %}" alt="">
-                            <p class="text-center">饮品类</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row" style="height: 30px;background:rgba(0,0,0,0.04)">
+    <!--slider-->
+    <div id="search_Q" class="{% if is_search %}search_Q disabled{% endif %}">
+        <div>
+            <div id="slider">
+                <div class="row">
+                    <div id="carousel-example-generic" class="carousel slide col-xs-12" data-ride="carousel">
+                        <!-- Indicators -->
+                        {% get_banner as banner_list %}
+                        <ol class="carousel-indicators">
+                            {% for id in banner_list|length|crenumlist %}
+                                {% if id == 0 %}
+                                    <li data-target="#carousel-example-generic" data-slide-to="{{ id }}"
+                                        class="active"></li>
+                                {% else %}
+                                    <li data-target="#carousel-example-generic" data-slide-to="{{ id }}"></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ol>
 
-        </div>
-        <div class="row" id="content">
-            <div class="col-xs-12">
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active canteen" id="food_fine">
-                        <div class="row">
-                            <h3 class="title">精品推荐</h3>
-                        </div>
-                        {% for business in recommend_list %}
-                            <a href="{% url 'businessdetail' business.business.pk %}">
-                                <div class="show row ">
-                                    <div class="col-xs-3">
-                                        <img src="media/{{ business.business.image }}" alt="">
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            {% for banner in banner_list %}
+                                {% if forloop.first %}
+                                    <div class="item active ">
+                                        <img src="media/{{ banner.image }}" alt="{{ banner.alttext }}">
                                     </div>
-                                    <div class="col-xs-9">
-                                        <h4>{{ business.business.name }}&nbsp;&nbsp;
-                                            {% if not business.business.is_open %}
-                                                <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
-                                            {% endif %}</h4>
-                                        <span>
+                                {% else %}
+                                    <div class="item ">
+                                        <img src="media/{{ banner.image }}" alt="{{ banner.alttext }}">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--content-->
+            <main>
+                <div class="row" id="main_nav">
+                    <div class="col-xs-12">
+                        <!-- Nav tabs -->
+                        <ul class="nav-tabs nav text-center" role="tablist">
+                            <li class="col-xs-4 active" role="presentation">
+                                <a href="#food_fine" aria-controls="home" role="tab" data-toggle="tab">
+                                    <img class="filter" src="{% static 'img/logo1.png' %}" alt="">
+                                    <p class="text-center">精品推荐</p>
+                                </a>
+                            </li>
+                            <li class="col-xs-4" role="presentation">
+                                <a href="#food_eat" aria-controls="profile" role="tab" data-toggle="tab">
+                                    <img class="filter" src="{% static 'img/logo2.png' %}" alt="">
+                                    <p class="text-center">餐品类</p>
+                                </a>
+                            </li>
+                            <li class="col-xs-4" role="presentation">
+                                <a href="#food_drink" aria-controls="messages" role="tab" data-toggle="tab">
+                                    <img class="filter" src="{% static 'img/logo3.png' %}" alt="">
+                                    <p class="text-center">饮品类</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row" style="height: 30px;background:rgba(0,0,0,0.04)">
+
+                </div>
+                <div class="row" id="content">
+                    <div class="col-xs-12">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active canteen" id="food_fine">
+                                <div class="row">
+                                    <h3 class="title">精品推荐</h3>
+                                </div>
+                                {% for business in recommend_list %}
+                                    <a href="{% url 'businessdetail' business.business.pk %}">
+                                        <div class="show row ">
+                                            <div class="col-xs-3">
+                                                <img src="media/{{ business.business.image }}" alt="">
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <h4>{{ business.business.name }}&nbsp;&nbsp;
+                                                    {% if not business.business.is_open %}
+                                                        <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
+                                                    {% endif %}</h4>
+                                                <span>
                                         <p>特色菜：{% for food in business.business.special.foods.all %}
                                             {{ food.name }}
                                         {% empty %}
@@ -148,29 +178,29 @@
                                         {% endfor %}</p>
                                             <span><p class="text-right">人均消费：{{ business.business.average }}元</p></span>
                                 </span>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr>
-                        {% endfor %}
-                    </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <hr>
+                                {% endfor %}
+                            </div>
 
-                    <div role="tabpanel" class="tab-pane canteen" id="food_eat">
-                        <div class="row">
-                            <h3 class="title">美味餐点</h3>
-                        </div>
-                        {% business_type_filter business_list 1 as meal_list %}
-                        {% for business in meal_list %}
-                            <a href="{% url 'businessdetail' business.pk %}">
-                                <div class="show row ">
-                                    <div class="col-xs-3">
-                                        <img src="media/{{ business.image }}" alt="">
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <h4>{{ business.name }}&nbsp;&nbsp;{% if not business.is_open %}
-                                            <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
-                                        {% endif %}</h4>
-                                        <span>
+                            <div role="tabpanel" class="tab-pane canteen" id="food_eat">
+                                <div class="row">
+                                    <h3 class="title">美味餐点</h3>
+                                </div>
+                                {% business_type_filter business_list 1 as meal_list %}
+                                {% for business in meal_list %}
+                                    <a href="{% url 'businessdetail' business.pk %}">
+                                        <div class="show row ">
+                                            <div class="col-xs-3">
+                                                <img src="media/{{ business.image }}" alt="">
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <h4>{{ business.name }}&nbsp;&nbsp;{% if not business.is_open %}
+                                                    <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
+                                                {% endif %}</h4>
+                                                <span>
                                         <p>特色菜：{% for food in business.special.foods.all %}
                                             {{ food.name }}
                                         {% empty %}
@@ -181,29 +211,29 @@
                                             </p>
                                             <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
                                 </span>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr>
-                        {% endfor %}
-                    </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <hr>
+                                {% endfor %}
+                            </div>
 
-                    <div role="tabpanel" class="tab-pane canteen" id="food_drink">
-                        <div class="row">
-                            <h3 class="title">饮品精选</h3>
-                        </div>
-                        {% business_type_filter business_list 2 as drink_list %}
-                        {% for business in drink_list %}
-                            <a href="{% url 'businessdetail' business.pk %}">
-                                <div class="show row ">
-                                    <div class="col-xs-3">
-                                        <img src="media/{{ business.image }}" alt="">
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <h4>{{ business.name }}&nbsp;&nbsp;{% if not business.is_open %}
-                                            <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
-                                        {% endif %}</h4>
-                                        <span>
+                            <div role="tabpanel" class="tab-pane canteen" id="food_drink">
+                                <div class="row">
+                                    <h3 class="title">饮品精选</h3>
+                                </div>
+                                {% business_type_filter business_list 2 as drink_list %}
+                                {% for business in drink_list %}
+                                    <a href="{% url 'businessdetail' business.pk %}">
+                                        <div class="show row ">
+                                            <div class="col-xs-3">
+                                                <img src="media/{{ business.image }}" alt="">
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <h4>{{ business.name }}&nbsp;&nbsp;{% if not business.is_open %}
+                                                    <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
+                                                {% endif %}</h4>
+                                                <span>
                                         <p>特色菜：{% for food in business.special.foods.all %}
                                             {{ food.name }}
                                         {% empty %}
@@ -215,23 +245,50 @@
 
                                             <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
                                 </span>
-                                    </div>
-                                </div>
-                            </a>
-                        {% endfor %}
-                    </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
 
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </main>
+            </main>
 
-    <!--footer-->
-    <footer style="height: 80px">
-    </footer>
+            <!--footer-->
+            <footer style="height: 80px">
+            </footer>
+        </div>
+    </div>
 </div>
 <script>
+    showtag = $("#show");
 
+    {% if is_search %}
+        $("#search").show();
+    {% endif %}
+
+    $(document).ready(function () {
+        showtag.click(function () {
+            $("#search").show();
+        });
+
+    });
+
+
+    showtag.click(function () {
+        $("#search_Q").addClass("search_Q disabled ");
+    });
+
+    $(document).mouseup(function (e) {
+        let _con = $(' #search ');
+        if (!_con.is(e.target) && _con.has(e.target).length === 0) {
+
+            $("#search").hide();
+            $("#search_Q").removeClass("search_Q disabled ");
+        }
+    });
 </script>
 </body>
 </html>
