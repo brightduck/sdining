@@ -1,6 +1,5 @@
 from functools import reduce
 
-from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
@@ -20,6 +19,7 @@ class IndexView(TemplateView):
         kwargs['business_list'] = Business.objects.all()
         kwargs['recommend_list'] = Recommend.objects.all()
         return kwargs
+
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         if request.GET.get('position', '') == '1':
@@ -30,7 +30,6 @@ class IndexView(TemplateView):
             context['business_list'] = context['business_list'].filter(position=2)
             context['recommend_list'] = context['recommend_list'].filter(business__position=2)
             return self.render_to_response(context)
-
 
         def search(q):
             foodlist = Food.objects.filter(name__icontains=q).distinct()
@@ -49,7 +48,6 @@ class IndexView(TemplateView):
         return self.render_to_response(context)
 
 
-
 class APIBannerListView(generics.ListAPIView):
     """
     Return the banner list
@@ -59,8 +57,6 @@ class APIBannerListView(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
 
-
-
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
@@ -68,5 +64,3 @@ def api_root(request, format=None):
         'business': reverse('business_list_api', request=request, format=format),
         'food': reverse('food_list_api', request=request, format=format),
     })
-
-

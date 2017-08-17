@@ -27,14 +27,14 @@
         </div>
     </div>
 </article>
+
 <article>
-    <div class="inbody2-1">
-        <div class="dingdan">
-            <p>订单信息</p>
+    <div class="order-body">
+        <div class="order-inf">
+            <span>预约信息</span>
         </div>
-        <hr>
-        <div class="ddxx">
-            <div class="weiding">
+        <div class="order-list">
+            <div class="order-doing">
                 <a class="but {% if not request.GET.s or request.GET.s == 'now' %}aactive{% endif %}"
                    href="?s=now">进行中</a>
                 {% if not request.GET.s or request.GET.s == 'now' %}
@@ -48,14 +48,15 @@
                     {% endfor %}
                 {% endif %}
             </div>
-
-            <div class="yiding">
+            <div class="order-done">
                 <a class="but {% if request.GET.s == 'history' %}aactive{% endif %}" href="?s=history">已完成</a>
                 {% if not request.GET.s or request.GET.s == 'now' %}
                     {% for order in user.get_now_order_list %}
-                    <p>
-                        <button class="button1" type="button" onclick="doneorder({{ order.pk }})" style="cursor: pointer">已取餐</button>
-                    </p>
+                        <p>
+                            <button class="button1" type="button" onclick="doneorder({{ order.pk }})"
+                                    style="cursor: pointer">已取餐
+                            </button>
+                        </p>
                     {% endfor %}
                 {% endif %}
                 {% if request.GET.s == 'history' %}
@@ -64,86 +65,67 @@
                     {% endfor %}
                 {% endif %}
             </div>
-            <hr>
         </div>
-        <hr>
     </div>
-    <hr>
 </article>
+
 <article>
-    <div class="inbody3-1">
-        <ul class="inbody3-2">
-            <li class="tu1">
-                <div class="wdsc">
-                    <a class="choose" style="width: 100%" href="#">
-                        <div class="aa">
-                            <a href="{% url 'mycollect' %}">我的收藏</a>
-                            <span><a href="{% url 'mycollect' %}">></a></span>
-                        </div>
-                    </a>
-                    <hr>
-                </div>
-            </li>
-            <li class="tu1">
-                <div class="wdsc">
-                    <a class="choose" href="#">
-                        <div class="aa">
-                            <a href="{% url 'mycomment' %}">我的评价</a>
-                            <span><a href="{% url 'mycomment' %}">></a></span>
-                        </div>
-                    </a>
-                    <hr>
-                </div>
-
-            </li>
-            <li class="tu1">
-                <div class="wdsc">
-                    <a class="choose" href="#">
-                        <div class="aa">
-                            <a href="{% url 'myvouchers' %}">我的礼券</a>
-                            <span><a href="{% url 'myvouchers' %}">></a></span>
-                        </div>
-                    </a>
-                    <hr>
-                </div>
-            </li>
-            <li class="tu1">
-                <div class="wdsc">
-                    <a class="choose" href="#">
-                        <div class="aa">
-                            <a href="{% url 'about' %}">关于我们</a>
-                            <span><a href="{% url 'about' %}">></a></span>
-                        </div>
-                    </a>
-                    <hr>
-                </div>
-
-            </li>
-            <li class="tu1">
-                <div class="wdsc">
-                    <a class="choose" href="#">
-                        <div class="aa">
-                            <a href="{% url 'agree' %}">使用协议</a>
-                            <span><a href="{% url 'agree' %}">></a></span>
-                        </div>
-                    </a>
-                    <hr>
-                </div>
-            </li>
-        </ul>
-    </div>
-</article>
+	     <div class="order-choose">
+			 <ul class="order-ul">
+				 <div class="order-total">
+				 	<a href="{% url 'mycollect' %}" class="order-a">
+						 <li class="order-li">
+							 <img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E6%94%B6%E8%97%8F.png width="24px" height="24px">
+						 	<span class="wz1">我的收藏</span><span class="tb1">></span>
+						 </li>
+				 	</a>
+				 </div>
+				 <div class="order-total">
+					 <a href="{% url 'mycomment' %}" class="order-a">
+                 		<li class="order-li">
+							<img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E8%AF%84%E4%BB%B7.png" width="24px" height="24px">
+					 	 	<span class="wz1">我的评价</span><span class="tb1">></span>
+				 		</li>
+					 </a>
+				 </div>
+				 <div class="order-total">
+					 <a href="{% url 'myvouchers' %}" class="order-a">
+						 <li class="order-li">
+					 		<img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E7%A4%BC%E5%88%B8.png" width="24px" height="24px">
+					 		<span class="wz1">我的礼券</span><span class="tb1">></span>
+					 	</li>
+				 	</a>
+				 </div>
+				 <div class="order-total">
+				 	<a href="{% url 'about' %}" class="order-a">
+						 <li class="order-li">
+							 <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC.png" width="24px" height="24px">
+					  		<span class="wz1">关于我们</span><span class="tb1">></span>
+					 	</li>
+				 	</a>
+				 </div>
+				 <div class="order-total">
+				 	<a href="{% url 'agree' %}" class="order-a">
+						 <li class="order-li">
+							 <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%8D%8F%E8%AE%AE.png" width="24px" height="24px">
+							<span class="wz1">使用协议</span><span class="tb1">></span>
+					 	</li>
+				 	</a>
+				 </div>
+		 </ul>
+		</div>
+	</article>
 
 <script>
 
     function doneorder(id) {
-        window.location.href="{% url 'orderdone' %}?id="+ id;
+        window.location.href = "{% url 'orderdone' %}?id=" + id;
     }
 
     {% if not request.user.is_authenticated %}
-    $(document).ready(function () {
-        window.location.href="{{ auth_url|safe }}";
-    });
+        $(document).ready(function () {
+            window.location.href = "{{ auth_url|safe }}";
+        });
     {% endif %}
 </script>
 
