@@ -1,15 +1,9 @@
 from django.views.generic import TemplateView
 
+
 class MycollectView(TemplateView):
     '''
     我的收藏
-    '''
-    template_name = 'utils/underbuild.html'
-
-
-class MycommentView(TemplateView):
-    '''
-    我的评价
     '''
     template_name = 'utils/underbuild.html'
 

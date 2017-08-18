@@ -2,21 +2,23 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta id="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1,  user-scalable=no,minimal-ui"
           name="viewport">
-    <title>用户个人界面</title>
+    <meta name="format-detection" content="telephone=no">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/userstyle.css' %}">
     <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 
 <body>
-
 <article>
     <div class="inbody1">
         <div class="inbody1-1">
-            <img class="yuan" src="{{ user.avatar }}">
+            <img class="userimg" src="{{ user.avatar }}">
         </div>
         <div class="inbody1-2">
             <ul>
@@ -24,6 +26,22 @@
                 <li>性别：{{ user.oauthqqprofile.get_sex_display }}</li>
                 <li>学号：{{ user.oauthqqprofile.stuid }}</li>
             </ul>
+        </div>
+    </div>
+</article>
+
+<article>
+    <div class="order-body">
+        <div class="order-inf">
+            <span>预约信息</span>
+        </div>
+        <div class="order-list">
+            <div class="order-doing">
+                <a class="but" href="#">进行中</a>
+            </div>
+            <div class="order-done">
+                <a class="but" href="#">已完成</a>
+            </div>
         </div>
     </div>
 </article>
@@ -70,51 +88,47 @@
 </article>
 
 <article>
-	     <div class="order-choose">
-			 <ul class="order-ul">
-				 <div class="order-total">
-				 	<a href="{% url 'mycollect' %}" class="order-a">
-						 <li class="order-li">
-							 <img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E6%94%B6%E8%97%8F.png width="24px" height="24px">
-						 	<span class="wz1">我的收藏</span><span class="tb1">></span>
-						 </li>
-				 	</a>
-				 </div>
-				 <div class="order-total">
-					 <a href="{% url 'mycomment' %}" class="order-a">
-                 		<li class="order-li">
-							<img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E8%AF%84%E4%BB%B7.png" width="24px" height="24px">
-					 	 	<span class="wz1">我的评价</span><span class="tb1">></span>
-				 		</li>
-					 </a>
-				 </div>
-				 <div class="order-total">
-					 <a href="{% url 'myvouchers' %}" class="order-a">
-						 <li class="order-li">
-					 		<img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E7%A4%BC%E5%88%B8.png" width="24px" height="24px">
-					 		<span class="wz1">我的礼券</span><span class="tb1">></span>
-					 	</li>
-				 	</a>
-				 </div>
-				 <div class="order-total">
-				 	<a href="{% url 'about' %}" class="order-a">
-						 <li class="order-li">
-							 <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC.png" width="24px" height="24px">
-					  		<span class="wz1">关于我们</span><span class="tb1">></span>
-					 	</li>
-				 	</a>
-				 </div>
-				 <div class="order-total">
-				 	<a href="{% url 'agree' %}" class="order-a">
-						 <li class="order-li">
-							 <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%8D%8F%E8%AE%AE.png" width="24px" height="24px">
-							<span class="wz1">使用协议</span><span class="tb1">></span>
-					 	</li>
-				 	</a>
-				 </div>
-		 </ul>
-		</div>
-	</article>
+    <div class="order-choose">
+        <ul class="order-ul">
+            <div class="order-total">
+                <a href="{% url 'mycollect' %}" class="order-a">
+                    <li class="order-li">
+                        <img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E6%94%B6%E8%97%8F.png"
+                             width="24px" height="24px">
+                        <span class="wz1">我的收藏</span><span class="tb1">></span>
+                    </li>
+                </a>
+            </div>
+            <div class="order-total">
+                <a href="{% url 'myvouchers' %}" class="order-a">
+                    <li class="order-li">
+                        <img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E7%A4%BC%E5%88%B8.png"
+                             width="24px" height="24px">
+                        <span class="wz1">我的礼券</span><span class="tb1">></span>
+                    </li>
+                </a>
+            </div>
+            <div class="order-total">
+                <a href="{% url 'about' %}" class="order-a">
+                    <li class="order-li">
+                        <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC.png"
+                             width="24px" height="24px">
+                        <span class="wz1">关于我们</span><span class="tb1">></span>
+                    </li>
+                </a>
+            </div>
+            <div class="order-total">
+                <a href="{% url 'agree' %}" class="order-a">
+                    <li class="order-li">
+                        <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%8D%8F%E8%AE%AE.png" width="24px" height="24px">
+                        <span class="wz1">使用协议</span><span class="tb1">></span>
+                    </li>
+                </a>
+            </div>
+        </ul>
+    </div>
+</article>
+
 
 <script>
 

@@ -13,10 +13,6 @@ class User(AbstractUser):
     truename = models.CharField(max_length=30, blank=True, verbose_name="真实姓名")
 
     def get_now_order_list(self):
-        '''
-        Retrive the orders which is accepted
-        :return: order list
-        '''
         return self.myorder.all().filter(is_accept=True, is_done=False)
 
     def get_done_order_list(self):
@@ -28,8 +24,10 @@ class User(AbstractUser):
         super(User, self).save()
 
     def get_businessuser_now_order(self):
-
-        return self.business.order_list.orders.all().order_by('-date_create')
+        try:
+            return self.business.order_list.orders.all().order_by('-date_create')
+        except:
+            return None
 
 
 class Accesstoken(models.Model):

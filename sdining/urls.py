@@ -52,7 +52,6 @@ urlpatterns = [
     url(r'^account/logout/$', accountviews.LogoutView.as_view(), name='logout'),
 
     url(r'^indev/collect/$', indeviews.MycollectView.as_view(), name='mycollect'),
-    url(r'^indev/comment/$', indeviews.MycommentView.as_view(), name='mycomment'),
     url(r'^indev/vouchers/$', indeviews.Myvouchers.as_view(), name='myvouchers'),
 
 ]

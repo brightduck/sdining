@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'reversion',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,7 @@ CACHES = {
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 TEMPLATE_BUTTON_URI = 'http://106.15.195.58/ucenter/'
+
+# CRONJOBS = [
+#     ('* * * * *', 'sdiningview.cron.my_schedule_job')
+# ]
