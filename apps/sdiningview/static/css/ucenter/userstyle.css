@@ -1,152 +1,205 @@
-body
-{
-	margin:0;
-	padding:0;
-	overflow-x: hidden;
-	width:100%;
-	height:100%;
-}
-html
-{
-	overflow: hidden;
-}
-.inbody1
-{
-	display:flex;
-	flex-direction: row;
-	background-color:dodgerblue;
-	color:white;
-	padding-left:15%;
-	height:100px;
-	padding-top:10px;
-}
-.inbody1-1
-{
-flex:1 1 50%;
-text-align: center;
-}
-.inbody1-1 img
-{
-	width:85px;
-	height:85px;
-}
-.userimg
-{
-	border-radius: 200%;
-	margin-left:-70px;
-}
-.inbody1-2
-{
-	flex:1 1 50%;
-    display:flex;
-	align-items: center;
-	justify-content: flex-start;
-	margin-left:-80px;
-}
-.inbody1-2 li
-{
-	list-style-type: none;
-}
-.order-body
-{
-	margin:0px;
-	border-bottom:1px solid rgba(170,113,196,0.13);
-	height:50vh;
-}
-.order-inf
-{
-	border-bottom:1px solid rgba(170,113,196,0.13);
-   justify-content: center;
-	height:40px;
-	display:flex;
-	align-items: center;
-}
-.order-inf span
-{
-	text-align: center;
-	font-size:16px;
-	font-family:"YouYan";
-}
-.order-list
-{
-	display:flex;
-	border-bottom:1px solid rgba(170,113,196,0.13);
 
-}
-.order-doing
-{
-	flex:1 1 50%;
-	border-right:2px solid rgba(170,113,196,0.13);
-	height:40px;
-
-}
-.order-done
-{
-	flex:1 1 50%;
-	height:40px;
-}
-.but
-{
-	border-bottom:1px solid rgba(170,113,196,0.13);
-	text-decoration: none;
-	display:block;
-	color:black;
-	height:40px;
-	display:flex;
-	align-items: center;
-	justify-content: center;
-}
-.but:hover
-{
-	background-color:rgba(83,97,53,0.21);
-	color:white;
-	text-decoration: none;
-}
-.order-done span
-{
-	font-size:16px;
-	border:none;
-}
-.order-total
-{
-
-
-}
-.order-li
-{
-	height:35px;
-	list-style-type: none;
-	border-bottom:1px solid rgba(170,113,196,0.13);
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
 }
 
-.order-a
-{
-	height:45px;
-	text-decoration: none;
-	display:block;
-	color:black;
-	margin-left:-33px;
-	padding-top:10px;
+.inbody1 {
+    display: flex;
+    flex-direction: row;
+    background-color: dodgerblue;
+    color: white;
+    padding-left: 15%;
+    height: 100px;
+    padding-top: 10px;
 }
-.order-a span
-{
-	disply:flex;
-	align-items: center;
+
+.inbody1-1 {
+    flex: 1 1 50%;
+    text-align: center;
 }
-.order-a:hover
-{
-	background-color:rgba(83,97,53,0.21);
-	color:white;
-	text-decoration: none;
+
+.inbody1-1 img {
+    width: 85px;
+    height: 85px;
 }
-.tb1
-{
-	float:right;
-	margin-right:30px;
+
+.userimg {
+    border-radius: 200%;
+    margin-left: -70px;
 }
-.wz1
-{
-	margin-left:5px;
+
+.inbody1-2 {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: -80px;
+}
+
+.inbody1-2 li {
+    list-style-type: none;
+}
+
+.order-body {
+    border-bottom: 1px solid rgba(170, 113, 196, 0.13);
+    height: 50vh;
+}
+
+.order-inf {
+    border-bottom: 1px solid rgba(170, 113, 196, 0.13);
+    justify-content: center;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.order-inf span {
+    text-align: center;
+    font-size: 16px;
+    font-family: "YouYan";
+}
+
+.order-list {
+    display: flex;
+    border-bottom: 1px solid rgba(170, 113, 196, 0.13);
+
+}
+
+.order-doing {
+    flex: 1 1 50%;
+    border-right: 2px solid rgba(170, 113, 196, 0.13);
+    height: 40px;
+}
+
+.order-done {
+    flex: 1 1 50%;
+    height: 40px;
+}
+
+.but {
+    border-bottom: 1px solid rgba(170, 113, 196, 0.13);
+    text-decoration: none;
+    display: block;
+    color: black;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.but:hover {
+    background-color: rgba(83, 97, 53, 0.21);
+    color: white;
+    text-decoration: none;
+}
+
+.order-done span {
+    font-size: 16px;
+    border: none;
+}
+
+.order-div {
+    display: flex;
+    margin-top: 8px;
+}
+
+.order-content-z {
+    flex: 1 1 50%;
+    text-align: center;
+}
+
+.order-content-y {
+    flex: 1 1 50%;
+    text-align: center;
+}
+
+.order-content-y button {
+    border: none;
+    font-size: 14px;
+    background-color: rgba(170, 113, 196, 0.13);
+    width: 60px;
+    height: 30px;
+}
+
+.order-content-y button:hover {
+    background-color: rgba(17, 27, 40, 0.24);
+    color: white;
+}
+
+.order-pj-z {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.order-time {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.order-pj-y {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.order-pj-y button {
+    border: none;
+    font-size: 14px;
+    background-color: rgba(170, 113, 196, 0.13);
+    width: 60px;
+    height: 30px;
+}
+
+.order-pj-y button:hover {
+    background-color: rgba(17, 27, 40, 0.24);
+    color: white;
+}
+
+.order-choose {
+    margin-top: -15px;
+}
+
+.order-li {
+    display: flex;
+    border-bottom: 1px solid rgba(170, 113, 196, 0.13);
+    height: 40px;
+}
+
+.order-a {
+    height: 40px;
+    text-decoration: none;
+    display: block;
+    color: black;
+    margin-left: -33px;
+}
+
+.order-a:hover {
+    background-color: rgba(83, 97, 53, 0.21);
+    color: white;
+    text-decoration: none;
+}
+
+.t1 {
+    flex: 1 1 2%;
+    padding-top: 7px;
+}
+
+.t2 {
+    flex: 1 1 88%;
+    padding-top: 8px;
+}
+
+.t3 {
+    flex: 1 1 10%;
+    padding-top: 7px;
+    text-align: end;
+}
+
+.t3 span {
+    margin-right: 15px;
 }
 
 .aactive {

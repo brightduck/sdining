@@ -32,6 +32,7 @@ class BusinessAdmin:
                      'floor',
                      'image',
                      'average',
+                     'rank',
                      'num_like')
         ),
         Side(
@@ -41,11 +42,6 @@ class BusinessAdmin:
         ),
     )
 
-    def queryset(self):
-        qs = super(BusinessAdmin, self).queryset()
-        if not self.user.is_superuser:
-            qs = qs.filter(user=self.user)
-        return qs
 
 class FoodAdmin:
     list_display = (
@@ -62,7 +58,7 @@ class FoodAdmin:
                      'business',
                      'name',
                      'price',
-                     'image',)
+                     'image', )
         ),
         Side(
             Fieldset('状态',
@@ -71,14 +67,10 @@ class FoodAdmin:
         ),
     )
 
-    def queryset(self):
-        qs = super(FoodAdmin, self).queryset()
-        if not self.user.is_superuser:
-            pass
-        return qs
 
 class SpecialAdmin:
     pass
+
 
 class AuthapplyAdmin:
     list_display = (
@@ -98,15 +90,15 @@ class AuthapplyAdmin:
 
     form_layout = (
         Main(
-          Fieldset(
-              '申请内容',
-              'user',
-              'name',
-              'position',
-              'floor',
-              'type',
-              'date_apply'
-          ),
+            Fieldset(
+                '申请内容',
+                'user',
+                'name',
+                'position',
+                'floor',
+                'type',
+                'date_apply'
+            ),
         ),
         Side(
             Fieldset(
@@ -115,6 +107,7 @@ class AuthapplyAdmin:
             )
         )
     )
+
 
 xadmin.site.register(Business, BusinessAdmin)
 xadmin.site.register(Food, FoodAdmin)

@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load mvctags %}
 
 <!doctype html>
 <html lang="en">
@@ -12,12 +13,25 @@
     <!-- juqery -->
     <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
 
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--css-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/index/common_css.css' %}">
     <link rel="stylesheet" href="{% static 'css/business/detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/business/iconfont.css' %}">
+    <style>
+        .icon {
+            font-size: 2.1em;
+        }
 
+        .icon:hover {
+            cursor: pointer;
+        }
+
+        .is_collect {
+            color: #d61e06;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,6 +44,8 @@
             <div class="col-xs-6 text-center">
                 <span>{{ business.name }}</span>
             </div>
+            <i class="icon iconfont icon-shoucang pull-right {% if user|is_collect:business %}is_collect{% endif %}"
+               onclick="collect(bpk={{ business.pk }}, tag=this)"></i>
         </div>
     </header>
 
@@ -67,6 +83,28 @@
 </div>
 
 <script>
+    function collect(bpk, tag) {
+        if ($(tag).hasClass('is_collect')) {
+            $(tag).removeClass('is_collect');
+        } else {
+            $(tag).addClass('is_collect');
+        }
+
+        $.post('{% url 'mycollect' %}', {
+                bpk: bpk,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            function (data) {
+                if (data['status'] === 2) {
+                    alert("取消收藏成功");
+                } else if (data['status'] === 1) {
+                    alert("收藏成功");
+                } else {
+                    alert("出错啦");
+                }
+            },
+            "json")
+    }
 
     function submitorder() {
         numtag = [];
@@ -74,8 +112,12 @@
             numtag.push($('#foodnum{{ food.pk }}'));
         {% endfor %}
         let s = 0;
-        numtag.forEach((t) => { if(parseInt(t.text()) === 1){s += 1;} });
-        if (s === 0){
+        numtag.forEach((t) => {
+            if (parseInt(t.text()) === 1) {
+                s += 1;
+            }
+        });
+        if (s === 0) {
             alert("您还未预约食物");
             return;
         }

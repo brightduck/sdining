@@ -13,21 +13,30 @@ class User(AbstractUser):
     truename = models.CharField(max_length=30, blank=True, verbose_name="真实姓名")
 
     def get_now_order_list(self):
-        return self.myorder.all().filter(is_accept=True, is_done=False)
+        try:
+            return self.myorder.all().filter(is_accept=True, is_done=False)
+        except:
+            return None
 
     def get_done_order_list(self):
         return self.myorder.all().filter(is_accept=True, is_done=True)
 
-    def save(self, *args, **kwargs):
-        if not self.email:
-            self.email = '{}@qq.com'.format(self.username)
-        super(User, self).save()
+    def get_collect_list(self):
+        try:
+            return self.mycollect.business.all()
+        except:
+            return None
 
     def get_businessuser_now_order(self):
         try:
             return self.business.order_list.orders.all().order_by('-date_create')
         except:
             return None
+
+    def save(self, *args, **kwargs):
+        if not self.email:
+            self.email = '{}@qq.com'.format(self.username)
+        super(User, self).save()
 
 
 class Accesstoken(models.Model):
@@ -49,5 +58,3 @@ class OAuthQQProfile(models.Model):
     class Meta:
         verbose_name = "QQ个人信息"
         verbose_name_plural = verbose_name
-
-

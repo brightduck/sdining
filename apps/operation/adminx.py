@@ -1,7 +1,7 @@
 import xadmin
 from xadmin.layout import Fieldset, Main, Side
 
-from .models import Order, AbnormalOrder, BusinessOrderList
+from .models import Order, AbnormalOrder, BusinessOrderList, UserCollect
 
 
 class OrderAdmin:
@@ -31,7 +31,9 @@ class OrderAdmin:
                 "基本信息",
                 'user',
                 'food',
-                'comment'
+                'comment',
+                'trank',
+                'prank'
             ),
             Fieldset(
                 "时间",
@@ -46,15 +48,11 @@ class OrderAdmin:
                 'is_done',
                 'is_abnormal',
                 'is_push',
+                'is_comment',
             )
         )
     )
 
-    def queryset(self):
-        qs = super(OrderAdmin, self).queryset()
-        if not self.user.is_superuser:
-            qs = qs.filter(food__business__user=self.user)
-        return qs
 
 class AbnormalOrderAdmin:
     pass
@@ -63,6 +61,12 @@ class AbnormalOrderAdmin:
 class BusinessOrderListAdmin:
     pass
 
+
+class UserCollectAdmin:
+    pass
+
+
 xadmin.site.register(Order, OrderAdmin)
 xadmin.site.register(AbnormalOrder, AbnormalOrderAdmin)
 xadmin.site.register(BusinessOrderList, BusinessOrderListAdmin)
+xadmin.site.register(UserCollect, UserCollectAdmin)

@@ -20,11 +20,14 @@ class Order(models.Model):
     comment = models.IntegerField(choices=((1, "挺好"), (2, "一般"), (3, "糟糕")), default=2, verbose_name="订单评价")
     date_create = models.DateTimeField(blank=True, null=True, verbose_name="创建时间")
     date_done = models.DateTimeField(blank=True, null=True, verbose_name="完成时间")
+    trank = models.IntegerField(default=0, verbose_name="口味评分")
+    prank = models.IntegerField(default=0, verbose_name="价格评分")
 
     is_accept = models.BooleanField(default=False, verbose_name="订单是否接受")
     is_done = models.BooleanField(default=False, verbose_name='订单是否完成')
     is_abnormal = models.BooleanField(default=False, verbose_name="订单是否是异常订单")
     is_push = models.BooleanField(default=False, verbose_name="订单是否已推送")
+    is_comment = models.BooleanField(default=False, verbose_name="是否评价")
 
     def get_openid(self):
         return self.food.business.user.username
@@ -34,7 +37,6 @@ class Order(models.Model):
             obj, created = BusinessOrderList.objects.get_or_create(business=self.food.business)
             obj.orders.add(self)
         except Exception as e:
-            # print(e)
             pass
 
     def remove_from_order_list(self):
@@ -42,7 +44,6 @@ class Order(models.Model):
             obj = BusinessOrderList.objects.get(business=self.food.business)
             obj.orders.remove(self)
         except Exception as e:
-            # print(e)
             pass
 
     def save(self, force_insert=False, force_update=False, using=None,
@@ -63,7 +64,6 @@ class Order(models.Model):
                 wrapper_order_list(order_obj=self)
             except:
                 pass
-
 
     def get_business_user(self):
         return self.food.business.user
@@ -113,6 +113,25 @@ class BusinessOrderList(models.Model):
 
     class Meta:
         verbose_name = "商家订单列表"
+        verbose_name_plural = verbose_name
+
+
+class UserCollect(models.Model):
+    user = models.OneToOneField(User, related_name='mycollect', verbose_name="用户")
+    business = models.ManyToManyField(Business, verbose_name="商家")
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if not self.user.usertype:
+            raise ValidationError({'user': '商家用户无法收藏'})
+
+        super(UserCollect, self).save()
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = "用户收藏"
         verbose_name_plural = verbose_name
 
 

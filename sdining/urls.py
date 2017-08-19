@@ -26,7 +26,9 @@ urlpatterns = [
     url(r'^ucenter/about/$', ucenterviews.AboutmeView.as_view(), name='about'),
     url(r'^ucenter/agree/$', ucenterviews.AgreeView.as_view(), name='agree'),
     url(r'^ucenter/done/$', ucenterviews.order_is_done, name='orderdone'),
+    url(r'^ucenter/collect/$', operationviews.MycollectView.as_view(), name='mycollect'),
     url(r'^ucenter/business/$', ucenterviews.BusinessUcenterView.as_view(), name='businessucenterindex'),
+    url(r'^ucenter/comment/(?P<opk>[0-9]+)/$', operationviews.comment, name='comment'),
     url(r'^ucenter/business/change/$', ucenterviews.changeopen, name='changestatus'),
     url(r'^ucenter/business/aord/$', ucenterviews.accept_or_deny, name='accept_or_deny'),
 
@@ -51,7 +53,6 @@ urlpatterns = [
     url(r'^account/auth/$', accountviews.AuthView.as_view(), name='auth'),
     url(r'^account/logout/$', accountviews.LogoutView.as_view(), name='logout'),
 
-    url(r'^indev/collect/$', indeviews.MycollectView.as_view(), name='mycollect'),
     url(r'^indev/vouchers/$', indeviews.Myvouchers.as_view(), name='myvouchers'),
 
 ]

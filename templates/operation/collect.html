@@ -1,0 +1,47 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=600px">
+    <meta name="format-detection" content="telephone=no">
+    <title>智慧食堂</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/index/common_css.css' %}">
+    <link href="{% static 'css/index/main.css' %}" rel="stylesheet" type="text/css">
+    <style>
+        .header {
+            text-align: center;
+            height: 5vh;
+            line-height: 5vh;
+        }
+    </style>
+</head>
+
+<body>
+<h2 class="header">我的收藏</h2>
+<hr size=3px width=100% color=black>
+{% for business in user.get_collect_list %}
+    <a href="{% url 'businessdetail' business.pk %}">
+        <div class="show row ">
+            <div class="col-xs-3">
+                <img src="/media/{{ business.image }}" alt="">
+            </div>
+            <div class="col-xs-9">
+                <h4>{{ business.name }}<em style="float:right; font-style:normal;">综合评分：{{ business.rank }}</em></h4>
+                <span>
+        <p>特色菜：{% for food in business.special.foods.all %}
+            {{ food.name }}
+        {% empty %}
+            {% for food in business.foodlist.all|slice:"3" %}
+                {{ food.name }}
+            {% endfor %}
+        {% endfor %}</p>
+        <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
+</span>
+            </div>
+        </div>
+    </a>
+    <hr>
+{% endfor %}
+</body>

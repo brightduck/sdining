@@ -14,6 +14,7 @@ class Business(models.Model):
     image = models.ImageField(upload_to='bimg/%Y/%m/%d', storage=ImgStorage(), blank=True, verbose_name="商家图片")
     average = models.IntegerField(default=10, verbose_name="人均消费")
     num_like = models.IntegerField(default=0, verbose_name="点赞数")
+    rank = models.IntegerField(default=0, verbose_name="综合评价")
 
     is_open = models.BooleanField(default=False, verbose_name="是否接受预约")
 

@@ -2,9 +2,10 @@ from django.http import JsonResponse, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
+from django.shortcuts import render
 
 from business.models import Business, Food
-from .models import Order
+from .models import Order, UserCollect
 
 
 @login_required(login_url='/')
@@ -69,7 +70,7 @@ def removeorder(request):
 
 
 class ShowOrderView(LoginRequiredMixin, TemplateView):
-    login_url = '/'
+    raise_exception = True
 
     template_name = 'operation/order.html'
 
@@ -119,4 +120,53 @@ class ShowOrderView(LoginRequiredMixin, TemplateView):
                 return JsonResponse({'status': 0})
             return JsonResponse({'status': 1})
         else:
+            return JsonResponse({'status': 0})
+
+
+class MycollectView(LoginRequiredMixin, TemplateView):
+    raise_exception = True
+    template_name = 'operation/collect.html'
+
+    def post(self, request):
+        bpk = request.POST.get('bpk', False)
+        try:
+            b = Business.objects.get(pk=bpk)
+        except:
+            return JsonResponse({'status': 0})
+        try:
+            obj = UserCollect.objects.get(user=request.user)
+            print(b)
+            if b in obj.business.all():
+                obj.business.remove(b)
+                return JsonResponse({'status': 2})
+            else:
+                obj.business.add(b)
+                return JsonResponse({'status': 1})
+        except:
+            return JsonResponse({'status': 0})
+
+
+@login_required(login_url='/')
+def comment(request, opk):
+    try:
+        order = request.user.myorder.get(pk=opk)
+    except:
+        return HttpResponseNotFound()
+
+    if not order.is_done:
+        return HttpResponseNotFound()
+
+    if request.method == 'GET':
+        return render(request, 'operation/comment.html', {
+            'order': order
+        })
+    elif request.method == 'POST':
+        trank = request.POST.get('trank', False)
+        prank = request.POST.get('prank', False)
+        try:
+            order.trank, order.prank = trank, prank
+            order.is_comment = True
+            order.save()
+            return JsonResponse({'status': 1})
+        except:
             return JsonResponse({'status': 0})

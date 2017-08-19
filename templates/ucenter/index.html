@@ -9,9 +9,7 @@
           name="viewport">
     <meta name="format-detection" content="telephone=no">
     <title>个人中心</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/userstyle.css' %}">
-    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 
 <body>
@@ -37,94 +35,112 @@
         </div>
         <div class="order-list">
             <div class="order-doing">
-                <a class="but" href="#">进行中</a>
+                <a class="but {% if not request.GET.s or request.GET.s == 'now' %}aactive{% endif %}"
+                   href="?s=now">进行中</a>
             </div>
             <div class="order-done">
-                <a class="but" href="#">已完成</a>
+                <a class="but {% if request.GET.s == 'done' %}aactive{% endif %}" href="?s=done">已完成</a>
             </div>
+        </div>
+        <div class="order-content">
+            {% if not request.GET.s or request.GET.s == 'now' %}
+                {% for order in user.get_now_order_list %}
+                    <div class="order-div">
+                        <div class="order-content-z">
+                            <span>{{ order.food.name }}</span>
+                        </div>
+                        <div class="order-content-y">
+                            <button type="button" style="cursor: pointer" onclick="doneorder({{ order.pk }})">取餐
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if request.GET.s == 'done' %}
+                {% for order in user.get_done_order_list %}
+                    <div class="order-div">
+                        <div class="order-pj-z">
+                            <span>{{ order.food.name }}</span>
+                        </div>
+                        <div class="order-time">
+                            <span>{{ order.date_done }}</span>
+                        </div>
+                        {% if not order.is_comment %}
+                            <div class="order-pj-y">
+                                <button type="button" onclick="window.location.href='{% url 'comment' order.pk %}'">点评
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </article>
 
-<article>
-    <div class="order-body">
-        <div class="order-inf">
-            <span>预约信息</span>
-        </div>
-        <div class="order-list">
-            <div class="order-doing">
-                <a class="but {% if not request.GET.s or request.GET.s == 'now' %}aactive{% endif %}"
-                   href="?s=now">进行中</a>
-                {% if not request.GET.s or request.GET.s == 'now' %}
-                    {% for order in user.get_now_order_list %}
-                        <p>{{ order.food.name }}</p>
-                    {% endfor %}
-                {% endif %}
-                {% if request.GET.s == 'history' %}
-                    {% for order in user.get_done_order_list|slice:"5" %}
-                        <p>{{ order.food.name }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div class="order-done">
-                <a class="but {% if request.GET.s == 'history' %}aactive{% endif %}" href="?s=history">已完成</a>
-                {% if not request.GET.s or request.GET.s == 'now' %}
-                    {% for order in user.get_now_order_list %}
-                        <p>
-                            <button class="button1" type="button" onclick="doneorder({{ order.pk }})"
-                                    style="cursor: pointer">已取餐
-                            </button>
-                        </p>
-                    {% endfor %}
-                {% endif %}
-                {% if request.GET.s == 'history' %}
-                    {% for order in user.get_done_order_list|slice:"5" %}
-                        <p>{{ order.date_done }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</article>
 
 <article>
     <div class="order-choose">
         <ul class="order-ul">
-            <div class="order-total">
-                <a href="{% url 'mycollect' %}" class="order-a">
-                    <li class="order-li">
+            <a href="{% url 'mycollect' %}" class="order-a">
+                <div class="order-li">
+                    <div class="t1">
                         <img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E6%94%B6%E8%97%8F.png"
                              width="24px" height="24px">
-                        <span class="wz1">我的收藏</span><span class="tb1">></span>
-                    </li>
-                </a>
-            </div>
-            <div class="order-total">
-                <a href="{% url 'myvouchers' %}" class="order-a">
-                    <li class="order-li">
+                    </div>
+                    <div class="t2">
+                        <span>我的收藏</span>
+                    </div>
+                    <div class="t3">
+                        <span>></span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="{% url 'myvouchers' %}" class="order-a">
+                <div class="order-li">
+                    <div class="t1">
                         <img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E7%A4%BC%E5%88%B8.png"
                              width="24px" height="24px">
-                        <span class="wz1">我的礼券</span><span class="tb1">></span>
-                    </li>
-                </a>
-            </div>
-            <div class="order-total">
-                <a href="{% url 'about' %}" class="order-a">
-                    <li class="order-li">
+                    </div>
+                    <div class="t2">
+                        <span>我的礼券</span>
+                    </div>
+                    <div class="t3">
+                        <span>></span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="{% url 'about' %}" class="order-a">
+                <div class="order-li">
+                    <div class="t1">
                         <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC.png"
                              width="24px" height="24px">
-                        <span class="wz1">关于我们</span><span class="tb1">></span>
-                    </li>
-                </a>
-            </div>
-            <div class="order-total">
-                <a href="{% url 'agree' %}" class="order-a">
-                    <li class="order-li">
+                    </div>
+                    <div class="t2">
+                        <span>关于我们</span>
+                    </div>
+                    <div class="t3">
+                        <span>></span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="{% url 'agree' %}" class="order-a">
+                <div class="order-li">
+                    <div class="t1">
                         <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%8D%8F%E8%AE%AE.png" width="24px" height="24px">
-                        <span class="wz1">使用协议</span><span class="tb1">></span>
-                    </li>
-                </a>
-            </div>
+                    </div>
+                    <div class="t2">
+                        <span>使用协议</span>
+                    </div>
+                    <div class="t3">
+                        <span>></span>
+                    </div>
+                </div>
+            </a>
+
         </ul>
     </div>
 </article>

@@ -49,3 +49,12 @@ def crenumlist(value):
 @register.filter
 def is_business_or_food(obj):
     return isinstance(obj, Business)
+
+
+@register.filter
+def is_collect(user, business):
+    try:
+        if business in user.mycollect.business.all():
+            return True
+    except:
+        return False
