@@ -134,8 +134,7 @@ class MycollectView(LoginRequiredMixin, TemplateView):
         except:
             return JsonResponse({'status': 0})
         try:
-            obj = UserCollect.objects.get(user=request.user)
-            print(b)
+            obj, is_created = UserCollect.objects.get_or_create(user=request.user)
             if b in obj.business.all():
                 obj.business.remove(b)
                 return JsonResponse({'status': 2})
