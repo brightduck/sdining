@@ -152,6 +152,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 TEMPLATE_BUTTON_URI = 'http://106.15.195.58/ucenter/'
 
-# CRONJOBS = [
-#     ('* * * * *', 'sdiningview.cron.my_schedule_job')
-# ]
+CRONJOBS = [
+    ('0 1 * * *', 'cronjob.cron.changeavatar')
+]
