@@ -153,5 +153,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 TEMPLATE_BUTTON_URI = 'http://106.15.195.58/ucenter/'
 
 CRONJOBS = [
-    ('0 1 * * *', 'cronjob.cron.changeavatar')
+    ('0 1 * * *', 'cronjob.changeavatar.changeavatar'),
+    ('0 1 * * *', 'cronjob.check_order.check_order'),
 ]

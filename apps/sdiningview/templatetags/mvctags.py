@@ -27,14 +27,14 @@ def get_banner():
 @register.simple_tag
 def get_pending_order_list(business_obj):
     try:
-        return Order.objects.filter(food__business=business_obj, is_accept=False)
+        return Order.objects.filter(food__business=business_obj, is_accept=False, is_abnormal=False)
     except:
         return None
 
 @register.simple_tag
 def get_done_order_list(business_obj):
     try:
-        return Order.objects.filter(food__business=business_obj, is_done=True)[:5]
+        return Order.objects.filter(food__business=business_obj, is_done=True, is_abnormal=False)[:5]
     except:
         return None
 

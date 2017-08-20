@@ -106,7 +106,6 @@ class ShowOrderView(LoginRequiredMixin, TemplateView):
                 orderdic = request.session['order']
             except:
                 return HttpResponseNotFound("您还未点餐")
-            print(orderdic)
             try:
                 for fpk in orderdic.keys():
                     if fpk == 'business':

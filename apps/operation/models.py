@@ -48,18 +48,15 @@ class Order(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        if self.is_accept and not self.is_done:
+        if self.is_accept and not self.is_done and not self.is_abnormal:
             self.date_create = timezone.now()
             super(Order, self).save()
             self.save_to_business_order_list()
         if self.is_done:
             self.date_done = timezone.now()
             self.remove_from_order_list()
-        if self.is_abnormal:
-            self.abnormalorder.order = self
-            self.abnormalorder.save()
         super(Order, self).save()
-        if not self.is_accept and self.is_push == False:
+        if not self.is_accept and not self.is_push :
             try:
                 wrapper_order_list(order_obj=self)
             except:
@@ -97,7 +94,7 @@ class AbnormalOrder(models.Model):
         super(AbnormalOrder, self).save()
 
     def __str__(self):
-        return self.order.date_create
+        return self.order
 
     class Meta:
         verbose_name = "异常订单"

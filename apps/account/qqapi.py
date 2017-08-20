@@ -109,5 +109,3 @@ class OAuthQQ(object):
         response = request.urlopen(url, data, context=self.context)
         result = json.load(response)
         return result
-
-

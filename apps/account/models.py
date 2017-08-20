@@ -14,12 +14,12 @@ class User(AbstractUser):
 
     def get_now_order_list(self):
         try:
-            return self.myorder.all().filter(is_accept=True, is_done=False)
+            return self.myorder.all().filter(is_accept=True, is_done=False, is_abnormal=False)
         except:
             return None
 
     def get_done_order_list(self):
-        return self.myorder.all().filter(is_accept=True, is_done=True)
+        return self.myorder.all().filter(is_accept=True, is_done=True, is_abnormal=False)
 
     def get_collect_list(self):
         try:
