@@ -80,6 +80,7 @@ class Special(models.Model):
         verbose_name = "特色菜"
         verbose_name_plural = verbose_name
 
+
 class Authapply(models.Model):
     '''
     For Business Auth Apply
@@ -100,8 +101,8 @@ class Authapply(models.Model):
             self.user.save()
             try:
                 Business.objects.create(user=self.user, name=self.name, position=self.position,
-                                                  floor=self.floor,
-                                                  type=self.type)
+                                        floor=self.floor,
+                                        type=self.type)
             except:
                 pass
         super(Authapply, self).save()
