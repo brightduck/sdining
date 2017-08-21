@@ -2,7 +2,7 @@ import time
 
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.conf import settings
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout
 from django.views.generic.base import View, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
@@ -33,11 +33,6 @@ def try_openid(request, openid):
 
 
 def qq_check(request):
-    """
-    for ucenter
-    :param request: request object
-    :return: to ucenter router
-    """
     code = request.GET.get('code')
     oauth_qq = OAuthQQ(settings.APPID, settings.APPKEY, settings.REDIRECT_URI)
     try:

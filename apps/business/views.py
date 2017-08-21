@@ -58,11 +58,6 @@ class APIBusinessListView(generics.ListAPIView):
 
 
 class BusinessIsOwnerOrSuperuserOrReadOnly(permissions.BasePermission):
-    '''
-    For APIBusinessDetailView
-    A simple permission control for BusinessAPI
-    '''
-
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True

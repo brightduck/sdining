@@ -36,14 +36,14 @@ class Order(models.Model):
         try:
             obj, created = BusinessOrderList.objects.get_or_create(business=self.food.business)
             obj.orders.add(self)
-        except Exception as e:
+        except:
             pass
 
     def remove_from_order_list(self):
         try:
             obj = BusinessOrderList.objects.get(business=self.food.business)
             obj.orders.remove(self)
-        except Exception as e:
+        except:
             pass
 
     def save(self, force_insert=False, force_update=False, using=None,
@@ -56,7 +56,7 @@ class Order(models.Model):
             self.date_done = timezone.now()
             self.remove_from_order_list()
         super(Order, self).save()
-        if not self.is_accept and not self.is_push :
+        if not self.is_accept and not self.is_push:
             try:
                 wrapper_order_list(order_obj=self)
             except:
@@ -94,7 +94,10 @@ class AbnormalOrder(models.Model):
         super(AbnormalOrder, self).save()
 
     def __str__(self):
-        return self.order
+        if self.order.date_create:
+            return '{} 预定 {} at {}'.format(self.order.user.username, self.order.food.name, self.order.date_create.strftime('%m-%d %H:%I'))
+        else:
+            return '{} 预定 {}'.format(self.order.user.username, self.order.food.name)
 
     class Meta:
         verbose_name = "异常订单"
@@ -130,5 +133,3 @@ class UserCollect(models.Model):
     class Meta:
         verbose_name = "用户收藏"
         verbose_name_plural = verbose_name
-
-

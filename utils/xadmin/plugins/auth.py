@@ -102,7 +102,7 @@ class UserAdmin(object):
                 ),
                 Side(
                     Fieldset(_('Status'),
-                             'is_active', 'is_staff', 'is_superuser',
+                             'is_active', 'is_staff', 'is_superuser', 'can_order',
                              ),
                 )
             )

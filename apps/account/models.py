@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from .validators import PhonenumberValidator
-from storage.storage import ImgStorage
-
 
 class User(AbstractUser):
     avatar = models.URLField(blank=True, verbose_name="头像")
@@ -12,6 +9,8 @@ class User(AbstractUser):
     phonenumber = models.CharField(max_length=11, blank=True, verbose_name="联系方式")
     truename = models.CharField(max_length=30, blank=True, verbose_name="真实姓名")
 
+    can_order = models.BooleanField(verbose_name="是否能订餐", default=True)
+
     def get_now_order_list(self):
         try:
             return self.myorder.all().filter(is_accept=True, is_done=False, is_abnormal=False)
@@ -19,7 +18,10 @@ class User(AbstractUser):
             return None
 
     def get_done_order_list(self):
-        return self.myorder.all().filter(is_accept=True, is_done=True, is_abnormal=False)
+        try:
+            return self.myorder.all().filter(is_accept=True, is_done=True, is_abnormal=False)
+        except:
+            return None
 
     def get_collect_list(self):
         try:
@@ -32,11 +34,6 @@ class User(AbstractUser):
             return self.business.order_list.orders.all().order_by('-date_create')
         except:
             return None
-
-    def save(self, *args, **kwargs):
-        if not self.email:
-            self.email = '{}@qq.com'.format(self.username)
-        super(User, self).save()
 
 
 class Accesstoken(models.Model):

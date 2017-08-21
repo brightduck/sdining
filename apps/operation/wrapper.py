@@ -1,5 +1,3 @@
-import json
-
 from django.utils import timezone
 from django.conf import settings
 
@@ -7,7 +5,6 @@ from account.qqapi import OAuthQQ
 
 
 def push(openid):
-    # TODO PUSH
     oauth_qq = OAuthQQ(settings.APPID, settings.APPKEY, settings.REDIRECT_URI)
     data = {
         "tousername": openid,
