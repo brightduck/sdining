@@ -52,7 +52,7 @@ class Order(models.Model):
             self.date_create = timezone.now()
             super(Order, self).save()
             self.save_to_business_order_list()
-        if self.is_done:
+        if self.is_done and not self.is_comment:
             self.date_done = timezone.now()
             self.remove_from_order_list()
         super(Order, self).save()

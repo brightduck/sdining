@@ -167,7 +167,10 @@
                                                 <h4>{{ business.business.name }}&nbsp;&nbsp;
                                                     {% if not business.business.is_open %}
                                                         <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
-                                                    {% endif %}</h4>
+                                                    {% endif %}
+                                                <span class="pull-right" style="font-size: 18px">综合评分：{{ business.rank }}</span>
+                                                </h4>
+
                                                 <span>
                                         <p>特色菜：{% for food in business.business.special.foods.all %}
                                             {{ food.name }}
@@ -199,7 +202,11 @@
                                             <div class="col-xs-9">
                                                 <h4>{{ business.name }}&nbsp;&nbsp;{% if not business.is_open %}
                                                     <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
-                                                {% endif %}</h4>
+                                                {% endif %}
+                                                <span class="pull-right" style="font-size: 18px">综合评分：{{ business.rank }}</span>
+
+                                                </h4>
+
                                                 <span>
                                         <p>特色菜：{% for food in business.special.foods.all %}
                                             {{ food.name }}
@@ -232,7 +239,9 @@
                                             <div class="col-xs-9">
                                                 <h4>{{ business.name }}&nbsp;&nbsp;{% if not business.is_open %}
                                                     <span style="background: #4b7fd3; color: #FFFFFF; ">暂停预约</span>
-                                                {% endif %}</h4>
+                                                {% endif %}
+                                                <span class="pull-right" style="font-size: 18px">综合评分：{{ business.rank }}</span>
+                                                </h4>
                                                 <span>
                                         <p>特色菜：{% for food in business.special.foods.all %}
                                             {{ food.name }}

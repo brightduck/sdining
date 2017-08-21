@@ -146,8 +146,10 @@ class MycollectView(LoginRequiredMixin, TemplateView):
 
 @login_required(login_url='/')
 def comment(request, opk):
+    num_order = Order.objects.count()
     try:
         order = request.user.myorder.get(pk=opk)
+        business = order.food.business
     except:
         return HttpResponseNotFound()
 
@@ -159,12 +161,16 @@ def comment(request, opk):
             'order': order
         })
     elif request.method == 'POST':
-        trank = request.POST.get('trank', False)
-        prank = request.POST.get('prank', False)
+        trank = int(request.POST.get('trank', False))
+        prank = int(request.POST.get('prank', False))
         try:
             order.trank, order.prank = trank, prank
+            average = (trank + prank) / 2
             order.is_comment = True
             order.save()
+            business.rank = round((business.rank + average) / num_order)
+            business.save()
             return JsonResponse({'status': 1})
-        except:
+        except Exception as e:
+            print(e)
             return JsonResponse({'status': 0})
