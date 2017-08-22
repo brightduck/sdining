@@ -95,7 +95,8 @@ class AbnormalOrder(models.Model):
 
     def __str__(self):
         if self.order.date_create:
-            return '{} 预定 {} at {}'.format(self.order.user.username, self.order.food.name, self.order.date_create.strftime('%m-%d %H:%I'))
+            return '{} 预定 {} at {}'.format(self.order.user.username, self.order.food.name,
+                                           self.order.date_create.strftime('%m-%d %H:%I'))
         else:
             return '{} 预定 {}'.format(self.order.user.username, self.order.food.name)
 

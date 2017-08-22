@@ -100,6 +100,10 @@ class ShowOrderView(LoginRequiredMixin, TemplateView):
     def post(self, request):
         if not request.user.usertype:
             return JsonResponse({'status': 2})
+        if not request.user.can_order:
+            return JsonResponse({'status': -1})
+        if Order.objects.filter(is_done=False, is_abnormal=False):
+            return JsonResponse({'status': -2})
         confirm = request.POST.get('confirm', False)
         if confirm:
             try:
@@ -146,7 +150,8 @@ class MycollectView(LoginRequiredMixin, TemplateView):
 
 @login_required(login_url='/')
 def comment(request, opk):
-    num_order = Order.objects.count()
+    num_order = Order.objects.filter(is_comment=True).count()
+
     try:
         order = request.user.myorder.get(pk=opk)
         business = order.food.business

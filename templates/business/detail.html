@@ -94,11 +94,7 @@
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             function (data) {
-                if (data['status'] === 2) {
-                    alert("取消收藏成功");
-                } else if (data['status'] === 1) {
-                    alert("收藏成功");
-                } else {
+                if(data['status'] === 0){
                     alert("出错啦");
                 }
             },

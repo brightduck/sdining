@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^ucenter/comment/(?P<opk>[0-9]+)/$', operationviews.comment, name='comment'),
     url(r'^ucenter/business/change/$', ucenterviews.changeopen, name='changestatus'),
     url(r'^ucenter/business/aord/$', ucenterviews.accept_or_deny, name='accept_or_deny'),
+    url(r'^ucenter/business/complain/$', ucenterviews.ComplainView.as_view(), name='complain'),
 
     url(r'^mvcapi/$', mainviews.api_root, name='api_list'),
     url(r'^mvcapi/banner/$', mainviews.APIBannerListView.as_view(), name='banner_list_api'),

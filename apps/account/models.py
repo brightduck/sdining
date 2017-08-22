@@ -31,7 +31,7 @@ class User(AbstractUser):
 
     def get_businessuser_now_order(self):
         try:
-            return self.business.order_list.orders.all().order_by('-date_create')
+            return self.business.order_list.orders.all().order_by('-date_create').filter(is_abnormal=False)
         except:
             return None
 
@@ -46,7 +46,7 @@ class OAuthQQProfile(models.Model):
     qq_openid = models.CharField(max_length=100, blank=True)
     access_token = models.CharField(max_length=100, blank=True)
     nickname = models.CharField(max_length=256, blank=True, verbose_name="昵称")
-    sex = models.IntegerField(choices=((1, "男"), (2, "女"), (0, "未知")), verbose_name="性别", default=1)
+    sex = models.IntegerField(choices=((1, "男"), (2, "女"), (0, "未知")), verbose_name="性别", default=0)
     stuid = models.CharField(max_length=20, verbose_name="学号", blank=True)
 
     def __str__(self):

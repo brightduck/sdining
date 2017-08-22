@@ -1,11 +1,12 @@
 from django.views.generic import TemplateView
-from django.http import HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden
+from django.views.generic.base import View
+from django.http import HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from account.views import qq_login
-from operation.models import Order
+from operation.models import Order, AbnormalOrder
 
 NOTFOUNDMESSAGE = '跟你说了不要瞎点，你就是不听，好了捏，你一点看到一片白就以为是系统的错，一看到系统错就联系开发团队，一联系开发团队后端爸爸就要加班，后端一加班就烦，\
 一烦就出错，你说你乱点个锤子'
@@ -86,6 +87,23 @@ def accept_or_deny(request):
             o.delete()
 
         return HttpResponseRedirect(reverse('businessucenterindex'))
+
+
+class ComplainView(LoginRequiredMixin, View):
+    raise_exception = True
+
+    def post(self, request):
+        opk = request.POST.get('opk', False)
+        try:
+            o = Order.objects.get(pk=opk)
+            o.is_abnormal = True
+            o.save()
+            AbnormalOrder.objects.create(order=o)
+            o.user.can_order = False
+            o.user.save()
+            return JsonResponse({'status': 1})
+        except:
+            return JsonResponse({'status': 0})
 
 
 class AboutmeView(TemplateView):

@@ -68,15 +68,21 @@
         $.post("{% url 'showorder' %}", {confirm: 1, csrfmiddlewaretoken: '{{ csrf_token }}'},
             function (data) {
                 if (data['status'] === 1) {
-                    alert("您的订单已成功提交，商家确认接单后可以前往个人中心查看以及确认收货");
+                    alert("您的订单已成功提交，请待商家接受预约后前往个人中心查看相应订单信息");
                     window.location.href = "/";
                 }
                 else if (data['status'] === 0) {
                     alert("提交预约失败，该商家可能目前未开启预约");
                     window.location.href = "/";
                 }
-                else {
+                else if(data['status'] === 2){
                     alert("商家并不能预约餐饮");
+                    window.location.href = "/";
+                }else if(data['status'] === -1){
+                    alert("您现在无法预约任何订单");
+                    window.location.href = "/";
+                }else if(data['status'] === -2){
+                    alert("您目前还有未完成的进行中订单，请处理后再预约");
                     window.location.href = "/";
                 }
             }
