@@ -1,3 +1,7 @@
+input, input:focus, input:active {
+    user-select: text;
+}
+
 .nav, .row, .input-group,
 h4, h3, a, p {
     margin: 0;

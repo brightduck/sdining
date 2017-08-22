@@ -150,7 +150,6 @@ class MycollectView(LoginRequiredMixin, TemplateView):
 
 @login_required(login_url='/')
 def comment(request, opk):
-    num_order = Order.objects.filter(is_comment=True).count()
 
     try:
         order = request.user.myorder.get(pk=opk)
@@ -173,6 +172,7 @@ def comment(request, opk):
             average = (trank + prank) / 2
             order.is_comment = True
             order.save()
+            num_order = Order.objects.filter(is_comment=True).count()
             business.rank = round((business.rank + average) / num_order)
             business.save()
             return JsonResponse({'status': 1})
