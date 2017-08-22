@@ -47,6 +47,9 @@
             {% if not request.GET.s or request.GET.s == 'now' %}
                 {% for order in user.get_now_order_list %}
                     <div class="order-div">
+                        <div class="order-number">
+                            <span>订单号：{{ order.pk }}</span>
+                        </div>
                         <div class="order-content-z">
                             <span>{{ order.food.name }}</span>
                         </div>
