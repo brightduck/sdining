@@ -17,7 +17,6 @@ class OrderAdmin:
         'is_accept',
         'is_done',
         'is_abnormal',
-        'comment',
     )
 
     search_fields = (
@@ -31,7 +30,6 @@ class OrderAdmin:
                 "基本信息",
                 'user',
                 'food',
-                'comment',
                 'trank',
                 'prank'
             ),

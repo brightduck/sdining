@@ -47,8 +47,11 @@
         <i id="j4" class="icon iconfont icon-xing"></i>
         <i id="j5" class="icon iconfont icon-xing"></i>
     </div>
+    <div class="book">
+        <input type="text" placeholder="说出您的心声，我们来反馈!" id="textcomment">
+    </div>
     <div class="buttont">
-        <button type="button" onclick="submitcomment()"><span>提交评价</span></button>
+        <button type="button" onclick="submitcomment()" name="textcomment"><span>提交评价</span></button>
     </div>
     <div class="ts">
         <span>温馨提示：您的评论我们系统将以匿名方式进行!</span>
@@ -111,6 +114,7 @@
         $.post('{% url 'comment' order.pk %}', {
                 trank: rank.ksum,
                 prank: rank.jsum,
+                textcomment: $('#textcomment').val(),
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             function (data) {
@@ -124,6 +128,7 @@
             },
             "json")
     }
+
 </script>
 </body>
 </html>

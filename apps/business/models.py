@@ -14,6 +14,7 @@ class Business(models.Model):
     image = models.ImageField(upload_to='bimg/%Y/%m/%d', storage=ImgStorage(), blank=True, verbose_name="商家图片")
     average = models.IntegerField(default=10, verbose_name="人均消费")
     num_like = models.IntegerField(default=0, verbose_name="点赞数")
+    total_rank = models.IntegerField(default=0, verbose_name="总分")
     rank = models.IntegerField(default=0, verbose_name="综合评价")
 
     is_open = models.BooleanField(default=False, verbose_name="是否接受预约")
@@ -112,4 +113,19 @@ class Authapply(models.Model):
 
     class Meta:
         verbose_name = "商家认证申请"
+        verbose_name_plural = verbose_name
+
+
+class BusinessTextComment(models.Model):
+    business = models.ForeignKey(Business, verbose_name="商家")
+    comment = models.CharField(max_length=150, blank=True, verbose_name="评价")
+    date_comment = models.DateTimeField(auto_now_add=True, verbose_name="评论时间")
+
+    is_pass = models.BooleanField(default=False, verbose_name="评论是否审核通过")
+
+    def __str__(self):
+        return self.comment
+
+    class Meta:
+        verbose_name = "商家评论"
         verbose_name_plural = verbose_name

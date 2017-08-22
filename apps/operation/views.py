@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.shortcuts import render
 
-from business.models import Business, Food
+from business.models import Business, Food, BusinessTextComment
 from .models import Order, UserCollect
 
 
@@ -167,13 +167,16 @@ def comment(request, opk):
     elif request.method == 'POST':
         trank = int(request.POST.get('trank', False))
         prank = int(request.POST.get('prank', False))
+        textcomment = request.POST.get('textcomment', False)
         try:
             order.trank, order.prank = trank, prank
             average = (trank + prank) / 2
             order.is_comment = True
             order.save()
+            BusinessTextComment.objects.create(business=order.food.business, comment=textcomment)
             num_order = Order.objects.filter(is_comment=True).count()
-            business.rank = round((business.rank + average) / num_order)
+            business.total_rank = business.total_rank + average
+            business.rank = round(business.total_rank / num_order)
             business.save()
             return JsonResponse({'status': 1})
         except Exception as e:

@@ -1,4 +1,3 @@
-
 @font-face {font-family: "iconfont";
   src: url('iconfont.eot?t=1503059795702'); /* IE9*/
   src: url('iconfont.eot?t=1503059795702#iefix') format('embedded-opentype'), /* IE6-IE8 */
@@ -49,7 +48,7 @@
 
 .icon-laoshi:before { content: "\e682"; }
 
-body
+*
 {
   margin:0;
   padding:0;
@@ -118,12 +117,23 @@ body
   font-family: 幼圆;
   color:white;
 }
-.ts
+
+.ts,.book
 {
   display:flex;
-  height:50px;
   justify-content: center;
-  align-items: center;
   font-size:14px;
   margin-top:20px;
+}
+.book input
+{
+  height:50px;
+  width:400px;
+  color:rgb(200,200,200);
+  border:1px solid rgb(200,200,200);
+}
+.ts
+{
+  align-items: center;
+  height:50px;
 }

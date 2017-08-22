@@ -17,7 +17,6 @@ def business_is_open_validator(value):
 class Order(models.Model):
     user = models.ForeignKey(User, related_name='myorder', verbose_name="订单发起者")
     food = models.ForeignKey(Food, validators=[business_is_open_validator], verbose_name="订单食物")
-    comment = models.IntegerField(choices=((1, "挺好"), (2, "一般"), (3, "糟糕")), default=2, verbose_name="订单评价")
     date_create = models.DateTimeField(blank=True, null=True, verbose_name="创建时间")
     date_done = models.DateTimeField(blank=True, null=True, verbose_name="完成时间")
     trank = models.IntegerField(default=0, verbose_name="口味评分")

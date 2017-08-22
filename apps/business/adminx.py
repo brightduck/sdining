@@ -1,7 +1,7 @@
 import xadmin
 from xadmin.layout import Fieldset, Main, Side
 
-from .models import Business, Food, Special, Authapply
+from .models import Business, Food, Special, Authapply, BusinessTextComment
 
 
 class BusinessAdmin:
@@ -109,7 +109,43 @@ class AuthapplyAdmin:
     )
 
 
+class BusinessTextCommentAdmin:
+    list_display = (
+        'comment',
+        'business',
+        'is_pass',
+        'date_comment'
+    )
+
+    list_filter = (
+        'is_pass',
+        'date_comment',
+    )
+
+    search_fields = (
+        'comment',
+    )
+
+    form_layout = (
+        Main(
+            Fieldset(
+                '基本信息',
+                'business',
+                'comment',
+                'date_comment'
+            ),
+        ),
+        Side(
+            Fieldset(
+                '状态控制',
+                'is_pass',
+            )
+        )
+    )
+
+
 xadmin.site.register(Business, BusinessAdmin)
 xadmin.site.register(Food, FoodAdmin)
 xadmin.site.register(Special)
 xadmin.site.register(Authapply, AuthapplyAdmin)
+xadmin.site.register(BusinessTextComment, BusinessTextCommentAdmin)
