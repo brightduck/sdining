@@ -33,6 +33,7 @@ class BusinessAdmin:
                      'image',
                      'average',
                      'rank',
+                     'total_rank',
                      'num_like')
         ),
         Side(

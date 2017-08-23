@@ -13,10 +13,6 @@ class AccesstokenAdmin:
         'date_create',
     )
 
-    readonly_fields = (
-        'access_token',
-    )
-
 
 xadmin.site.register(OAuthQQProfile, OAuthQQProfileAdmin)
 xadmin.site.register(Accesstoken, AccesstokenAdmin)
