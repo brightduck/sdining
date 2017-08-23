@@ -74,11 +74,11 @@
                             <p>{{ order.food.name }}</p>
                         </div>
                         <div class="order-list-y">
-                            <button type="button"
+                            <button class="receive" type="button"
                                     onclick="window.location.href='{% url 'accept_or_deny' %}?op=accept&opk={{ order.pk }}'">
                                 接受订单
                             </button>
-                            <button type="button"
+                            <button class="object" type="button"
                                     onclick="window.location.href='{% url 'accept_or_deny' %}?op=deny&opk={{ order.pk }}'">
                                 拒绝订单
                             </button>

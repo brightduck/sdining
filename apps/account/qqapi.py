@@ -160,7 +160,7 @@ class OAuthQQ(object):
         try:
             if result['errcode'] == 40001:
                 result = self.process_wrong_access_token(params=params,
-                                                         url='https://api.uni.qq.com/cgi-bin/user/info?{}', data=data)
+                                                         url='https://api.uni.qq.com/cgi-bin/message/template/send?{}', data=data)
         except Exception as e:
             print(e)
             pass

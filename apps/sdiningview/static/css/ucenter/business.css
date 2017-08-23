@@ -158,7 +158,14 @@ html {
 .order button:hover, .orderon3 button:hover {
     font-size: 13px;
 }
-
+.receive
+{
+	background-color:#7ade53 !important;
+}
+.object
+{
+	background-color:#f75a57 !important;
+}
 .order-in, .order-on {
     display: flex;
     font-size: 14px;
