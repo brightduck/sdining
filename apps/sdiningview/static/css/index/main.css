@@ -1,7 +1,3 @@
-input, input:focus, input:active {
-    user-select: text;
-}
-
 .nav, .row, .input-group,
 h4, h3, a, p {
     margin: 0;
@@ -97,6 +93,10 @@ header select {
 
 .btn-lg {
     font-size: 1.9em;
+}
+
+a {
+    text-decoration: none !important;
 }
 
 header select {

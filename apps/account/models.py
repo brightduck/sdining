@@ -40,6 +40,9 @@ class Accesstoken(models.Model):
     access_token = models.CharField(max_length=200)
     date_create = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-date_create']
+
 
 class OAuthQQProfile(models.Model):
     user = models.OneToOneField(User, verbose_name="用户")

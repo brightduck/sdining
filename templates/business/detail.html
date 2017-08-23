@@ -12,7 +12,7 @@
     <title>智慧食堂</title>
     <!--css-->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/index/common_css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/business/detail.css' %}">
     <link rel="stylesheet" href="{% static 'css/business/iconfont.css' %}">
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
@@ -54,113 +54,150 @@
         </div>
     </main>
 
-    <div class="text-center" id="menu_title">
-        <span>菜单列表</span>
-    </div>
+    <div class="row">
+        <div class="row" id="main_nav">
+            <div class="col-xs-12">
+                <ul class="nav-tabs nav text-center" role="tablist">
+                    <li class="col-xs-6 active" role="presentation">
+                        <a href="#food_fine" aria-controls="home" role="tab" data-toggle="tab">
+                            <p class="text-center">菜单列表</p>
+                        </a>
+                    </li>
+                    <li class="col-xs-6" role="presentation">
+                        <a href="#food_eat" aria-controls="profile" role="tab" data-toggle="tab">
+                            <p class="text-center">商家评论</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-    <div id="menu">
-        <div class="row">
-            <table class="table text-center">
-                {% for food in business.get_food_list %}
-                    <tr>
-                        <td class="">{{ food.name }}</td>
-                        <td>{{ food.price }} 元</td>
-                        <td class=""><a onclick="cut(pk={{ food.pk }})"><span
-                                class="glyphicon glyphicon-minus-sign"></span></a><span
-                                id="foodnum{{ food.pk }}">0</span>
-                            <a class="add" onclick="add(pk={{ food.pk }})" style="cursor: pointer"><span
-                                    class="glyphicon glyphicon-plus-sign"></span></a></td>
-                    </tr>
-                {% endfor %}
-            </table>
+        <div id="menu">
+            <div class="row">
+                <div class="tab-content col-xs-12">
+                    <div role="tabpanel" class="tab-pane active" id="food_fine">
+                        <table class="table text-center">
+                            {% for food in business.get_food_list %}
+                                <tr>
+                                    <td class="">{{ food.name }}</td>
+                                    <td>{{ food.price }} 元</td>
+                                    <td class=""><a onclick="cut(pk={{ food.pk }})"><span
+                                            class="glyphicon glyphicon-minus-sign"></span></a><span
+                                            id="foodnum{{ food.pk }}">0</span>
+                                        <a class="add" onclick="add(pk={{ food.pk }})" style="cursor: pointer"><span
+                                                class="glyphicon glyphicon-plus-sign"></span></a></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <div class="text-center" style="position: fixed;bottom: 0">
+                            <button type="button" class="btn btn-success btn-lg" onclick="submitorder()">预约点餐</button>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="food_eat">
+                        <main id="main">
+                            {% for comment in comment_list %}
+                            <div class="evaluat">
+                                <div class="row customer">
+                                    <div class="col-xs-7">匿名用户：{{ business.name }}</div>
+                                </div>
+                                <div class="row time">{{ comment.date_comment }}</div>
+                                <div class="row content">
+                                    {{ comment.comment }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="row text-center">
+                                <a href="{% url 'businesscommentlist' business.pk %}">查看更多</a>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="text-center" style="position: fixed;bottom: 0">
-        <button type="button" class="btn btn-success btn-lg" onclick="submitorder()">预约点餐</button>
-    </div>
+
+    <script>
+        function collect(bpk, tag) {
+            if ($(tag).hasClass('is_collect')) {
+                $(tag).removeClass('is_collect');
+            } else {
+                $(tag).addClass('is_collect');
+            }
+
+            $.post('{% url 'mycollect' %}', {
+                    bpk: bpk,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                function (data) {
+                    if (data['status'] === 0) {
+                        alert("出错啦");
+                    }
+                },
+                "json")
+        }
+
+        function submitorder() {
+            numtag = [];
+            {% for food in business.get_food_list %}
+                numtag.push($('#foodnum{{ food.pk }}'));
+            {% endfor %}
+            let s = 0;
+            numtag.forEach((t) => {
+                if (parseInt(t.text()) === 1) {
+                    s += 1;
+                }
+            });
+            if (s === 0) {
+                alert("您还未预约食物");
+                return;
+            }
+            window.location.href = "{% url 'showorder' %}";
+        }
+
+        function add(pk) {
+            numtag = $('#foodnum' + pk);
+            num = parseInt(numtag.text());
+            if (num >= 1) {
+                alert("亲一次只能点一个");
+                return;
+            }
+            numtag.text(num + 1);
+            $.post("{% url 'makeorder' %}", {
+                    businesspk: {{ business.pk }},
+                    foodpk: pk,
+                    num: num + 1,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                function (data) {
+                    if (data['status'] !== 1) {
+                        alert("提交失败");
+                    }
+                }
+                , "json");
+        }
+
+        function cut(pk) {
+            numtag = $('#foodnum' + pk);
+            num = parseInt(numtag.text());
+            if (num === 0) {
+                alert("已经是最小份数");
+                return;
+            }
+            numtag.text(num - 1);
+            $.post("{% url 'removeorder' %}", {
+                    businesspk: {{ business.pk }},
+                    foodpk: pk,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                function (data) {
+                    if (data['status'] !== 1) {
+                        alert("提交失败");
+                    }
+                }
+                , "json");
+        }
+    </script>
 </div>
-
-<script>
-    function collect(bpk, tag) {
-        if ($(tag).hasClass('is_collect')) {
-            $(tag).removeClass('is_collect');
-        } else {
-            $(tag).addClass('is_collect');
-        }
-
-        $.post('{% url 'mycollect' %}', {
-                bpk: bpk,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            function (data) {
-                if(data['status'] === 0){
-                    alert("出错啦");
-                }
-            },
-            "json")
-    }
-
-    function submitorder() {
-        numtag = [];
-        {% for food in business.get_food_list %}
-            numtag.push($('#foodnum{{ food.pk }}'));
-        {% endfor %}
-        let s = 0;
-        numtag.forEach((t) => {
-            if (parseInt(t.text()) === 1) {
-                s += 1;
-            }
-        });
-        if (s === 0) {
-            alert("您还未预约食物");
-            return;
-        }
-        window.location.href = "{% url 'showorder' %}";
-    }
-
-    function add(pk) {
-        numtag = $('#foodnum' + pk);
-        num = parseInt(numtag.text());
-        if (num >= 1) {
-            alert("亲一次只能点一个");
-            return;
-        }
-        numtag.text(num + 1);
-        $.post("{% url 'makeorder' %}", {
-                businesspk: {{ business.pk }},
-                foodpk: pk,
-                num: num + 1,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            function (data) {
-                if (data['status'] !== 1) {
-                    alert("提交失败");
-                }
-            }
-            , "json");
-    }
-
-    function cut(pk) {
-        numtag = $('#foodnum' + pk);
-        num = parseInt(numtag.text());
-        if (num === 0) {
-            alert("已经是最小份数");
-            return;
-        }
-        numtag.text(num - 1);
-        $.post("{% url 'removeorder' %}", {
-                businesspk: {{ business.pk }},
-                foodpk: pk,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            function (data) {
-                if (data['status'] !== 1) {
-                    alert("提交失败");
-                }
-            }
-            , "json");
-    }
-</script>
 </body>
 </html>

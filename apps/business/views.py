@@ -1,22 +1,12 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.urlresolvers import reverse
 
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 
 from .serializers import FoodSerializer, BusinessSerializer
-from .models import Food, Business
-
-
-class FoodList(ListView):
-    CATWGORY_LIST = [
-        'meals',
-        'recommend',
-        'drink',
-    ]
-    template_name = 'index/index.html'
+from .models import Food, Business, BusinessTextComment
 
 
 class APIFoodListView(generics.ListAPIView):
@@ -78,8 +68,23 @@ class BusinessDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
+        context['comment_list'] = BusinessTextComment.objects.filter(business=self.get_object()).order_by(
+            '-date_comment')[:2]
         try:
             del request.session['order']
         except:
             pass
+        return self.render_to_response(context)
+
+
+class CommentListView(LoginRequiredMixin, ListView):
+    model = BusinessTextComment
+    template_name = 'business/comment_list.html'
+    context_object_name = 'comment_list'
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        context = super(CommentListView, self).get_context_data()
+        context['pk'] = kwargs['pk']
+        context[self.context_object_name] = context[self.context_object_name].filter(business__pk=kwargs['pk']).order_by('-date_comment')
         return self.render_to_response(context)

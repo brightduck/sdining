@@ -114,16 +114,18 @@ text-align: center;
 .order-content-y button
 {
 	border:none;
-	font-size:14px;
-	background-color:rgb(235,235,235);
+	font-size:12px;
+	background-color: #f49636;
+    color: #ffffff;
 	width:60px;
 	height:30px;
+    border-radius: 20%;
 }
-.order-content-y button:hover
-{
-	background-color: rgba(17,27,40,0.24);
-	color:white;
+
+.order-content-y button:hover {
+    font-size: 13px;
 }
+
 .order-pj-z
 {
 	flex:1 1 auto;
@@ -142,15 +144,16 @@ text-align: center;
 .order-pj-y button
 {
 	border:none;
-	font-size:14px;
-	background-color:rgb(235,235,235);
+	font-size:12px;
+    color: #ffffff;
+	background-color: #f49636;
 	width:60px;
 	height:30px;
+    border-radius: 20%;
 }
 .order-pj-y button:hover
 {
-	background-color: rgba(17,27,40,0.24);
-	color:white;
+	font-size: 13px;
 }
 .order-choose
 {

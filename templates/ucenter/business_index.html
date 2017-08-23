@@ -12,6 +12,18 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/business.css' %}">
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <title>商家个人中心</title>
+    <style>
+        .aactive {
+            background-color: rgb(230, 230, 230);
+            color: rgba(193, 54, 68, 0.92) !important;
+            border: none;
+        }
+
+
+        button {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <article>
@@ -53,7 +65,6 @@
                 <a class="order-a {% if request.GET.s == 'done' %}aactive{% endif %}" href="?s=done">已完成</a>
             </div>
         </div>
-        <!--是否确认接单-->
         <div class="order-list">
             {% if not request.GET.s or request.GET.s == 'pending' %}
                 {% get_pending_order_list user.business as pending_list %}
@@ -93,7 +104,9 @@
                             <p> {{ order.user.oauthqqprofile.get_sex_display }}</p>
                         </div>
                         <div class="orderon3">
-                            <button type="button" onclick="complain(opk={{ order.pk }}, b=this)" style="cursor: pointer">未取餐</button>
+                            <button type="button" onclick="complain(opk={{ order.pk }}, b=this)"
+                                    style="cursor: pointer">未取餐
+                            </button>
                         </div>
                     </div>
                 {% endfor %}
@@ -149,18 +162,18 @@
 <script>
     function complain(opk, b) {
         $.post("{% url 'complain' %}", {
-            opk: opk,
-            csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        function (data) {
-            if(data['status'] === 1){
-                alert("感谢您的投诉，我们已限制该用户的相关操作");
-                location.reload();
-            }else if (data['status'] === 0){
-                alert("出错啦");
-            }
-        },
-        "json");
+                opk: opk,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            function (data) {
+                if (data['status'] === 1) {
+                    alert("感谢您的投诉，我们已限制该用户的相关操作");
+                    location.reload();
+                } else if (data['status'] === 0) {
+                    alert("出错啦");
+                }
+            },
+            "json");
     }
 </script>
 </body>

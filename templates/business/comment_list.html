@@ -1,0 +1,56 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=600px">
+    <link rel="shortcut icon" href="#" type="image/x-icon"/>
+
+    <meta name="format-detection" content="telephone=no">
+    <title>智慧食堂</title>
+    <!-- Vue -->
+    <script src="https://unpkg.com/vue"></script>
+    <!-- juqery -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--css-->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="{% static 'css/index/style.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/business/comment.css' %}">
+
+</head>
+<body>
+<div id="block">
+    <!--title-->
+    <header>
+        <div class="row">
+            <div class="col-xs-3">
+                <a class="glyphicon glyphicon-menu-left" href="{% url 'businessdetail' pk %}"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>全部评价</span>
+            </div>
+        </div>
+    </header>
+
+    <!--content-->
+    <main>
+        {% for comment in comment_list %}
+        <div class="evaluat">
+            <div class="row customer">
+                <div class="col-xs-7">匿名用户：{{ comment.business.name }}</div>
+                {% comment %}<div class="col-xs-5 text-right">综合评分：4.0</div>{% endcomment %}
+            </div>
+            <div class="row time">{{ comment.date_comment }}</div>
+            <div class="row content">
+                {{ comment.comment }}
+            </div>
+        </div>
+        {% endfor %}
+
+    </main>
+
+</div>
+</body>
+</html>

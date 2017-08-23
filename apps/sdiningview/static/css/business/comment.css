@@ -99,97 +99,27 @@ a {
     text-decoration: none !important;
 }
 
-main img {
-    height: 226px;
-}
-
-#main_nav a {
-    background: none;
-    margin: 17px 20px;
-    letter-spacing: 1px;
-    color: black;
-    border: none;
-}
-
-#main_nav a p {
-    font-size: 1.25em;
-}
-
-#main_nav .active {
-    font-weight: 800;
-}
-
-#main {
+main {
     line-height: 2;
     color: #999999;
     font-size: 1.7em;
-    padding: 17px 20px;
 }
 
-#main .evaluat {
+main .evaluat {
     border-bottom: 1px solid #efefef;
+    margin: 17px 20px;
     padding: 17px 20px;
 }
 
-#main .customer {
+main .customer {
     color: black;
 }
 
-#main .content {
+main .content {
     line-height: 1.2;
 }
 
-#main a {
-    font-size: 1em !important;
-    line-height: 3;
-}
-
-#menu {
-    margin-bottom: 120px;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 2px 6px #b7b7b7;
-}
-
-#menu table {
-    font-size: 1.7em;
-}
-
-#menu table #menu_title {
-    font-weight: 600;
-}
-
-#menu table tr {
-    height: 75px;
-    line-height: 75px;
-}
-
-#menu table td {
-    border: none;
-}
-
-button {
-    width: 600px;
-    height: 75px;
-    font-size: 2.5em;
-    border-radius: 0 !important;
-    box-shadow: 0 2px 6px #b7b7b7;
-}
-
-h2 {
-    padding: 0;
-    margin: 0 !important;
-}
-
-.glyphicon-plus-sign, .glyphicon-minus-sign {
-    color: rgba(92, 165, 250, 0.71);
-    font-size: 1.7em !important;
-}
-
-td span {
-    font-size: 0.95em;
-    margin: 0 3px;
-}
-
-.glyphicon-minus-sign {
-    color: rgba(248, 102, 98, 0.73);
+main img {
+    width: 100%;
+    padding: 6px 3px 6px 0;
 }

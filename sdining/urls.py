@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^$', mainviews.IndexView.as_view(), name='index'),
 
     url(r'^business/(?P<pk>[0-9]+)/$', businessviews.BusinessDetailView.as_view(), name='businessdetail'),
+    url(r'^business/comment/(?P<pk>[0-9]+)/$', businessviews.CommentListView.as_view(), name='businesscommentlist'),
 
     url(r'^operation/makeorder/$', operationviews.makeorder, name='makeorder'),
     url(r'^operation/removeorder/$', operationviews.removeorder, name='removeorder'),
