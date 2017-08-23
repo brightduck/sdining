@@ -276,9 +276,10 @@
 </div>
 <script>
     showtag = $("#show");
+    searchtag = $("#search")
 
     {% if is_search %}
-        $("#search").show();
+        searchtag.show();
     {% endif %}
 
     showtag.click(function () {
@@ -288,12 +289,8 @@
 
 
     $(document).mouseup(function (e) {
-        let _con = $(' #search ');
-        if (!_con.is(e.target) && _con.has(e.target).length === 0) {
-
-            $("#search").hide();
+            searchtag.hide();
             $("#search_Q").removeClass("search_Q disabled ");
-        }
     });
 
 </script>
