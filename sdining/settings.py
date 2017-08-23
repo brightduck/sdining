@@ -121,12 +121,12 @@ WRAPPER_MINUTE = 0
 
 ORDER_TIME_ONE = [
     '10,50',
-    '11,50'
+    '11,40'
 ]
 
 ORDER_TIME_TWO = [
     '15,50',
-    '16,50'
+    '16,40'
 ]
 
 DEFAULT_PASSWORD = '123321'
@@ -155,4 +155,8 @@ TEMPLATE_BUTTON_URI = 'http://106.15.195.58/ucenter/'
 CRONJOBS = [
     ('0 15 * * *', 'cronjob.auto_done.auto_done'),
     ('0 20 * * *', 'cronjob.auto_done.auto_done'),
+    ('0 13 * * *', 'cronjob.auto_abnormal.auto_abnormal'),
+    ('0 18 * * *', 'cronjob.auto_abnormal.auto_abnormal'),
+    ('40 11 * * *', 'cronjob.auto_close.auto_close'),
+    ('40 16 * * *', 'cronjob.auto_close.auto_close'),
 ]

@@ -140,7 +140,7 @@ html {
 .order-list-y button, .orderon3 button {
     font-size: 12px;
     height: 32px;
-    width: 65px;
+    width: auto;
     border: none;
     margin-right: 10px;
     color: white;
@@ -149,6 +149,7 @@ html {
 
 .orderon3 button {
     background-color: #f75a57;
+    width: auto;
 }
 
 .order-list-y button {

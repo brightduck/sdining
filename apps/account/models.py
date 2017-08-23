@@ -19,7 +19,7 @@ class User(AbstractUser):
 
     def get_done_order_list(self):
         try:
-            return self.myorder.all().filter(is_accept=True, is_done=True, is_abnormal=False)
+            return self.myorder.all().filter(is_accept=True, is_done=True, is_abnormal=False)[:5]
         except:
             return None
 

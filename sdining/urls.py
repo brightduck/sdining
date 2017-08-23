@@ -48,7 +48,6 @@ urlpatterns = [
 
     url(r'^media/(?P<path>.*)', serve, {"document_root": settings.MEDIA_ROOT}),
 
-    url(r'^qq/login/$', accountviews.qq_login, name='qqlogin'),
     url(r'^qq/check/$', accountviews.qq_check, name='qqcheck'),
 
     url(r'^account/authguide/$', accountviews.AuthGuideView.as_view(), name='authguide'),
