@@ -51,7 +51,10 @@ class OAuthQQ(object):
             Accesstoken.objects.all().delete()
 
         def check_accesstoken():
-            a = Accesstoken.objects.all()[0]
+            try:
+                a = Accesstoken.objects.all()[0]
+            except:
+                return False
             if (timezone.now() - a.date_create).total_seconds() < 7200:
                 return a.access_token
             else:
