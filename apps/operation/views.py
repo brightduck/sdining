@@ -173,7 +173,8 @@ def comment(request, opk):
             average = (trank + prank) / 2
             order.is_comment = True
             order.save()
-            BusinessTextComment.objects.create(business=order.food.business, comment=textcomment)
+            if textcomment:
+                BusinessTextComment.objects.create(business=order.food.business, comment=textcomment)
             num_order = Order.objects.filter(is_comment=True).count()
             business.total_rank = business.total_rank + average
             business.rank = round(business.total_rank / num_order)
