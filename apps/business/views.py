@@ -68,7 +68,7 @@ class BusinessDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
-        context['comment_list'] = BusinessTextComment.objects.filter(business=self.get_object()).order_by(
+        context['comment_list'] = BusinessTextComment.objects.filter(business=self.get_object(), is_pass=True).order_by(
             '-date_comment')[:2]
         try:
             del request.session['order']

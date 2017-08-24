@@ -96,19 +96,23 @@
                     <div role="tabpanel" class="tab-pane" id="food_eat">
                         <main id="main">
                             {% for comment in comment_list %}
-                            <div class="evaluat">
-                                <div class="row customer">
-                                    <div class="col-xs-7">匿名用户：{{ business.name }}</div>
+                                <div class="evaluat">
+                                    <div class="row customer">
+                                        <div class="col-xs-7">匿名用户：{{ business.name }}</div>
+                                    </div>
+                                    <div class="row time">{{ comment.date_comment }}</div>
+                                    <div class="row content">
+                                        {{ comment.comment }}
+                                    </div>
                                 </div>
-                                <div class="row time">{{ comment.date_comment }}</div>
-                                <div class="row content">
-                                    {{ comment.comment }}
-                                </div>
-                            </div>
+                                {% empty %}
+                                <p class="text-center">暂时还没有评论</p>
                             {% endfor %}
-                            <div class="row text-center">
-                                <a href="{% url 'businesscommentlist' business.pk %}">查看更多</a>
-                            </div>
+                            {% if comment_list %}
+                                <div class="row text-center">
+                                    <a href="{% url 'businesscommentlist' business.pk %}">查看更多</a>
+                                </div>
+                            {% endif %}
                         </main>
                     </div>
                 </div>
