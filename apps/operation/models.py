@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404
 
 from account.models import User
 from business.models import Food, Business
-from .wrapper import wrapper_order_list
 
 
 def business_is_open_validator(value):
@@ -55,11 +54,6 @@ class Order(models.Model):
             self.date_done = timezone.now()
             self.remove_from_order_list()
         super(Order, self).save()
-        if not self.is_accept and not self.is_push:
-            try:
-                wrapper_order_list(order_obj=self)
-            except:
-                pass
 
     def get_business_user(self):
         return self.food.business.user
