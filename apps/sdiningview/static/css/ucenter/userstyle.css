@@ -46,7 +46,7 @@ text-align: center;
 .order-body
 {
 	border-bottom:1px solid rgba(170,113,196,0.13);
-	height:50vh;
+	height:auto;
 }
 .order-inf
 {
@@ -110,7 +110,12 @@ text-align: center;
 	flex:1 1 auto;
 	text-align: center;
 }
-
+.order-content
+{
+	 overflow: scroll;
+    height:250px;
+    overflow-x: hidden;
+}
 .order-content-y button
 {
 	border:none;

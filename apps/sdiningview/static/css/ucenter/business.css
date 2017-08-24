@@ -70,7 +70,7 @@ html {
 }
 
 .order {
-    height: 400px;
+    height: auto;
     border-bottom: 1px solid rgba(107, 83, 156, 0.22);
 }
 
@@ -120,6 +120,12 @@ html {
     border: none;
 }
 
+.order-list
+{
+    overflow: scroll;
+    height:250px;
+    overflow-x: hidden;
+}
 .order-list1 {
     display: flex;
     font-size: 14px;
@@ -158,6 +164,7 @@ html {
 
 .order button:hover, .orderon3 button:hover {
     font-size: 13px;
+    width: auto;
 }
 .receive
 {
@@ -215,17 +222,16 @@ html {
 }
 
 .t1 {
-    flex: 1 1 8%;
+    flex: 1 1 5%;
     padding-top: 7px;
 }
 
-.t2 {
-    flex: 1 1 82%;
-    padding-top: 8px;
+.add{
+    margin-left:2%;
 }
 
 .t3 {
-    flex: 1 1 10%;
+    flex: 1 1 auto;
     padding-top: 7px;
     text-align: end;
 }
