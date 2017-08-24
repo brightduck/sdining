@@ -83,9 +83,6 @@ class Special(models.Model):
 
 
 class Authapply(models.Model):
-    '''
-    For Business Auth Apply
-    '''
     user = models.OneToOneField(User, verbose_name="申请者")
     name = models.CharField(max_length=100, verbose_name="商家名称")
     position = models.IntegerField(choices=((1, "楚园食堂"), (2, "汉园食堂")), verbose_name="位置")
