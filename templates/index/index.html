@@ -276,7 +276,7 @@
 </div>
 <script>
     showtag = $("#show");
-    searchtag = $("#search")
+    searchtag = $("#search");
 
     {% if is_search %}
         searchtag.show();
@@ -288,7 +288,7 @@
     });
 
 
-    $(document).mouseup(function (e) {
+    $(document).mousedown(function (e) {
             searchtag.hide();
             $("#search_Q").removeClass("search_Q disabled ");
     });

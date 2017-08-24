@@ -86,5 +86,5 @@ class CommentListView(LoginRequiredMixin, ListView):
         self.object_list = self.get_queryset()
         context = super(CommentListView, self).get_context_data()
         context['pk'] = kwargs['pk']
-        context[self.context_object_name] = context[self.context_object_name].filter(business__pk=kwargs['pk']).order_by('-date_comment')
+        context[self.context_object_name] = context[self.context_object_name].filter(business__pk=kwargs['pk'], is_pass=True).order_by('-date_comment')
         return self.render_to_response(context)

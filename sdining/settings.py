@@ -159,4 +159,5 @@ CRONJOBS = [
     ('0 18 * * *', 'cronjob.auto_abnormal.auto_abnormal'),
     ('40 11 * * *', 'cronjob.auto_close.auto_close'),
     ('40 16 * * *', 'cronjob.auto_close.auto_close'),
+    ('0 8 * * *', 'cronjob.process_creditrank.process_creditrank'),
 ]

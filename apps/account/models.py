@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 
 class User(AbstractUser):
@@ -10,6 +11,8 @@ class User(AbstractUser):
     truename = models.CharField(max_length=30, blank=True, verbose_name="真实姓名")
 
     can_order = models.BooleanField(verbose_name="是否能订餐", default=True)
+    date_ban = models.DateTimeField(verbose_name="开始封禁的时间", blank=True, null=True)
+    banday = models.IntegerField(default=0, verbose_name="封禁天数")
 
     def get_now_order_list(self):
         try:
@@ -34,6 +37,13 @@ class User(AbstractUser):
             return self.business.order_list.orders.all().order_by('-date_create').filter(is_abnormal=False)
         except:
             return None
+
+    def save(self, *args, **kwargs):
+        if self.can_order == True:
+            self.banday = 0
+        else:
+            self.date_ban = timezone.now()
+        super(User, self).save()
 
 
 class Accesstoken(models.Model):

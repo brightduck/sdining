@@ -99,6 +99,7 @@ class ComplainView(LoginRequiredMixin, View):
             o.is_abnormal = True
             o.save()
             AbnormalOrder.objects.create(order=o)
+            o.user.creditrank = o.user.creditrank - 20
             o.user.can_order = False
             o.user.save()
             return JsonResponse({'status': 1})
