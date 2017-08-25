@@ -32,7 +32,7 @@ def push(openid, ordernum):
 def wrapper():
     sortorder = {}
 
-    for b in Business.objects.all():
+    for b in Business.objects.filter():
         sortorder[b] = []
 
     print(sortorder)
@@ -45,9 +45,12 @@ def wrapper():
 
     for i in sortorder:
         count = len(sortorder[i])
-        if push(i.user.oauthqqprofile.qq_openid, count):
-            for o in sortorder[i]:
-                o.is_push = True
-                o.save()
+        if count:
+            if push(i.user.oauthqqprofile.qq_openid, count):
+                for o in sortorder[i]:
+                    o.is_push = True
+                    o.save()
+            else:
+                pass
         else:
             pass
