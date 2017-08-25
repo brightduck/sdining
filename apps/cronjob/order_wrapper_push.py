@@ -35,13 +35,10 @@ def wrapper():
     for b in Business.objects.filter():
         sortorder[b] = []
 
-    print(sortorder)
     for o in Order.objects.filter(is_accept=False, is_push=False):
         if o.food.business in sortorder:
             ob = o.food.business
             sortorder[ob].append(o)
-
-    print(sortorder)
 
     for i in sortorder:
         count = len(sortorder[i])
