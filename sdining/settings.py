@@ -119,16 +119,6 @@ REDIRECT_URI = 'http://106.15.195.58/qq/check/'
 WRAPPER_MINUTE = 0
 # if the WRAPPER_MINUTE = 0 that's means real-time push
 
-ORDER_TIME_ONE = [
-    '10,50',
-    '11,40'
-]
-
-ORDER_TIME_TWO = [
-    '15,50',
-    '16,40'
-]
-
 DEFAULT_PASSWORD = '123321'
 
 AUTHENTICATION_BACKENDS = [
