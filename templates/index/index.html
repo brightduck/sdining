@@ -275,8 +275,9 @@
 </div>
 <script type="text/javascript">
     {% if not request.user.is_authenticated %}
+
         window.onload = function () {
-            window.location.href = 'https://xui.ptlogin2.qq.com/cgi-bin/xlogin?which=&state=&style=35&appid=716027609&pt_skey_valid=1&response_type=token&daid=383&s_url=http%3A%2F%2Fconnect.qq.com&src=1&refer_cgi=authorize&scope=all&redirect_uri=http%3A%2F%2F106.15.195.58%2Fqq%2Fcheck%2F&pt_3rd_aid=200513914&client_id=200513914&auth_time=1503552202966'
+            window.location.href = 'https://xui.ptlogin2.qq.com/cgi-bin/xlogin?which=&scope=&state=1&style=35&appid=716027609&pt_skey_valid=1&response_type=code&daid=383&s_url=http%3A%2F%2Fconnect.qq.com&src=1&refer_cgi=authorize&redirect_uri=http%3A%2F%2F106.15.195.58%2Fqq%2Fcheck%2F&pt_3rd_aid=200513914&client_id=200513914&auth_time=1503625883413'
         };
     {% endif %}
 </script>

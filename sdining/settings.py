@@ -163,5 +163,5 @@ CRONJOBS = [
     ('50 10 * * *', 'cronjob.order_wrapper_push.wrapper'),
     ('0,10,20,30,40 11 * * *', 'cronjob.order_wrapper_push.wrapper'),
     ('50 15 * * *', 'cronjob.order_wrapper_push.wrapper'),
-    ('0,10,20,30,40 11 * * *', 'cronjob.order_wrapper_push.wrapper'),
+    ('0,10,20,30,40 16 * * *', 'cronjob.order_wrapper_push.wrapper'),
 ]
