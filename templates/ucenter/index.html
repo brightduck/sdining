@@ -21,7 +21,12 @@
 <article>
     <div class="inbody1">
         <div class="inbody1-1">
-            <img class="userimg" src="{{ user.avatar }}">
+            <div class="return">
+                <a href="{% url 'index' %}"><img class="fanhui" src="{% static 'img/return.png' %}"></a>
+            </div>
+            <div class="photo">
+                <img class="tuoxiang" src="{{ user.avatar }}">
+            </div>
         </div>
         <div class="inbody1-2">
             <ul>
@@ -58,7 +63,7 @@
                             <span>{{ order.food.name }}</span>
                         </div>
                         <div class="order-content-y">
-                            <button type="button" style="cursor: pointer" onclick="doneorder({{ order.pk }})">取餐
+                            <button type="button" style="cursor: pointer" onclick="doneorder({{ order.pk }})">已取餐
                             </button>
                         </div>
                     </div>

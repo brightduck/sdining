@@ -19,9 +19,16 @@
             border: none;
         }
 
-
         button {
             cursor: pointer;
+        }
+
+        .open {
+            background-color: #7ade53 !important;
+        }
+
+        .close {
+            background-color: #f75a57 !important;
         }
     </style>
 </head>
@@ -29,7 +36,12 @@
 <article>
     <div class="inbody1">
         <div class="inbody1-1">
-            <img src="/media/{{ user.business.image }}">
+            <div class="return">
+                <a href="{% url 'index' %}"><img class="fanhui" src="{% static 'img/return.png' %}"></a>
+            </div>
+            <div class="photo">
+                <img class="tuoxiang" src="/media/{{ user.business.image }}">
+            </div>
         </div>
         <div class="inbody1-2">
             <ul>
@@ -39,8 +51,8 @@
         </div>
 
         <div class="inbody1-3">
-            <button onclick="window.location.href='{% url 'changestatus' %}'" style="cursor: pointer">
-                {% if user.business.is_open %}关闭{% else %}开启{% endif %}预约
+            <button onclick="window.location.href='{% url 'changestatus' %}'" style="cursor: pointer;" class="{% if user.business.is_open %}close{% else %}open{% endif %}">
+                {% if user.business.is_open %}休息{% else %}接单{% endif %}
             </button>
         </div>
     </div>
@@ -74,7 +86,7 @@
                             <p>{{ order.food.name }}</p>
                         </div>
                         <div class="order-list-y">
-                            <button class="receive" type="button"
+                            <button class="recive" type="button"
                                     onclick="window.location.href='{% url 'accept_or_deny' %}?op=accept&opk={{ order.pk }}'">
                                 接单
                             </button>
@@ -104,11 +116,13 @@
                             <p> {{ order.user.oauthqqprofile.get_sex_display }}</p>
                         </div>
                         <div class="orderon3">
+                            <button type="button" onclick="doneorder({{ order.pk }})" style="cursor: pointer; background-color: #7ade53">已取餐</button>
                             <button type="button" onclick="complain(opk={{ order.pk }}, b=this)"
                                     style="cursor: pointer">未取餐
                             </button>
                         </div>
                     </div>
+
                 {% endfor %}
             {% elif request.GET.s == 'done' %}
                 {% get_done_order_list user.business as done_list %}
@@ -156,6 +170,10 @@
 
 
 <script>
+    function doneorder(id) {
+        window.location.href = "{% url 'businessorderdone' %}?id=" + id;
+    }
+
     function complain(opk, b) {
         $.post("{% url 'complain' %}", {
                 opk: opk,

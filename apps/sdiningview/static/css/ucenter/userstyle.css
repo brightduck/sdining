@@ -8,29 +8,50 @@ body
 }
 .inbody1
 {
-	display:flex;
+    	display:flex;
 	flex-direction: row;
 	background-color:dodgerblue;
 	color:white;
-	padding-left:15%;
 	height:100px;
-	padding-top:10px;
 }
 .inbody1-1
 {
-flex:1 1 50%;
-text-align: center;
+    flex:1 1 50%;
+    display:flex;
 }
-.inbody1-1 img
+
+.return,.photo
 {
-	width:85px;
-	height:85px;
+	flex:1 1 auto;
+
 }
-.userimg
+.return
 {
+	display:flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.photo
+{
+	display:flex;
+	align-items: center;
+}
+.fanhui
+{
+	width:25px;
+	height:25px;
+}
+.tuoxiang
+{
+	padding-top:5px;
+	width:80px;
+	height:80px;
 	border-radius: 200%;
-	margin-left:-70px;
+	margin-left:20px;
 }
+
+
 .inbody1-2
 {
 	flex:1 1 50%;
@@ -42,6 +63,7 @@ text-align: center;
 .inbody1-2 li
 {
 	list-style-type: none;
+    font-size: 14px;
 }
 .order-body
 {

@@ -174,8 +174,11 @@
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 function (data) {
-                    if (data['status'] !== 1) {
+                    if (data['status'] === 0) {
                         alert("提交失败");
+                    }else if (data['status'] === -1){
+                        alert("一次只能点一种菜哟");
+                        window.location.href = "{% url 'businessdetail' business.pk %}"
                     }
                 }
                 , "json");

@@ -42,7 +42,7 @@ class BusinessUcenterView(LoginRequiredMixin, TemplateView):
 
 @login_required(login_url='/ucenter/')
 def order_is_done(request):
-    oid = request.GET.get('id', '')
+    oid = request.GET.get('id', False)
     if not oid:
         return HttpResponseNotFound(NOTFOUNDMESSAGE)
     try:
@@ -50,6 +50,20 @@ def order_is_done(request):
         obj.is_done = True
         obj.save()
         return HttpResponseRedirect(reverse('ucenterindex'))
+    except:
+        return HttpResponseNotFound(NOTFOUNDMESSAGE)
+
+
+@login_required(login_url='/ucenter/')
+def business_order_is_done(request):
+    oid = request.GET.get('id', False)
+    if not oid:
+        return HttpResponseNotFound(NOTFOUNDMESSAGE)
+    try:
+        obj = Order.objects.get(pk=int(oid), food__business__user=request.user)
+        obj.is_done = True
+        obj.save()
+        return HttpResponseRedirect(reverse('businessucenterindex') + '?s=now')
     except:
         return HttpResponseNotFound(NOTFOUNDMESSAGE)
 

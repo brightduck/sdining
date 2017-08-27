@@ -31,8 +31,11 @@ def makeorder(request):
             return True
         else:
             return False
-
     request.session['order'].update({'business': businesspk, foodpk: num})
+    if request.session['order'].__len__() > 2:
+        del request.session['order']
+        return JsonResponse({'status': -1})
+
     s = check_attr()
     if s:
         return JsonResponse({'status': 1})
