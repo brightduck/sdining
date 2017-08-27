@@ -166,19 +166,24 @@ list-style-type: none;
 {
 	text-decoration: none;
 }
-.order-list-y button,.orderon3 button
+.order-list-y button
 {
 	font-size:12px;
 	height:32px;
 	width:auto;                                              /*修改1*/
     border:none;
-	margin-right:10px;
 	color:white;
 	border-radius: 20%;
 }
 .orderon3 button
 {
 	background-color:#f75a57;
+	font-size:10px;
+	height:32px;
+	width:auto;                                              /*修改1*/
+    border:none;
+	color:white;
+	border-radius: 20%;
 
 }
 .recive
@@ -211,15 +216,16 @@ list-style-type: none;
 	justify-content: center;
 	align-items: center;
 }
-.orderon1,.orderon2,.orderon3
+.orderon1,.orderon2
 {
-	flex:1 1 33%;
+	flex:1 1 30%;
 	display:flex;
 	justify-content: center;
 	align-items: center;
 }
 .orderon3
 {
+	flex:1 1 40%;
 	margin-top:-30px;
 }
 .business-li
