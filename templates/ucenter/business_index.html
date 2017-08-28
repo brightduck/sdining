@@ -10,6 +10,7 @@
           name="viewport">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/business.css' %}">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <title>商家个人中心</title>
     <style>
@@ -37,7 +38,7 @@
     <div class="inbody1">
         <div class="inbody1-1">
             <div class="return">
-                <a href="{% url 'index' %}"><img class="fanhui" src="{% static 'img/return.png' %}"></a>
+                <a href="{% url 'index' %}"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a>
             </div>
             <div class="photo">
                 <img class="tuoxiang" src="/media/{{ user.business.image }}">
