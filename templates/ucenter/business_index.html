@@ -52,9 +52,12 @@
         </div>
 
         <div class="inbody1-3">
-            <button onclick="window.location.href='{% url 'changestatus' %}'" style="cursor: pointer;" class="{% if user.business.is_open %}close{% else %}open{% endif %}">
-                {% if user.business.is_open %}休息{% else %}接单{% endif %}
-            </button>
+
+            {% if user.business.is_open %}
+                <button class="relax" type="button" onclick="window.location.href='{% url 'changestatus' %}'">休息</button>
+            {% else %}
+                <button class="work" type="button" onclick="window.location.href='{% url 'changestatus' %}'">接单</button>
+            {% endif %}
         </div>
     </div>
 </article>
@@ -100,27 +103,31 @@
                 {% endfor %}
             {% elif request.GET.s == 'now' %}
                 {% for order in user.get_businessuser_now_order %}
-                    <div class="order-in">
-                        <div class="orderin1">
-                            <p>订单号：{{ order.pk }}</p>
+                    <div class="order-or">
+                        <div class="order-in">
+                            <div class="orderin1">
+                                <p>订单号：{{ order.pk }}</p>
+                            </div>
+                            <div class="orderin2">
+                                <p> {{ order.food.name }}</p>
+                            </div>
+                            <div class="orderin3"></div>
                         </div>
-                        <div class="orderin2">
-                            <p> {{ order.food.name }}</p>
-                        </div>
-                        <div class="orderin3"></div>
-                    </div>
-                    <div class="order-on">
-                        <div class="orderon1">
-                            <p> {{ order.user.truename }}</p>
-                        </div>
-                        <div class="orderon2">
-                            <p> {{ order.user.oauthqqprofile.get_sex_display }}</p>
-                        </div>
-                        <div class="orderon3">
-                            <button type="button" onclick="doneorder({{ order.pk }})" style="cursor: pointer; background-color: #7ade53">已取餐</button>
-                            <button type="button" onclick="complain(opk={{ order.pk }}, b=this)"
-                                    style="cursor: pointer">未取餐
-                            </button>
+                        <div class="order-on">
+                            <div class="orderon1">
+                                <p> {{ order.user.truename }}</p>
+                            </div>
+                            <div class="orderon2">
+                                <p> {{ order.user.oauthqqprofile.get_sex_display }}</p>
+                            </div>
+                            <div class="orderon3">
+                                <button type="button" onclick="doneorder({{ order.pk }})"
+                                        style="cursor: pointer; background-color: #7ade53">已取餐
+                                </button>
+                                <button type="button" onclick="complain(opk={{ order.pk }}, b=this)"
+                                        style="cursor: pointer">未取餐
+                                </button>
+                            </div>
                         </div>
                     </div>
 

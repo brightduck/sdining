@@ -75,9 +75,8 @@ html
 	display: flex;
 	align-items: center;
 }
-.inbody1-3 button
+.work,.relax
 {
-	background-color:#7ade53;
 	color:white;
 	font-size:10px;
 	font-weight:800;
@@ -86,6 +85,14 @@ html
 	height:30px;
 	border:none;
 	padding-right:3px;
+}
+.relax
+{
+	background-color:#7ade53;
+}
+.work
+{
+	background-color:#d62b49;
 }
 .inbody1-3 button:hover{
 	font-size:12px;
@@ -186,6 +193,7 @@ list-style-type: none;
 .orderon3 button
 {
 	background-color:#f75a57;
+	margin-right:5px;
 
 }
 .recive
@@ -201,16 +209,16 @@ list-style-type: none;
 	font-size:13px;
 	border:none;
 }
-
+.order-or
+{
+	margin-top:5px;
+}
 .order-in,.order-on
 {
 	display:flex;
 	font-size:14px;
 }
-.order-on
-{
-	margin-top:-10px;
-}
+
 .orderon1,.orderon2,.orderin2,.orderin1,.orderin3,.orderon3
 {
 	display:flex;
@@ -224,9 +232,11 @@ list-style-type: none;
 .orderon3,.orderin3
 {
 	flex:1 1 40%;
-
 }
-.orderin3
+.orderon3
+{
+	margin-top:-40px;
+}
 .business-li
 {
 	display:flex;

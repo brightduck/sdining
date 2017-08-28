@@ -48,7 +48,8 @@ class OAuthQQ(object):
             return a.access_token
 
         def delete_all_accesstoken():
-            Accesstoken.objects.all().delete()
+            for a in Accesstoken.objects.all():
+                a.delete()
 
         def check_accesstoken():
             try:
@@ -160,7 +161,8 @@ class OAuthQQ(object):
         try:
             if result['errcode'] == 40001:
                 result = self.process_wrong_access_token(params=params,
-                                                         url='https://api.uni.qq.com/cgi-bin/message/template/send?{}', data=data)
+                                                         url='https://api.uni.qq.com/cgi-bin/message/template/send?{}',
+                                                         data=data)
         except Exception as e:
             print(e)
             pass
