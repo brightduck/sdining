@@ -14,6 +14,12 @@ class User(AbstractUser):
     date_ban = models.DateTimeField(verbose_name="开始封禁的时间", blank=True, null=True)
     banday = models.IntegerField(default=0, verbose_name="封禁天数")
 
+    def get_no_done_order_list(self):
+        try:
+            return self.myorder.all().filter(is_done=False)
+        except:
+            return None
+
     def get_now_order_list(self):
         try:
             return self.myorder.all().filter(is_accept=True, is_done=False, is_abnormal=False)

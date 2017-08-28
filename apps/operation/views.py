@@ -105,7 +105,7 @@ class ShowOrderView(LoginRequiredMixin, TemplateView):
             return JsonResponse({'status': 2})
         if not request.user.can_order:
             return JsonResponse({'status': -1})
-        if Order.objects.filter(is_done=False, is_abnormal=False):
+        if request.user.get_no_done_order_list():
             return JsonResponse({'status': -2})
         confirm = request.POST.get('confirm', False)
         if confirm:
