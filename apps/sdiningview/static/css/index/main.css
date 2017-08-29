@@ -223,14 +223,6 @@ header input {
     font-size: 1.25em;
 }
 
-.search_Q {
+#search_Q {
     overflow-y: hidden;
-}
-
-.search_Q div {
-    -webkit-filter: blur(38px);
-    /* Chrome, Opera */
-    -ms-filter: blur(38px);
-    filter: blur(38px);
-    background: rgba(255, 200, 200, 0.03);
 }

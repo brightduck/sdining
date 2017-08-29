@@ -12,6 +12,7 @@
     <title>智慧食堂</title>
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <link href="{% static 'css/index/style.css' %}" rel="stylesheet" type="text/css">
@@ -80,8 +81,8 @@
     </div>
 
     <!--slider-->
-    <div id="search_Q" class="{% if is_search %}search_Q disabled{% endif %}">
-        <div>
+    <div style="overflow-y: hidden">
+        <div id="search_Q">
             <div id="slider">
                 <div class="row">
                     <div id="carousel-example-generic" class="carousel slide col-xs-12" data-ride="carousel">
@@ -273,33 +274,34 @@
     </div>
 </div>
 
-<span id="qqLoginBtn" class="hidden"></span>
-{% if not request.user.is_authenticated %}
-    <script type="text/javascript">
-        window.location.href = "https://graph.qq.com/oauth/show?which=Login&display=pc&client_id=200513914&response_type=token&scope=all&redirect_uri=http%3A%2F%2F106.15.195.58%2Fqq%2Fcheck%2F";
-    </script>
-{% endif %}
 
 
 
 <script>
-    showtag = $("#show");
-    searchtag = $("#search");
-
-    {% if is_search %}
-        searchtag.show();
-    {% endif %}
-
-    showtag.click(function () {
-        $("#search").show();
-        $("#search_Q").addClass("search_Q disabled ");
+    $(document).ready(function () {
+        $("#show").click(function () {
+            $("#search").show();
+        });
     });
 
+    tag1 = $("#search_Q");
+    $("#show").click(function () {
+            tag1.css("filter","blur(38px)");
+            tag1.css("-webkit-filter","blur(38px)");
+            tag1.css("-ms-filter","blur(38px)");
+            tag1.css("background","rgba(255, 200, 200, 0.03)");
+        });
 
-    $(document).mousedown(function (e) {
-        searchtag.hide();
-        $("#search_Q").removeClass("search_Q disabled ");
-    });
+    $(document).mouseup(function (e) {
+            const _con = $(' #search ');   // 设置目标区域
+            if (!_con.is(e.target) && _con.has(e.target).length === 0) { // Mark 1
+                $("#search").hide();
+                tag1.css("-webkit-filter","none");
+                tag1.css("-ms-filter","none");
+                tag1.css("filter","none");
+                tag1.css("background","none");
+            }
+        });
 
 </script>
 </body>
