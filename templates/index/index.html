@@ -12,7 +12,7 @@
     <title>智慧食堂</title>
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <link href="{% static 'css/index/style.css' %}" rel="stylesheet" type="text/css">
@@ -275,33 +275,36 @@
 </div>
 
 
-
-
 <script>
-    $(document).ready(function () {
-        $("#show").click(function () {
-            $("#search").show();
+
+    {% if request.GET.q %}
+        $(document).ready(function () {
+            $("#show").click();
         });
+    {% endif %}
+
+    $("#show").click(function () {
+        $("#search").show();
     });
 
     tag1 = $("#search_Q");
     $("#show").click(function () {
-            tag1.css("filter","blur(38px)");
-            tag1.css("-webkit-filter","blur(38px)");
-            tag1.css("-ms-filter","blur(38px)");
-            tag1.css("background","rgba(255, 200, 200, 0.03)");
-        });
+        tag1.css("filter", "blur(38px)");
+        tag1.css("-webkit-filter", "blur(38px)");
+        tag1.css("-ms-filter", "blur(38px)");
+        tag1.css("background", "rgba(255, 200, 200, 0.03)");
+    });
 
     $(document).mouseup(function (e) {
-            const _con = $(' #search ');   // 设置目标区域
-            if (!_con.is(e.target) && _con.has(e.target).length === 0) { // Mark 1
-                $("#search").hide();
-                tag1.css("-webkit-filter","none");
-                tag1.css("-ms-filter","none");
-                tag1.css("filter","none");
-                tag1.css("background","none");
-            }
-        });
+        const _con = $(' #search ');   // 设置目标区域
+        if (!_con.is(e.target) && _con.has(e.target).length === 0) { // Mark 1
+            $("#search").hide();
+            tag1.css("-webkit-filter", "none");
+            tag1.css("-ms-filter", "none");
+            tag1.css("filter", "none");
+            tag1.css("background", "none");
+        }
+    });
 
 </script>
 </body>
