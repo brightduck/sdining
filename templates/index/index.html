@@ -293,6 +293,7 @@
         tag1.css("-webkit-filter", "blur(38px)");
         tag1.css("-ms-filter", "blur(38px)");
         tag1.css("background", "rgba(255, 200, 200, 0.03)");
+        tag1.css("pointer-events", "none");
     });
 
     $(document).mouseup(function (e) {
@@ -303,6 +304,7 @@
             tag1.css("-ms-filter", "none");
             tag1.css("filter", "none");
             tag1.css("background", "none");
+            tag1.css("pointer-events", "auto");
         }
     });
 
