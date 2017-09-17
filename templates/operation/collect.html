@@ -24,7 +24,7 @@
 
 <body>
 <div class="container">
-    <h2 class="header">我的收藏</h2>
+    <h2 class="header"><span class="pull-left"><i class="glyphicon glyphicon-chevron-left" style="cursor: pointer" onclick="window.location.href='{% url 'ucenterindex' %}'"></i> </span>我的收藏</h2>
     <hr size=3px width=100% color=black>
     {% for business in user.get_collect_list %}
         <a href="{% url 'businessdetail' business.pk %}">

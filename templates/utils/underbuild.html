@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>出错啦！ </title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -35,6 +36,7 @@
 </head>
 
 <body style="height:100vh">
+<i class="glyphicon glyphicon-chevron-left" style="cursor: pointer; font-size: 7em" onclick="window.location.href='{% url 'ucenterindex' %}'"></i>
 <div class="for-logo">
     <img id="the-logo" src="{% static 'img/indev.jpg' %}"
          alt="加载失败" style="max-width:100%"/>
