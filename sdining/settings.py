@@ -115,10 +115,7 @@ APPKEY = 'WHXYOPENAPIKEY'
 
 TEMPLATE_ID = 'af40aca07db111e7be1d54520092a308'
 
-REDIRECT_URI = 'http://106.15.195.58/qq/check/'
-
-WRAPPER_MINUTE = 0
-# if the WRAPPER_MINUTE = 0 that's means real-time push
+REDIRECT_URI = 'http://118.89.37.25:81/qq/check/'
 
 DEFAULT_PASSWORD = '123321'
 
@@ -141,7 +138,7 @@ CACHES = {
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-TEMPLATE_BUTTON_URI = 'http://106.15.195.58/ucenter/'
+TEMPLATE_BUTTON_URI = 'http://118.89.37.25:81/ucenter/'
 
 CRONJOBS = [
     ('0 15 * * *', 'cronjob.auto_done.auto_done'),

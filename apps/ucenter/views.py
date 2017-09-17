@@ -62,7 +62,7 @@ def cancel_order(request):
         return HttpResponseNotFound(NOTFOUNDMESSAGE)
     try:
         obj = Order.objects.get(pk=int(oid), user=request.user)
-        if (timezone.now() - obj.date_create).total_seconds() > 600:
+        if obj.is_accept:
             return JsonResponse({
                 'status': 0
             })

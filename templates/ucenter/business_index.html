@@ -93,7 +93,7 @@
                             <button class="recive" type="button"
                                     onclick="window.location.href='{% url 'accept_or_deny' %}?op=accept&opk={{ order.pk }}'">
                                 接单
-                            </button>
+                            </button>&nbsp;&nbsp;
                             <button class="object" type="button"
                                     onclick="window.location.href='{% url 'accept_or_deny' %}?op=deny&opk={{ order.pk }}'">
                                 拒单
@@ -123,7 +123,7 @@
                             <div class="orderon3">
                                 <button type="button" onclick="doneorder({{ order.pk }})"
                                         style="cursor: pointer; background-color: #7ade53">已取餐
-                                </button>
+                                </button>&nbsp;&nbsp;
                                 <button type="button" onclick="complain(opk={{ order.pk }}, b=this)"
                                         style="cursor: pointer">未取餐
                                 </button>
