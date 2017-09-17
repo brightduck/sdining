@@ -163,23 +163,22 @@
                                                 <img src="media/{{ business.business.image }}" alt="">
                                             </div>
                                             <div class="col-xs-9">
-                                                <h4 style="font-size: 28px">{{ business.business.name }}&nbsp;&nbsp;
+                                                <h4>{{ business.business.name }}&nbsp;&nbsp;
                                                     {% if not business.business.is_open %}
                                                         <span style="background: #4b7fd3; color: #FFFFFF; ">商家休息</span>
                                                     {% endif %}
-                                                    <span class="pull-right"
-                                                          style="font-size: 18px">综合评分：{{ business.business.rank }}</span>
+                                                    <span class="pull-right">综合评分：{{ business.business.rank }}</span>
                                                 </h4>
 
                                                 <span>
-                                        <p style="font-size: 20px">特色菜：{% for food in business.business.special.foods.all %}
+                                        <p style="">特色菜：{% for food in business.business.special.foods.all %}
                                             {{ food.name }}
                                         {% empty %}
                                             {% for food in business.business.foodlist.all|slice:"2" %}
                                                 {{ food.name }}
                                             {% endfor %}
                                         {% endfor %}</p>
-                                                <span><p class="pull-left" style="font-size: 15px">位置：{{ business.business.get_position_display }} {{ business.business.get_floor_display }}</p></span>
+                                                <span><p class="pull-left">位置：{{ business.business.get_position_display }} {{ business.business.get_floor_display }}</p></span>
                                             <span><p class="text-right">人均消费：{{ business.business.average }}元</p></span>
                                 </span>
                                             </div>
