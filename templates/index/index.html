@@ -179,6 +179,7 @@
                                                 {{ food.name }}
                                             {% endfor %}
                                         {% endfor %}</p>
+                                                <span><p class="pull-left">位置：{{ business.business.get_position_display }} {{ business.business.get_floor_display }}</p></span>
                                             <span><p class="text-right">人均消费：{{ business.business.average }}元</p></span>
                                 </span>
                                             </div>
@@ -217,6 +218,7 @@
                                             {% endfor %}
                                         {% endfor %}
                                             </p>
+                                                <span><p class="pull-left">位置：{{ business.get_position_display }} {{ business.get_floor_display }}</p></span>
                                             <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
                                 </span>
                                             </div>
@@ -253,9 +255,9 @@
                                             {% endfor %}
                                         {% endfor %}
                                             </p>
-
+                                                <span><p class="pull-left">位置：{{ business.get_position_display }} {{ business.get_floor_display }}</p></span>
                                             <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
-                                </span>
+                                            </span>
                                             </div>
                                         </div>
                                     </a>

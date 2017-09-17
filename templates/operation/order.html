@@ -57,9 +57,16 @@
         </div>
     </main>
 
+    <div>
+        <p class="text-center" style="font-size: 2em; color: #d61e06">使用须知</p>
+        <p class="know">1.提交预约之后，在商家接单之前您可以取消此次订单</p>
+        <p class="know">2.预约取餐时间段为：中午12:00——12:20，晚上17:00——17：20</p>
+        <p class="know">3.若晚于规定取餐时间10分钟还未到窗口取餐，我们会对用户进行使用限制</p>
+    </div>
+
 
     <div class="text-center">
-        <button type="button" class="btn btn-success btn-lg" onclick="submit()">提交订单</button>
+        <button type="button" class="btn btn-success btn-lg btn-block" onclick="submit()">提交订单</button>
     </div>
 </div>
 
@@ -79,7 +86,7 @@
                     alert("商家并不能预约餐饮");
                     window.location.href = "/";
                 }else if(data['status'] === -1){
-                    alert("您现在无法预约任何订单");
+                    alert("由于您之前发生过预约未取餐的行为，后台已自动限制您使用，请到关于我们联系开发人员解除限制");
                     window.location.href = "/";
                 }else if(data['status'] === -2){
                     alert("您目前还有未完成的进行中订单，请处理后再预约");

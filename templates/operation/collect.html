@@ -15,33 +15,41 @@
             height: 5vh;
             line-height: 5vh;
         }
+
+        .bimg {
+            height: 122px;
+        }
     </style>
 </head>
 
 <body>
-<h2 class="header">我的收藏</h2>
-<hr size=3px width=100% color=black>
-{% for business in user.get_collect_list %}
-    <a href="{% url 'businessdetail' business.pk %}">
-        <div class="show row ">
-            <div class="col-xs-3">
-                <img src="/media/{{ business.image }}" alt="">
-            </div>
-            <div class="col-xs-9">
-                <h4>{{ business.name }}<em style="float:right; font-style:normal;">综合评分：{{ business.rank }}</em></h4>
-                <span>
-        <p>特色菜：{% for food in business.special.foods.all %}
+<div class="container">
+    <h2 class="header">我的收藏</h2>
+    <hr size=3px width=100% color=black>
+    {% for business in user.get_collect_list %}
+        <a href="{% url 'businessdetail' business.pk %}">
+            <div class="show row ">
+                <div class="col-xs-3">
+                    <img src="/media/{{ business.image }}" alt="" class="bimg">
+                </div>
+                <div class="col-xs-9">
+                    <h4 style="margin-left: 10px">{{ business.name }}<em style="float:right; font-style:normal; margin-right: 10px">综合评分：{{ business.rank }}</em>
+                    </h4>
+                    <span>
+        <p style="margin-left: 10px">特色菜：{% for food in business.special.foods.all %}
             {{ food.name }}
         {% empty %}
             {% for food in business.foodlist.all|slice:"3" %}
                 {{ food.name }}
             {% endfor %}
-        {% endfor %}</p>
-        <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
+        {% endfor %}</p><br>
+                    <span><p class="pull-left" style="margin-left: 10px">位置：{{ business.get_position_display }} {{ business.get_floor_display }}</p></span>
+        <span><p class="text-right" style="color: #717171; margin-right: 10px">人均消费：{{ business.average }}元</p></span>
 </span>
+                </div>
             </div>
+        </a>
+        <hr>
         </div>
-    </a>
-    <hr>
-{% endfor %}
+    {% endfor %}
 </body>
