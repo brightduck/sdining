@@ -4,6 +4,7 @@ from django.http import HttpResponseNotFound, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone
 
 from account.views import qq_login
 from operation.models import Order, AbnormalOrder
@@ -52,6 +53,29 @@ def order_is_done(request):
         return HttpResponseRedirect(reverse('ucenterindex'))
     except:
         return HttpResponseNotFound(NOTFOUNDMESSAGE)
+
+
+@login_required(login_url='/ucenter')
+def cancel_order(request):
+    oid = request.POST.get('id', False)
+    if not oid:
+        return HttpResponseNotFound(NOTFOUNDMESSAGE)
+    try:
+        obj = Order.objects.get(pk=int(oid), user=request.user)
+        if (timezone.now() - obj.date_create).total_seconds() > 600:
+            return JsonResponse({
+                'status': 0
+            })
+        else:
+            obj.delete()
+            return JsonResponse({
+                'status': 1
+            })
+    except:
+        return JsonResponse({
+            'status': 0
+        })
+
 
 
 @login_required(login_url='/ucenter/')

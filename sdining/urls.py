@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^ucenter/about/$', ucenterviews.AboutmeView.as_view(), name='about'),
     url(r'^ucenter/agree/$', ucenterviews.AgreeView.as_view(), name='agree'),
     url(r'^ucenter/done/$', ucenterviews.order_is_done, name='orderdone'),
+    url(r'^ucenter/cancel/$', ucenterviews.cancel_order, name='cancelorder'),
     url(r'^ucenter/collect/$', operationviews.MycollectView.as_view(), name='mycollect'),
     url(r'^ucenter/business/$', ucenterviews.BusinessUcenterView.as_view(), name='businessucenterindex'),
     url(r'^ucenter/business/done/$', ucenterviews.business_order_is_done, name='businessorderdone'),

@@ -11,7 +11,7 @@
   {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "xadmin/css/rtl.css" %}{% endblock %}" />{% endif %}
   {% vendor 'bootstrap.css' %}
   {% if site_theme %}
-  <link rel="stylesheet" id="site-theme" href="https://bootswatch.com/paper/bootstrap.min.css" />
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   {% else %}
   <link rel="stylesheet" href="{% static "xadmin/css/themes/bootstrap-xadmin.css" %}" />
   {% endif %}

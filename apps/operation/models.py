@@ -6,8 +6,6 @@ from django.shortcuts import get_object_or_404
 from account.models import User
 from business.models import Food, Business
 
-from .real_time_push import push
-
 def business_is_open_validator(value):
     food = get_object_or_404(Food, pk=value)
     if not food.business.is_open:
@@ -17,7 +15,7 @@ def business_is_open_validator(value):
 class Order(models.Model):
     user = models.ForeignKey(User, related_name='myorder', verbose_name="订单发起者")
     food = models.ForeignKey(Food, validators=[business_is_open_validator], verbose_name="订单食物")
-    date_create = models.DateTimeField(blank=True, null=True, verbose_name="创建时间")
+    date_create = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name="创建时间")
     date_done = models.DateTimeField(blank=True, null=True, verbose_name="完成时间")
     trank = models.IntegerField(default=0, verbose_name="口味评分")
     prank = models.IntegerField(default=0, verbose_name="价格评分")
@@ -55,7 +53,6 @@ class Order(models.Model):
             self.date_done = timezone.now()
             self.remove_from_order_list()
         super(Order, self).save()
-        push(openid=self.food.business.user.oauthqqprofile.qq_openid)
 
     def get_business_user(self):
         return self.food.business.user

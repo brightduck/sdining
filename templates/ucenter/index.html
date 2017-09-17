@@ -55,18 +55,33 @@
         <div class="order-content">
             {% if not request.GET.s or request.GET.s == 'now' %}
                 {% for order in user.get_now_order_list %}
-                    <div class="order-div">
-                        <div class="order-number">
-                            <span>订单号：{{ order.pk }}</span>
+                    {% if order.is_accept %}
+                        <div class="order-div">
+                            <div class="order-number">
+                                <span>订单号：{{ order.pk }}</span>
+                            </div>
+                            <div class="order-content-z">
+                                <span>{{ order.food.name }}</span>
+                            </div>
+                            <div class="order-content-y">
+                                <button type="button" style="cursor: pointer" onclick="doneorder({{ order.pk }})">已取餐
+                                </button>
+                            </div>
                         </div>
-                        <div class="order-content-z">
-                            <span>{{ order.food.name }}</span>
+                    {% else %}
+                        <div class="order-div">
+                            <div class="order-number">
+                                <span>等待接单：</span>
+                            </div>
+                            <div class="order-content-z">
+                                <span>{{ order.food.name }}</span>
+                            </div>
+                            <div class="order-content-y">
+                                <button type="button" style="cursor: pointer" onclick="cancel({{ order.pk }})">取消预约
+                                </button>
+                            </div>
                         </div>
-                        <div class="order-content-y">
-                            <button type="button" style="cursor: pointer" onclick="doneorder({{ order.pk }})">已取餐
-                            </button>
-                        </div>
-                    </div>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
             {% if request.GET.s == 'done' %}
@@ -163,6 +178,21 @@
 
     function doneorder(id) {
         window.location.href = "{% url 'orderdone' %}?id=" + id;
+    }
+
+    function cancel(id) {
+        $.post("{% url 'cancelorder' %}", {
+            id: id,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        function (data) {
+            if (data['status'] === 1) {
+                alert("取消成功");
+                location.reload();
+            } else {
+                alert("取消失败，已超过十分钟");
+            }
+        })
     }
 
     {% if not request.user.is_authenticated %}

@@ -297,7 +297,7 @@
     });
 
     $(document).mouseup(function (e) {
-        const _con = $(' #search ');   // 设置目标区域
+        const _con = $(' #search ');
         if (!_con.is(e.target) && _con.has(e.target).length === 0) { // Mark 1
             $("#search").hide();
             tag1.css("-webkit-filter", "none");

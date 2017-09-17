@@ -22,7 +22,7 @@ class User(AbstractUser):
 
     def get_now_order_list(self):
         try:
-            return self.myorder.all().filter(is_accept=True, is_done=False, is_abnormal=False)
+            return self.myorder.all().filter(is_done=False, is_abnormal=False)
         except:
             return None
 
