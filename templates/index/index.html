@@ -42,7 +42,7 @@
                 <form action="{% url 'index' %}" method="get">
                     <label for="show"></label>
                     <input id="show" class="text-center" type="search" name="q"
-                           value="{% if is_search %}{{ is_search }}{% else %}武汉热干面{% endif %}" onfocus="this.value=''"
+                           value="{% if is_search %}{{ is_search }}{% else %}欢迎使用智慧食堂{% endif %}" onfocus="this.value=''"
                            required>
                     <input type="submit" style="display: none">
                 </form>
@@ -276,7 +276,7 @@
     </div>
 </div>
 
-<footer class="text-center">
+<footer class="text-center" style="font-size: 1.2em">
     © 2017 众焰科技, Inc.
 </footer>
 
