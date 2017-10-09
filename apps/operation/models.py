@@ -16,6 +16,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, related_name='myorder', verbose_name="订单发起者")
     food = models.ForeignKey(Food, validators=[business_is_open_validator], verbose_name="订单食物")
     date_create = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name="创建时间")
+    date_pickup = models.CharField(max_length=10, verbose_name="取餐时间")
     date_done = models.DateTimeField(blank=True, null=True, verbose_name="完成时间")
     trank = models.IntegerField(default=0, verbose_name="口味评分")
     prank = models.IntegerField(default=0, verbose_name="价格评分")

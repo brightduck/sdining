@@ -46,15 +46,16 @@
         </div>
         <div class="inbody1-2">
             <ul>
-                <li>商家名称：{{ user.business }}</li>
-                <li>商家位置：{{ user.business.get_position_display }} {{ user.business.get_floor_display }}</li>
+                <li>商家：{{ user.business }}</li>
+                <li>位置：{{ user.business.get_position_display }} {{ user.business.get_floor_display }}</li>
             </ul>
         </div>
 
         <div class="inbody1-3">
 
             {% if user.business.is_open %}
-                <button class="relax" type="button" onclick="window.location.href='{% url 'changestatus' %}'">休息</button>
+                <button class="relax" type="button" onclick="window.location.href='{% url 'changestatus' %}'">休息
+                </button>
             {% else %}
                 <button class="work" type="button" onclick="window.location.href='{% url 'changestatus' %}'">接单</button>
             {% endif %}
@@ -89,6 +90,9 @@
                         <div class="order-list-z">
                             <p>{{ order.food.name }}</p>
                         </div>
+                        <div class="order-list-z">
+                            取餐时间：{{ order.date_pickup }}
+                        </div>
                         <div class="order-list-y">
                             <button class="recive" type="button"
                                     onclick="window.location.href='{% url 'accept_or_deny' %}?op=accept&opk={{ order.pk }}'">
@@ -100,6 +104,7 @@
                             </button>
                         </div>
                     </div>
+                    <hr>
                 {% endfor %}
             {% elif request.GET.s == 'now' %}
                 {% for order in user.get_businessuser_now_order %}
@@ -111,14 +116,16 @@
                             <div class="orderin2">
                                 <p> {{ order.food.name }}</p>
                             </div>
-                            <div class="orderin3"></div>
+                            <div class="orderin3">
+
+                            </div>
                         </div>
                         <div class="order-on">
                             <div class="orderon1">
-                                <p> {{ order.user.truename }}</p>
+                                <p>取餐时间：{{ order.date_pickup }}</p>
                             </div>
                             <div class="orderon2">
-                                <p> {{ order.user.oauthqqprofile.get_sex_display }}</p>
+                                <p> {{ order.user.truename }}</p>
                             </div>
                             <div class="orderon3">
                                 <button type="button" onclick="doneorder({{ order.pk }})"
@@ -130,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <hr>
                 {% endfor %}
             {% elif request.GET.s == 'done' %}
                 {% get_done_order_list user.business as done_list %}

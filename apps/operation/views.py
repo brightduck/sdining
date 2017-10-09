@@ -108,6 +108,7 @@ class ShowOrderView(LoginRequiredMixin, TemplateView):
         if request.user.get_no_done_order_list():
             return JsonResponse({'status': -2})
         confirm = request.POST.get('confirm', False)
+        time = request.POST.get('time', False)
         if confirm:
             try:
                 orderdic = request.session['order']
@@ -121,7 +122,7 @@ class ShowOrderView(LoginRequiredMixin, TemplateView):
                             return JsonResponse({'status': 0})
                     else:
                         f = Food.objects.get(pk=fpk)
-                        Order.objects.create(user=request.user, food=f)
+                        Order.objects.create(user=request.user, food=f, date_pickup=time)
             except:
                 return JsonResponse({'status': 0})
             return JsonResponse({'status': 1})
