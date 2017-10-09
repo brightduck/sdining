@@ -86,7 +86,7 @@
             {% if not request.GET.s or request.GET.s == 'pending' %}
                 {% get_pending_order_list user.business as pending_list %}
                 {% for order in pending_list %}
-                    <div class="order-list1">
+                    <div class="order-list1" style="border-bottom: 1px solid #e2e2e2">
                         <div class="order-list-z">
                             <p>{{ order.food.name }}</p>
                         </div>
@@ -104,11 +104,10 @@
                             </button>
                         </div>
                     </div>
-                    <hr>
                 {% endfor %}
             {% elif request.GET.s == 'now' %}
                 {% for order in user.get_businessuser_now_order %}
-                    <div class="order-or">
+                    <div class="order-or" style="border-bottom: 1px solid #e2e2e2">
                         <div class="order-in">
                             <div class="orderin1">
                                 <p>订单号：{{ order.pk }}</p>
@@ -135,14 +134,14 @@
                                         style="cursor: pointer">未取餐
                                 </button>
                             </div>
+
                         </div>
                     </div>
-                    <hr>
                 {% endfor %}
             {% elif request.GET.s == 'done' %}
                 {% get_done_order_list user.business as done_list %}
                 {% for order in done_list %}
-                    <div class="order-list1">
+                    <div class="order-list1" style="border-bottom: 1px solid #e2e2e2">
                         <div class="order-list-z">
                             <p>{{ order.food.name }}</p>
                         </div>
