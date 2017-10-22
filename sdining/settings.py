@@ -145,8 +145,6 @@ CRONJOBS = [
     ('0 20 * * *', 'cronjob.auto_done.auto_done'),
     ('0 13 * * *', 'cronjob.auto_abnormal.auto_abnormal'),
     ('0 18 * * *', 'cronjob.auto_abnormal.auto_abnormal'),
-    ('40 11 * * *', 'cronjob.auto_close.auto_close'),
-    ('40 16 * * *', 'cronjob.auto_close.auto_close'),
     ('0 8 * * *', 'cronjob.process_creditrank.process_creditrank'),
     ('50 10 * * *', 'cronjob.order_wrapper_push.wrapper'),
     ('0,10,20,30,40 11 * * *', 'cronjob.order_wrapper_push.wrapper'),
