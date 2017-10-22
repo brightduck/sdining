@@ -80,7 +80,7 @@
             </div>
             <div class="col-xs-4">
                 <p>
-                    <select class="form-control" id="m">
+                    <select class="form-control">
                         <option value="-1">请选择分钟</option>
                         <option value="0">0</option>
                         <option value="10">10</option>
@@ -89,6 +89,29 @@
                         <option value="40">40</option>
                         <option value="50">50</option>
                     </select>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <span style="font-size: 1.7em">备注</span>
+            </div>
+            <div class="col-xs-4">
+                <p>
+                    <select class="form-control" id="remark1">
+                        <option value="-1">请选择口味。不选为食物默认口味</option>
+                        <option value="1">不要辣</option>
+                        <option value="2">微辣</option>
+                        <option value="3">辣</option>
+                        <option value="4">特辣</option>
+                    </select>
+                </p>
+            </div>
+            <div class="col-xs-4">
+                <p>
+                <form>
+                    <input type="text" class="form-control" placeholder="如有其它要求请输入" id="remark2">
+                </form>
                 </p>
             </div>
         </div>
@@ -113,8 +136,9 @@
             alert('您还未选择取餐时间');
             return false;
         }
-        time = $('#h').val() + ':'+$('#m').val();
-        $.post("{% url 'showorder' %}", {confirm: 1, csrfmiddlewaretoken: '{{ csrf_token }}', time:time},
+        time = $('#h').val() + ':' + $('#m').val();
+        remarkstr = $('#remark1').find("option:selected").text() + $('#remark2').val();
+        $.post("{% url 'showorder' %}", {confirm: 1, csrfmiddlewaretoken: '{{ csrf_token }}', time: time, remarkstr: remarkstr},
             function (data) {
                 if (data['status'] === 1) {
                     alert("您的订单已成功提交，请待商家接受预约后前往个人中心查看相应订单信息");

@@ -103,6 +103,9 @@
                                 拒单
                             </button>
                         </div>
+                        <div class="order-list-z">
+                            <p>备注信息：{{ order.remark }}</p>
+                        </div>
                     </div>
                 {% endfor %}
             {% elif request.GET.s == 'now' %}
@@ -116,7 +119,6 @@
                                 <p> {{ order.food.name }}</p>
                             </div>
                             <div class="orderin3">
-
                             </div>
                         </div>
                         <div class="order-on">
@@ -134,7 +136,9 @@
                                         style="cursor: pointer">未取餐
                                 </button>
                             </div>
-
+                        </div>
+                        <div class="order-on">
+                            <p>备注信息：{{ order.remark }}</p>
                         </div>
                     </div>
                 {% endfor %}

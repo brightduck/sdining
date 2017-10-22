@@ -109,6 +109,7 @@ class ShowOrderView(LoginRequiredMixin, TemplateView):
             return JsonResponse({'status': -2})
         confirm = request.POST.get('confirm', False)
         time = request.POST.get('time', False)
+        remarkstr = request.POST.get('remarkstr', '')
         if confirm:
             try:
                 orderdic = request.session['order']
@@ -122,8 +123,9 @@ class ShowOrderView(LoginRequiredMixin, TemplateView):
                             return JsonResponse({'status': 0})
                     else:
                         f = Food.objects.get(pk=fpk)
-                        Order.objects.create(user=request.user, food=f, date_pickup=time)
-            except:
+                        Order.objects.create(user=request.user, food=f, date_pickup=time, remark=remarkstr)
+            except Exception as e:
+                print(e)
                 return JsonResponse({'status': 0})
             return JsonResponse({'status': 1})
         else:

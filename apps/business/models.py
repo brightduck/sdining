@@ -17,6 +17,8 @@ class Business(models.Model):
     total_rank = models.IntegerField(default=0, verbose_name="总分")
     rank = models.IntegerField(default=0, verbose_name="综合评价")
 
+    sort_weight = models.IntegerField(default=0, verbose_name="排序权值")
+
     is_open = models.BooleanField(default=False, verbose_name="是否接受预约")
 
     def save(self, force_insert=False, force_update=False, using=None,

@@ -9,7 +9,8 @@ class BusinessAdmin:
         'name',
         'user',
         'type',
-        'is_open'
+        'is_open',
+        'sort_weight'
     )
 
     search_fields = (
@@ -34,7 +35,8 @@ class BusinessAdmin:
                      'average',
                      'rank',
                      'total_rank',
-                     'num_like')
+                     'num_like',
+                     'sort_weight')
         ),
         Side(
             Fieldset('状态控制',

@@ -18,6 +18,7 @@ class Order(models.Model):
     date_create = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name="创建时间")
     date_pickup = models.CharField(max_length=10, verbose_name="取餐时间")
     date_done = models.DateTimeField(blank=True, null=True, verbose_name="完成时间")
+    remark = models.CharField(max_length=20, verbose_name="备注", blank=True, null=True)
     trank = models.IntegerField(default=0, verbose_name="口味评分")
     prank = models.IntegerField(default=0, verbose_name="价格评分")
 
