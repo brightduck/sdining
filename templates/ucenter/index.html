@@ -12,165 +12,179 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/userstyle.css' %}">
     <style>
-        button {
-            cursor: pointer;
+        @media screen and (max-width: 325px) {
+            .detail-left span {
+                font-size: 13px;
+            }
+
+            .detail-right span {
+                font-size: 10px !important;
+            }
         }
+
+        @media screen and (min-width: 400px) {
+            * {
+                font-size: 17px;
+            }
+
+            .detail-left span {
+                font-size: 17px;
+            }
+
+            .detail-right span {
+                font-size: 17px !important;
+            }
+        }
+
+        .info-detail ul li {
+                height: 100px;
+                box-sizing: border-box;
+                border: 1px solid rgb(220, 220, 220);
+                margin-top: 10px;
+                border-radius: 5px;
+            }
     </style>
 </head>
 <body>
 <article>
-    <div class="inbody1">
-        <div class="inbody1-1">
-            <div class="return">
-                <a href="{% url 'index' %}"><img class="fanhui" src="{% static 'img/return.png' %}"></a>
-            </div>
-            <div class="photo">
-                <img class="tuoxiang" src="{{ user.avatar }}">
-            </div>
+    <header>
+        <i class="glyphicon glyphicon-chevron-left back" onclick="location.href='{% url 'index' %}'"></i>
+        <span>我的个人界面</span>
+    </header>
+    <nav>
+        <div class="navleft">
+            <img class="myimg" src="{{ user.avatar }}">
         </div>
-        <div class="inbody1-2">
+        <div class="navright">
             <ul>
-                <li>姓名：{{ user.truename }}</li>
-                <li>性别：{{ user.oauthqqprofile.get_sex_display }}</li>
-                <li>学号：{{ user.oauthqqprofile.stuid }}</li>
+                <li>姓名:{{ user.truename }}</li>
+                <li>性别: {{ user.oauthqqprofile.get_sex_display }}</li>
+                <li>手机号: {{ user.oauthqqprofile.stuid }}</li>
             </ul>
         </div>
-    </div>
+    </nav>
 </article>
 
 <article>
-    <div class="order-body">
-        <div class="order-inf">
-            <span>预约信息</span>
+    <div class="content">
+        <div class="c-info">
+            <span>订单信息</span>
         </div>
-        <div class="order-list">
-            <div class="order-doing">
-                <a class="but {% if not request.GET.s or request.GET.s == 'now' %}aactive{% endif %}"
-                   href="?s=now">进行中</a>
+        <div class="c-info-main">
+            <div class="ingOrdone">
+                <span class="{% if not request.GET.s or request.GET.s == 'now' %}ing-active{% endif %}"
+                      onclick="location.href='?s=now'">进行中</span>
+                <span class="{% if request.GET.s == 'done' %}ing-active{% endif %}" onclick="location.href='?s=done'">已完成</span>
             </div>
-            <div class="order-done">
-                <a class="but {% if request.GET.s == 'done' %}aactive{% endif %}" href="?s=done">已完成</a>
-            </div>
-        </div>
-        <div class="order-content">
-            {% if not request.GET.s or request.GET.s == 'now' %}
-                {% for order in user.get_now_order_list %}
-                    {% if order.is_accept %}
-                        <div class="order-div">
-                            <div class="order-number">
-                                <span>订单号：{{ order.pk }}</span>
-                            </div>
-                            <div class="order-content-z">
-                                <span>{{ order.food.name }}</span>
-                            </div>
-{#                            <div class="order-content-y">#}
-{#                                <button type="button" style="cursor: pointer" onclick="doneorder({{ order.pk }})">已取餐#}
-{#                                </button>#}
-{#                            </div>#}
-                        </div>
-                    {% else %}
-                        <div class="order-div">
-                            <div class="order-number">
-                                <span>等待接单：</span>
-                            </div>
-                            <div class="order-content-z">
-                                <span>{{ order.food.name }}</span>
-                            </div>
-                            <div class="order-content-y">
-                                <button type="button" style="cursor: pointer" onclick="cancel({{ order.pk }})">取消预约
-                                </button>
-                            </div>
-                        </div>
+            <div class="info-detail">
+                <ul>
+                    {% if not request.GET.s or request.GET.s == 'now' %}
+                        {% for order in user.get_now_order_list %}
+                            {% if order.is_accept %}
+                                <li>
+                                    <div class="detail-left">
+                                        <span>订单号: {{ order.pk }}</span>
+                                        <span>{{ order.food.name }}</span>
+                                    </div>
+                                    <div class="detail-left">
+                                        <span>取餐时间：{{ order.date_pickup }}</span>
+                                        <span>备注: {{ order.remark }}</span>
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <div class="detail-left">
+                                        <span>订单号: {{ order.pk }}</span>
+                                        <span>{{ order.food.name }}</span>
+                                    </div>
+                                    <div class="detail-left">
+                                        <span>取餐时间：{{ order.date_pickup }}</span>
+                                        <span>备注: {{ order.remark }}</span>
+                                    </div>
+                                    <div class="detail-right">
+                                        <span onclick="cancel({{ order.pk }})">取消预约</span>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
-                {% endfor %}
-            {% endif %}
-            {% if request.GET.s == 'done' %}
-                {% for order in user.get_done_order_list %}
-                    <div class="order-div">
-                        <div class="order-pj-z">
-                            <span>{{ order.food.name }}</span>
-                        </div>
-                        <div class="order-time">
-                            <span>{{ order.date_done }}</span>
-                        </div>
-                        {% if not order.is_comment %}
-                            <div class="order-pj-y">
-                                <button type="button" onclick="window.location.href='{% url 'comment' order.pk %}'">点评
-                                </button>
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            {% endif %}
+                    {% if request.GET.s == 'done' %}
+                        {% for order in user.get_done_order_list %}
+                            <li>
+                                <div class="detail-left">
+                                    <span>订单号: {{ order.pk }}</span>
+                                    <span>{{ order.food.name }}</span>
+                                </div>
+                                <div class="detail-left">
+                                    <span>取餐时间：{{ order.date_pickup }}</span>
+                                    <span>备注: {{ order.remark }}</span>
+                                </div>
+                                <div class="detail-right">
+                                    <span onclick="window.location.href='{% url 'comment' order.pk %}'">点评</span>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-    </div>
-</article>
-
-
-<article>
-    <div class="order-choose">
-        <ul class="order-ul">
-            <a href="{% url 'mycollect' %}" class="order-a">
-                <div class="order-li">
-                    <div class="t1">
-                        <img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E6%94%B6%E8%97%8F.png"
-                             width="24px" height="24px">
-                    </div>
-                    <div class="t2">
-                        <span>我的收藏</span>
-                    </div>
-                    <div class="t3">
-                        <span>></span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{% url 'myvouchers' %}" class="order-a">
-                <div class="order-li">
-                    <div class="t1">
-                        <img src="http://ouq4wie1o.bkt.clouddn.com/%E6%88%91%E7%9A%84%E7%A4%BC%E5%88%B8.png"
-                             width="24px" height="24px">
-                    </div>
-                    <div class="t2">
-                        <span>我的礼券</span>
-                    </div>
-                    <div class="t3">
-                        <span>></span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{% url 'about' %}" class="order-a">
-                <div class="order-li">
-                    <div class="t1">
-                        <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC.png"
-                             width="24px" height="24px">
-                    </div>
-                    <div class="t2">
-                        <span>关于我们</span>
-                    </div>
-                    <div class="t3">
-                        <span>></span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{% url 'agree' %}" class="order-a">
-                <div class="order-li">
-                    <div class="t1">
-                        <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%8D%8F%E8%AE%AE.png" width="24px" height="24px">
-                    </div>
-                    <div class="t2">
-                        <span>使用协议</span>
-                    </div>
-                    <div class="t3">
-                        <span>></span>
-                    </div>
-                </div>
-            </a>
-
+        <ul class="c-info-bottom">
+            <li onclick="location.href='{% url 'mycollect' %}'">
+                <i class="glyphicon glyphicon-star star-color"></i>
+                <span class="bottom-title">我的收藏</span>
+                <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+            </li>
+            <li onclick="location.href='{% url 'myvouchers' %}'">
+                <i class="glyphicon glyphicon-gift gift-color"></i>
+                <span class="bottom-title">我的礼券</span>
+                <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+            </li>
+            <li onclick="location.href='{% url 'about' %}'">
+                <i class="glyphicon glyphicon-earphone earphone-color"></i>
+                <span class="bottom-title">联系我们</span>
+                <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+            </li>
+            <li onclick="location.href='{% url 'agree' %}'">
+                <i class="glyphicon glyphicon-check check-color"></i>
+                <span class="bottom-title">使用协议</span>
+                <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+            </li>
         </ul>
     </div>
+    {#    <div class="order-body">#}
+    {#        <div class="order-inf">#}
+    {#            <span>预约信息</span>#}
+    {#        </div>#}
+    {#        <div class="order-list">#}
+    {#            <div class="order-doing">#}
+    {#                <a class="but {% if not request.GET.s or request.GET.s == 'now' %}aactive{% endif %}"#}
+    {#                   href="?s=now">进行中</a>#}
+    {#            </div>#}
+    {#            <div class="order-done">#}
+    {#                <a class="but {% if request.GET.s == 'done' %}aactive{% endif %}" href="?s=done">已完成</a>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <div class="order-content">#}
+    {#            {% if request.GET.s == 'done' %}#}
+    {#                {% for order in user.get_done_order_list %}#}
+    {#                    <div class="order-div">#}
+    {#                        <div class="order-pj-z">#}
+    {#                            <span>{{ order.food.name }}</span>#}
+    {#                        </div>#}
+    {#                        <div class="order-time">#}
+    {#                            <span>{{ order.date_done }}</span>#}
+    {#                        </div>#}
+    {#                        {% if not order.is_comment %}#}
+    {#                            <div class="order-pj-y">#}
+    {#                                <button type="button" onclick="window.location.href='{% url 'comment' order.pk %}'">点评#}
+    {#                                </button>#}
+    {#                            </div>#}
+    {#                        {% endif %}#}
+    {#                    </div>#}
+    {#                {% endfor %}#}
+    {#            {% endif %}#}
+    {#        </div>#}
+    {#    </div>#}
 </article>
 
 
@@ -182,17 +196,17 @@
 
     function cancel(id) {
         $.post("{% url 'cancelorder' %}", {
-            id: id,
-            csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        function (data) {
-            if (data['status'] === 1) {
-                alert("取消成功");
-                location.reload();
-            } else {
-                alert("取消失败，已超过十分钟");
-            }
-        })
+                id: id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            function (data) {
+                if (data['status'] === 1) {
+                    alert("取消成功");
+                    location.reload();
+                } else {
+                    alert("取消失败，已超过十分钟");
+                }
+            })
     }
 
     {% if not request.user.is_authenticated %}

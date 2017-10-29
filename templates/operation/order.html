@@ -80,7 +80,7 @@
             </div>
             <div class="col-xs-4">
                 <p>
-                    <select class="form-control">
+                    <select class="form-control" id="m">
                         <option value="-1">请选择分钟</option>
                         <option value="0">0</option>
                         <option value="10">10</option>
@@ -137,7 +137,11 @@
             return false;
         }
         time = $('#h').val() + ':' + $('#m').val();
-        remarkstr = $('#remark1').find("option:selected").text() + $('#remark2').val();
+        if ($('#remark1').val() === -1) {
+            remarkstr = '默认口味' + $('#remark2').val();
+        } else {
+            remarkstr = $('#remark1').find("option:selected").text() + $('#remark2').val();
+        }
         $.post("{% url 'showorder' %}", {confirm: 1, csrfmiddlewaretoken: '{{ csrf_token }}', time: time, remarkstr: remarkstr},
             function (data) {
                 if (data['status'] === 1) {

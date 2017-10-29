@@ -9,182 +9,156 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1,  user-scalable=no,minimal-ui"
           name="viewport">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/business.css' %}">
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/userstyle.css' %}">
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <title>商家个人中心</title>
     <style>
-        .aactive {
-            background-color: rgb(230, 230, 230);
-            color: rgba(193, 54, 68, 0.92) !important;
-            border: none;
+        @media screen and (max-width: 325px) {
+            .detail-left span {
+                font-size: 13px;
+            }
+
+            .detail-right span {
+                font-size: 10px !important;
+            }
         }
 
-        button {
-            cursor: pointer;
-        }
+        @media screen and (min-width: 400px) {
+            * {
+                font-size: 17px;
+            }
 
-        .open {
-            background-color: #7ade53 !important;
-        }
+            .detail-left span {
+                font-size: 17px;
+            }
 
-        .close {
-            background-color: #f75a57 !important;
+            .detail-right span {
+                font-size: 17px !important;
+            }
+
+            .ingOrdone span {
+                display: inline-block;
+                width: 30%;
+                height: 20px;
+                text-align: center;
+                border: 1px solid rgb(220, 220, 220);
+                border-radius: 20px;
+                line-height: 20px;
+            }
+
+            .info-detail ul li {
+                height: 100px;
+                box-sizing: border-box;
+                border: 1px solid rgb(220, 220, 220);
+                margin-top: 10px;
+                border-radius: 5px;
+            }
         }
     </style>
 </head>
 <body>
-<article>
-    <div class="inbody1">
-        <div class="inbody1-1">
-            <div class="return">
-                <a href="{% url 'index' %}"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a>
-            </div>
-            <div class="photo">
-                <img class="tuoxiang" src="/media/{{ user.business.image }}">
-            </div>
+<header>
+    <i class="glyphicon glyphicon-chevron-left back" onclick="location.href='{% url 'index' %}'"></i>
+    <span>商家个人中心</span>
+</header>
+<nav>
+    <div class="navleft">
+        <img class="myimg" src="/media/{{ user.business.image }}">
+    </div>
+    <div class="navright">
+        <ul>
+            <li>商家：{{ user.business }}</li>
+            <li>位置：{{ user.business.get_position_display }} {{ user.business.get_floor_display }}</li>
+        </ul>
+    </div>
+    {% if user.business.is_open %}
+        <button onclick="window.location.href='{% url 'changestatus' %}'" style="float: right; border: 1px solid green">点击改变为休息状态
+        </button>
+    {% else %}
+        <button onclick="window.location.href='{% url 'changestatus' %}'" style="float: right; border: 1px solid red">点击改变为接单状态
+        </button>
+    {% endif %}
+</nav>
+
+<div class="content">
+    <div class="c-info">
+        <span>订单信息</span>
+    </div>
+    <div class="c-info-main">
+        <div class="ingOrdone">
+            <span class="{% if not request.GET.s or request.GET.s == 'pending' %}ing-active{% endif %}"
+                  onclick="location.href='?s=pending'">待处理</span>
+            <span class="{% if request.GET.s == 'now' %}ing-active{% endif %}"
+                  onclick="location.href='?s=now'">进行中</span>
+            <span class="{% if request.GET.s == 'done' %}ing-active{% endif %}"
+                  onclick="location.href='?s=done'">已完成</span>
         </div>
-        <div class="inbody1-2">
+        <div class="info-detail">
             <ul>
-                <li>商家：{{ user.business }}</li>
-                <li>位置：{{ user.business.get_position_display }} {{ user.business.get_floor_display }}</li>
+                {% if not request.GET.s or request.GET.s == 'pending' %}
+                    {% get_pending_order_list user.business as pending_list %}
+                    {% for order in pending_list %}
+                        <li>
+                            <div class="detail-left">
+                                <span>{{ order.food.name }}</span>
+                                <span>备注: {{ order.remark }}</span>
+                            </div>
+                            <div class="detail-left">
+                                <span>取餐时间：{{ order.date_pickup }}</span>
+                            </div>
+                            <div class="detail-right">
+                                <span onclick="window.location.href='{% url 'accept_or_deny' %}?op=accept&opk={{ order.pk }}'">接单</span>
+                                <span onclick="window.location.href='{% url 'accept_or_deny' %}?op=deny&opk={{ order.pk }}'">拒单</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% elif request.GET.s == 'now' %}
+                    {% for order in user.get_businessuser_now_order %}
+                        <li>
+                            <div class="detail-left">
+                                <span>订单号: {{ order.pk }}</span>
+                                <span>{{ order.food.name }}</span>
+                            </div>
+                            <div class="detail-left">
+                                <span>取餐时间：{{ order.date_pickup }}</span>
+                                <span>备注: {{ order.remark }}</span>
+                            </div>
+                            <div class="detail-right">
+                                <span class="detail-active" onclick="doneorder({{ order.pk }})">已取餐</span>
+                                <span class="detail-active" onclick="complain(opk={{ order.pk }}, b=this)">未取餐</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% elif request.GET.s == 'done' %}
+                    {% get_done_order_list user.business as done_list %}
+                    {% for order in done_list %}
+                        <li>
+                            <div class="detail-left">
+                                <span>{{ order.food.name }}</span>
+                            </div>
+                            <div class="detail-left">
+                                <span>完成时间：{{ order.date_done }}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% endif %}
             </ul>
         </div>
-
-        <div class="inbody1-3">
-
-            {% if user.business.is_open %}
-                <button class="relax" type="button" onclick="window.location.href='{% url 'changestatus' %}'">休息
-                </button>
-            {% else %}
-                <button class="work" type="button" onclick="window.location.href='{% url 'changestatus' %}'">接单</button>
-            {% endif %}
-        </div>
     </div>
-</article>
-<article>
-    <div class="order">
-        <div class="order-info">
-            <span>预约信息</span>
-        </div>
-        <div class="order-ing">
-
-            <div class="order-dcl">
-                <a class="order-a {% if not request.GET.s or request.GET.s == 'pending' %}aactive{% endif %}"
-                   href="?s=pending">待处理</a>
-            </div>
-
-            <div class="order-jxz">
-                <a class="order-a {% if request.GET.s == 'now' %}aactive{% endif %}" href="?s=now">进行中</a>
-            </div>
-
-            <div class="order-ywc">
-                <a class="order-a {% if request.GET.s == 'done' %}aactive{% endif %}" href="?s=done">已完成</a>
-            </div>
-        </div>
-        <div class="order-list">
-            {% if not request.GET.s or request.GET.s == 'pending' %}
-                {% get_pending_order_list user.business as pending_list %}
-                {% for order in pending_list %}
-                    <div class="order-list1" style="border-bottom: 1px solid #e2e2e2">
-                        <div class="order-list-z">
-                            <p>{{ order.food.name }}</p>
-                        </div>
-                        <div class="order-list-z">
-                            取餐时间：{{ order.date_pickup }}
-                        </div>
-                        <div class="order-list-y">
-                            <button class="recive" type="button"
-                                    onclick="window.location.href='{% url 'accept_or_deny' %}?op=accept&opk={{ order.pk }}'">
-                                接单
-                            </button>&nbsp;&nbsp;
-                            <button class="object" type="button"
-                                    onclick="window.location.href='{% url 'accept_or_deny' %}?op=deny&opk={{ order.pk }}'">
-                                拒单
-                            </button>
-                        </div>
-                        <div class="order-list-z">
-                            <p>备注信息：{{ order.remark }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% elif request.GET.s == 'now' %}
-                {% for order in user.get_businessuser_now_order %}
-                    <div class="order-or" style="border-bottom: 1px solid #e2e2e2">
-                        <div class="order-in">
-                            <div class="orderin1">
-                                <p>订单号：{{ order.pk }}</p>
-                            </div>
-                            <div class="orderin2">
-                                <p> {{ order.food.name }}</p>
-                            </div>
-                            <div class="orderin3">
-                            </div>
-                        </div>
-                        <div class="order-on">
-                            <div class="orderon1">
-                                <p>取餐时间：{{ order.date_pickup }}</p>
-                            </div>
-                            <div class="orderon2">
-                                <p> {{ order.user.truename }}</p>
-                            </div>
-                            <div class="orderon3">
-                                <button type="button" onclick="doneorder({{ order.pk }})"
-                                        style="cursor: pointer; background-color: #7ade53">已取餐
-                                </button>&nbsp;&nbsp;
-                                <button type="button" onclick="complain(opk={{ order.pk }}, b=this)"
-                                        style="cursor: pointer">未取餐
-                                </button>
-                            </div>
-                        </div>
-                        <div class="order-on">
-                            <p>备注信息：{{ order.remark }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% elif request.GET.s == 'done' %}
-                {% get_done_order_list user.business as done_list %}
-                {% for order in done_list %}
-                    <div class="order-list1" style="border-bottom: 1px solid #e2e2e2">
-                        <div class="order-list-z">
-                            <p>{{ order.food.name }}</p>
-                        </div>
-                        <div class="order-list-y">
-                            完成时间：{{ order.date_done }}
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
-</article>
-
-<article>
-    <a href="{% url 'about' %}" class="business-a">
-        <div class="business-li">
-            <div class="t1">
-                <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC.png" width="24px"
-                     height="24px">
-                <span class="add">&nbsp;关于我们</span>
-            </div>
-            <div class="t3">
-                <span>></span>
-            </div>
-        </div>
-    </a>
-
-    <a href="{% url 'agree' %}" class="business-a">
-        <div class="business-li">
-            <div class="t1">
-                <img src="http://ouq4wie1o.bkt.clouddn.com/%E5%8D%8F%E8%AE%AE.png" width="24px" height="24px">
-                <span class="add">使用协议</span>
-            </div>
-            <div class="t3">
-                <span>></span>
-            </div>
-        </div>
-    </a>
-</article>
+    <ul class="c-info-bottom">
+        <li onclick="location.href='{% url 'about' %}'">
+            <i class="glyphicon glyphicon-earphone earphone-color"></i>
+            <span class="bottom-title">联系我们</span>
+            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+        </li>
+        <li onclick="location.href='{% url 'agree' %}'">
+            <i class="glyphicon glyphicon-check check-color"></i>
+            <span class="bottom-title">使用协议</span>
+            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+        </li>
+    </ul>
+</div>
+</body>
 
 
 <script>
@@ -208,5 +182,4 @@
             "json");
     }
 </script>
-</body>
 </html>

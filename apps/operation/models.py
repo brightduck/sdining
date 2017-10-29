@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from account.models import User
 from business.models import Food, Business
 
+
 def business_is_open_validator(value):
     food = get_object_or_404(Food, pk=value)
     if not food.business.is_open:
@@ -16,7 +17,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, related_name='myorder', verbose_name="订单发起者")
     food = models.ForeignKey(Food, validators=[business_is_open_validator], verbose_name="订单食物")
     date_create = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name="创建时间")
-    date_pickup = models.CharField(max_length=10, verbose_name="取餐时间")
+    date_pickup = models.CharField(max_length=15, verbose_name="取餐时间")
     date_done = models.DateTimeField(blank=True, null=True, verbose_name="完成时间")
     remark = models.CharField(max_length=20, verbose_name="备注", blank=True, null=True)
     trank = models.IntegerField(default=0, verbose_name="口味评分")

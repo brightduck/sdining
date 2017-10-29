@@ -9,6 +9,7 @@
           name="viewport">
     <meta name="format-detection" content="telephone=no">
     <title>评价</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <link href="{% static 'css/operation/iconfont.css' %}" type="text/css" rel="stylesheet">
     <style>
@@ -24,6 +25,7 @@
     </style>
 </head>
 <body>
+<i class="glyphicon glyphicon-chevron-left" style="position: absolute; font-size: 20px; margin: 10px 0 0 10px" onclick="window.location.href='{% url 'ucenterindex' %}'"></i>
 <div class="head">
     <span>{{ order.food.business }}</span>
 </div>
