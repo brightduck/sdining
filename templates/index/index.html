@@ -13,6 +13,7 @@
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="{% static 'js/zepto.js' %}"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{% static 'js/slider.js' %}"></script>
     <link href="{% static 'css/index/style.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/index/main.css' %}" rel="stylesheet" type="text/css">
@@ -178,19 +179,19 @@
                         <!-- Nav tabs -->
                         <ul class="nav-tabs nav text-center" role="tablist">
                             <li class="col-xs-4 active" role="presentation">
-                                <a href="#food_fine" aria-controls="home" role="tab" data-toggle="tab">
+                                <a onclick="change(id=1)">
                                     <img class="filter" src="http://ouq4wie1o.bkt.clouddn.com/logo1.png" alt="">
                                     <p class="text-center">精品推荐</p>
                                 </a>
                             </li>
                             <li class="col-xs-4" role="presentation">
-                                <a href="#food_eat" aria-controls="profile" role="tab" data-toggle="tab">
+                                <a onclick="change(id=2)">
                                     <img class="filter" src="http://ouq4wie1o.bkt.clouddn.com/logo2.png" alt="">
                                     <p class="text-center">餐品类</p>
                                 </a>
                             </li>
                             <li class="col-xs-4" role="presentation">
-                                <a href="#food_drink" aria-controls="messages" role="tab" data-toggle="tab">
+                                <a onclick="change(id=3)">
                                     <img class="filter" src="http://ouq4wie1o.bkt.clouddn.com/logo3.png" alt="">
                                     <p class="text-center">饮品类</p>
                                 </a>
@@ -338,6 +339,21 @@
 
 
 <script>
+    function change(id) {
+        if (id == 1) {
+            $('#food_fine').addClass('active');
+            $('#food_eat').removeClass('active');
+            $('#food_drink').removeClass('active');
+        } else if (id == 2) {
+            $('#food_fine').removeClass('active');
+            $('#food_eat').addClass('active');
+            $('#food_drink').removeClass('active');
+        } else {
+            $('#food_fine').removeClass('active');
+            $('#food_eat').removeClass('active');
+            $('#food_drink').addClass('active');
+        }
+    }
 
     {% if request.GET.q %}
         $(document).ready(function () {

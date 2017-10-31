@@ -31,6 +31,7 @@ def get_pending_order_list(business_obj):
     except:
         return None
 
+
 @register.simple_tag
 def get_done_order_list(business_obj):
     try:

@@ -143,27 +143,22 @@
         </div>
     </div>
     <ul class="c-info-bottom">
-        <li>
+        <li onclick="location.href = '{% url 'mycollect' %}'">
             <i class="glyphicon glyphicon-star star-color"></i>
             <span class="bottom-title">我的收藏</span>
             <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
         </li>
-        <li>
-            <i class="glyphicon glyphicon-thumbs-up up-color"></i>
-            <span class="bottom-title">我的评价</span>
-            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
-        </li>
-        <li>
+        <li onclick="location.href = '{% url 'myvouchers' %}'">
             <i class="glyphicon glyphicon-gift gift-color"></i>
             <span class="bottom-title">我的礼券</span>
             <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
         </li>
-        <li>
+        <li onclick="location.href = '{% url 'about' %}'">
             <i class="glyphicon glyphicon-earphone earphone-color"></i>
             <span class="bottom-title">联系我们</span>
             <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
         </li>
-        <li>
+        <li onclick="location.href = '{% url 'agree' %}'">
             <i class="glyphicon glyphicon-check check-color"></i>
             <span class="bottom-title">使用协议</span>
             <i class="glyphicon glyphicon-chevron-right buttom-right"></i>

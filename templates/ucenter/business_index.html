@@ -3,15 +3,10 @@
 <!doctype html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta id="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1,  user-scalable=no,minimal-ui"
-          name="viewport">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/userstyle.css' %}">
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <title>商家个人中心</title>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+    <title></title>
     <style>
         @media screen and (max-width: 325px) {
             .detail-left span {
@@ -19,7 +14,25 @@
             }
 
             .detail-right span {
-                font-size: 10px !important;
+                font-size: 13px !important;
+            }
+
+            .ingOrdone > span > span {
+                font-size: 13px;
+            }
+        }
+
+        @media screen  and (min-width: 325px) {
+            .detail-left span {
+                font-size: 15px;
+            }
+
+            .detail-right span {
+                font-size: 15px !important;
+            }
+
+            .ingOrdone > span > span {
+                font-size: 15px;
             }
         }
 
@@ -36,25 +49,13 @@
                 font-size: 17px !important;
             }
 
-            .ingOrdone span {
-                display: inline-block;
-                width: 30%;
-                height: 20px;
-                text-align: center;
-                border: 1px solid rgb(220, 220, 220);
-                border-radius: 20px;
-                line-height: 20px;
-            }
-
-            .info-detail ul li {
-                height: 100px;
-                box-sizing: border-box;
-                border: 1px solid rgb(220, 220, 220);
-                margin-top: 10px;
-                border-radius: 5px;
+            .ingOrdone > span > span {
+                font-size: 15px;
             }
         }
     </style>
+    <link rel="stylesheet" href="{% static 'css/ucenter/ucenter.css' %}">
+
 </head>
 <body>
 <header>
@@ -86,82 +87,96 @@
     </div>
     <div class="c-info-main">
         <div class="ingOrdone">
-            <span class="{% if not request.GET.s or request.GET.s == 'pending' %}ing-active{% endif %}"
-                  onclick="location.href='?s=pending'">待处理</span>
-            <span class="{% if request.GET.s == 'now' %}ing-active{% endif %}"
-                  onclick="location.href='?s=now'">进行中</span>
-            <span class="{% if request.GET.s == 'done' %}ing-active{% endif %}"
-                  onclick="location.href='?s=done'">已完成</span>
+                <span id="clickUndo" class="ing-active">
+                    <span>待处理</span>
+                </span>
+            <span id="clickIng">
+                    <span>进行中</span>
+                </span>
+            <span id="clickDone">
+                    <span>已完成</span>
+                </span>
         </div>
         <div class="info-detail">
-            <ul>
-                {% if not request.GET.s or request.GET.s == 'pending' %}
-                    {% get_pending_order_list user.business as pending_list %}
-                    {% for order in pending_list %}
-                        <li>
-                            <div class="detail-left">
-                                <span>{{ order.food.name }}</span>
-                                <span>备注: {{ order.remark }}</span>
-                            </div>
-                            <div class="detail-left">
-                                <span>取餐时间：{{ order.date_pickup }}</span>
-                            </div>
-                            <div class="detail-right">
-                                <span onclick="window.location.href='{% url 'accept_or_deny' %}?op=accept&opk={{ order.pk }}'">接单</span>
-                                <span onclick="window.location.href='{% url 'accept_or_deny' %}?op=deny&opk={{ order.pk }}'">拒单</span>
-                            </div>
-                        </li>
-                    {% endfor %}
-                {% elif request.GET.s == 'now' %}
-                    {% for order in user.get_businessuser_now_order %}
-                        <li>
-                            <div class="detail-left">
-                                <span>订单号: {{ order.pk }}</span>
-                                <span>{{ order.food.name }}</span>
-                            </div>
-                            <div class="detail-left">
-                                <span>取餐时间：{{ order.date_pickup }}</span>
-                                <span>备注: {{ order.remark }}</span>
-                            </div>
-                            <div class="detail-right">
-                                <span class="detail-active" onclick="doneorder({{ order.pk }})">已取餐</span>
-                                <span class="detail-active" onclick="complain(opk={{ order.pk }}, b=this)">未取餐</span>
-                            </div>
-                        </li>
-                    {% endfor %}
-                {% elif request.GET.s == 'done' %}
-                    {% get_done_order_list user.business as done_list %}
-                    {% for order in done_list %}
-                        <li>
-                            <div class="detail-left">
-                                <span>{{ order.food.name }}</span>
-                            </div>
-                            <div class="detail-left">
-                                <span>完成时间：{{ order.date_done }}</span>
-                            </div>
-                        </li>
-                    {% endfor %}
-                {% endif %}
+            <ul id="undo">
+                {% get_pending_order_list user.business as undo_order_list %}
+                {% for order in undo_order_list %}
+                    <li>
+                        <div class="detail-left">
+                            <span>订单号: {{ order.pk }}</span>
+                            <span>取餐时间: {{ order.date_pickup }}</span>
+                            <span>备注: {{ order.remark }}</span>
+                        </div>
+                        <div class="detail-right">
+                            <span>{{ order.food.name }}</span>
+                            <span class="undo" onclick="location.href = '{% url 'accept_or_deny' %}?op=accept&opk={{ order.pk }}'">接受订单</span>
+                            <span class="undo" onclick="location.href = '{% url 'accept_or_deny' %}?op=deny&opk={{ order.pk }}'" style="background-color: red; margin-top: 5px">拒绝订单</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <ul id="ing">
+                {% for order in user.get_businessuser_now_order %}
+                    <li>
+                        <div class="detail-left">
+                            <span>订单号: {{ order.pk }}</span>
+                            <span>取餐时间: {{ order.date_pickup }}</span>
+                            <span>备注: {{ order.remark }}</span>
+                        </div>
+                        <div class="detail-right">
+                            <span>{{ order.food.name }}</span>
+                            <span>姓名：{{ order.user.truename }}</span>
+                            <span class="undo" onclick="doneorder({{ order.pk }})">已取餐</span>
+                            <span class="undo" style="background-color: red; margin-top: 5px" onclick="complain(opk={{ order.pk }}, b=this)">未取餐</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <ul id="done">
+            {% get_done_order_list user.business as now_order_list %}
+                {% for order in now_order_list %}
+                    <li>
+                        <div class="detail-left">
+                            <span>订单号: {{ order.pk }}</span>
+                            <span>完成时间: {{ order.date_done |date:"H:m" }}</span>
+
+                        </div>
+                        <div class="detail-right">
+                            <span>{{ order.food.name }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
-    <ul class="c-info-bottom">
-        <li onclick="location.href='{% url 'about' %}'">
-            <i class="glyphicon glyphicon-earphone earphone-color"></i>
-            <span class="bottom-title">联系我们</span>
-            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
-        </li>
-        <li onclick="location.href='{% url 'agree' %}'">
-            <i class="glyphicon glyphicon-check check-color"></i>
-            <span class="bottom-title">使用协议</span>
-            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
-        </li>
-    </ul>
-</div>
 </body>
 
 
 <script>
+    document.getElementById('clickUndo').onclick = function () {
+        document.getElementById('clickUndo').setAttribute('class', 'ing-active');
+        document.getElementById('clickIng').setAttribute('class', '');
+        document.getElementById('clickDone').setAttribute('class', '');
+        document.getElementById('undo').style.display = "block";
+        document.getElementById('ing').style.display = "none";
+        document.getElementById('done').style.display = "none";
+    }
+    document.getElementById('clickIng').onclick = function () {
+        document.getElementById('clickUndo').setAttribute('class', '');
+        document.getElementById('clickIng').setAttribute('class', 'ing-active');
+        document.getElementById('clickDone').setAttribute('class', '');
+        document.getElementById('undo').style.display = "none";
+        document.getElementById('ing').style.display = "block";
+        document.getElementById('done').style.display = "none";
+    }
+    document.getElementById('clickDone').onclick = function () {
+        document.getElementById('clickUndo').setAttribute('class', '');
+        document.getElementById('clickIng').setAttribute('class', '');
+        document.getElementById('clickDone').setAttribute('class', 'ing-active');
+        document.getElementById('undo').style.display = "none";
+        document.getElementById('ing').style.display = "none";
+        document.getElementById('done').style.display = "block";
+    }
     function doneorder(id) {
         window.location.href = "{% url 'businessorderdone' %}?id=" + id;
     }
