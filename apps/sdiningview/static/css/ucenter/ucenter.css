@@ -1147,7 +1147,7 @@ nav {
 }
 
 .c-info-main {
-    height: 250px;
+    height: 350px;
     padding: 0 20px;
 }
 
@@ -1157,23 +1157,29 @@ nav {
     padding-bottom: 10px;
 }
 
-.ingOrdone span {
+.ingOrdone>span {
     display: inline-block;
-    width: 48%;
+    width: 31.5%;
     height: 20px;
     text-align: center;
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 20px;
     line-height: 20px;
 }
 
-.ingOrdone .ing-active {
-    border: 1px solid rgb(255, 201, 123);
+.ingOrdone>span>span {
+    padding: 0 13px;
+}
+
+.ingOrdone span:not(:last-child) {
+    border-right: 1px solid rgb(220, 220, 220);
+}
+
+.ingOrdone .ing-active  {
+    border-bottom: 2px solid rgb(255, 201, 123);
     color: rgb(255, 201, 123);
 }
 
 .info-detail {
-    height: 200px;
+    height: 300px;
     border: 1px solid rgb(220, 220, 220);
     overflow: auto;
 }
@@ -1183,48 +1189,46 @@ nav {
 }
 
 .info-detail ul li {
-    height: 60px;
+
     box-sizing: border-box;
     border: 1px solid rgb(220, 220, 220);
     margin-top: 10px;
     border-radius: 5px;
 }
+.info-detail ul li::after{
+    content: '.';
+    height: 0;
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
 
 .detail-left {
-    width: 37%;
+    width: 50%;
     height: 100%;
     float: left;
 }
 
-.detail-right {
-    width: 26%;
-    height: 100%;
-    float: right;
-}
-
 .detail-left span {
     padding-left: 5px;
-    display: inline-block;
+    display: block;
     width: 100%;
-    height: 29px;
     line-height: 29px;
 }
 
-.detail-right span {
-    display: inline-block;
-    margin-top: 5px;
-    width: 80%;
-    height: 20px;
-    background-color: rgb(255, 152, 0);
-    color: white;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 15px;
-    line-height: 20px;
+.detail-right {
+    width: 50%;
+    height: 100%;
+    float: right;
+    text-align: right;
 }
+.detail-right span {
+    margin-right: 10px;
+}
+.detail-right span:first-child {
+    height: 29px;
+    display: block;
 
-.detail-right .detail-active {
-    background-color: rgb(26, 228, 26);
 }
 
 .c-info-bottom {
@@ -1272,4 +1276,52 @@ nav {
 .check-color {
     color: rgb(63, 81, 181);
     top: 2px;
+}
+
+#undo {
+    display: block;
+}
+
+#ing {
+    display: none;
+}
+
+#done {
+    display: none;
+}
+
+#done li {
+    height: 60px;
+}
+
+.undo {
+    display: block;
+    margin-top: -2px;
+    height: 20px;
+    width: 70px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    background-color: #f4ff00;
+    float: right;
+}
+
+.ing {
+    color: #00ff00;
+    display: block;
+    line-height: 20px;
+}
+
+.done {
+    display: block;
+    margin-top: -2px;
+    width: 50px;
+    float: right;
+    padding: 2px 10px;
+    background-color: #ffa200;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
 }

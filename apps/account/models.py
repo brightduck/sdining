@@ -20,6 +20,12 @@ class User(AbstractUser):
         except:
             return None
 
+    def get_acc_order_list(self):
+        try:
+            return self.myorder.all().filter(is_done=False, is_accept=False, is_abnormal=False)
+        except:
+            return None
+
     def get_now_order_list(self):
         try:
             return self.myorder.all().filter(is_done=False, is_abnormal=False)

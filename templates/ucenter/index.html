@@ -1,16 +1,13 @@
 {% load staticfiles %}
-<!doctype html>
+{% load mvctags %}
+<!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta id="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1,  user-scalable=no,minimal-ui"
-          name="viewport">
-    <meta name="format-detection" content="telephone=no">
-    <title>个人中心</title>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/ucenter/userstyle.css' %}">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+    <title></title>
     <style>
         @media screen and (max-width: 325px) {
             .detail-left span {
@@ -18,7 +15,25 @@
             }
 
             .detail-right span {
-                font-size: 10px !important;
+                font-size: 13px !important;
+            }
+
+            .ingOrdone > span > span {
+                font-size: 13px;
+            }
+        }
+
+        @media screen  and (min-width: 325px) {
+            .detail-left span {
+                font-size: 15px;
+            }
+
+            .detail-right span {
+                font-size: 15px !important;
+            }
+
+            .ingOrdone > span > span {
+                font-size: 15px;
             }
         }
 
@@ -34,165 +49,160 @@
             .detail-right span {
                 font-size: 17px !important;
             }
-        }
 
-        .info-detail ul li {
-                height: 100px;
-                box-sizing: border-box;
-                border: 1px solid rgb(220, 220, 220);
-                margin-top: 10px;
-                border-radius: 5px;
+            .ingOrdone > span > span {
+                font-size: 15px;
             }
+        }
     </style>
-</head>
-<body>
-<article>
-    <header>
-        <i class="glyphicon glyphicon-chevron-left back" onclick="location.href='{% url 'index' %}'"></i>
-        <span>我的个人界面</span>
-    </header>
-    <nav>
-        <div class="navleft">
-            <img class="myimg" src="{{ user.avatar }}">
-        </div>
-        <div class="navright">
-            <ul>
-                <li>姓名:{{ user.truename }}</li>
-                <li>性别: {{ user.oauthqqprofile.get_sex_display }}</li>
-                <li>手机号: {{ user.oauthqqprofile.stuid }}</li>
-            </ul>
-        </div>
-    </nav>
-</article>
+    <link rel="stylesheet" href="{% static 'css/ucenter/ucenter.css' %}">
 
-<article>
-    <div class="content">
-        <div class="c-info">
-            <span>订单信息</span>
-        </div>
-        <div class="c-info-main">
-            <div class="ingOrdone">
-                <span class="{% if not request.GET.s or request.GET.s == 'now' %}ing-active{% endif %}"
-                      onclick="location.href='?s=now'">进行中</span>
-                <span class="{% if request.GET.s == 'done' %}ing-active{% endif %}" onclick="location.href='?s=done'">已完成</span>
-            </div>
-            <div class="info-detail">
-                <ul>
-                    {% if not request.GET.s or request.GET.s == 'now' %}
-                        {% for order in user.get_now_order_list %}
-                            {% if order.is_accept %}
-                                <li>
-                                    <div class="detail-left">
-                                        <span>订单号: {{ order.pk }}</span>
-                                        <span>{{ order.food.name }}</span>
-                                    </div>
-                                    <div class="detail-left">
-                                        <span>取餐时间：{{ order.date_pickup }}</span>
-                                        <span>备注: {{ order.remark }}</span>
-                                    </div>
-                                </li>
-                            {% else %}
-                                <li>
-                                    <div class="detail-left">
-                                        <span>订单号: {{ order.pk }}</span>
-                                        <span>{{ order.food.name }}</span>
-                                    </div>
-                                    <div class="detail-left">
-                                        <span>取餐时间：{{ order.date_pickup }}</span>
-                                        <span>备注: {{ order.remark }}</span>
-                                    </div>
-                                    <div class="detail-right">
-                                        <span onclick="cancel({{ order.pk }})">取消预约</span>
-                                    </div>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    {% if request.GET.s == 'done' %}
-                        {% for order in user.get_done_order_list %}
-                            <li>
-                                <div class="detail-left">
-                                    <span>订单号: {{ order.pk }}</span>
-                                    <span>{{ order.food.name }}</span>
-                                </div>
-                                <div class="detail-left">
-                                    <span>取餐时间：{{ order.date_pickup }}</span>
-                                    <span>备注: {{ order.remark }}</span>
-                                </div>
-                                <div class="detail-right">
-                                    <span onclick="window.location.href='{% url 'comment' order.pk %}'">点评</span>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-        <ul class="c-info-bottom">
-            <li onclick="location.href='{% url 'mycollect' %}'">
-                <i class="glyphicon glyphicon-star star-color"></i>
-                <span class="bottom-title">我的收藏</span>
-                <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
-            </li>
-            <li onclick="location.href='{% url 'myvouchers' %}'">
-                <i class="glyphicon glyphicon-gift gift-color"></i>
-                <span class="bottom-title">我的礼券</span>
-                <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
-            </li>
-            <li onclick="location.href='{% url 'about' %}'">
-                <i class="glyphicon glyphicon-earphone earphone-color"></i>
-                <span class="bottom-title">联系我们</span>
-                <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
-            </li>
-            <li onclick="location.href='{% url 'agree' %}'">
-                <i class="glyphicon glyphicon-check check-color"></i>
-                <span class="bottom-title">使用协议</span>
-                <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
-            </li>
+</head>
+
+<body>
+<header>
+    <i class="glyphicon glyphicon-chevron-left back" onclick="location.href='{% url 'index' %}'"></i>
+    <span>我的个人界面</span>
+</header>
+<nav>
+    <div class="navleft">
+        <img class="myimg" src="{{ user.avatar }}">
+    </div>
+    <div class="navright">
+        <ul>
+            <li>姓名: {{ user.truename }}</li>
+            <li>性别: {{ user.oauthqqprofile.get_sex_display }}</li>
+            <li>学号: {{ user.oauthqqprofile.stuid }}</li>
         </ul>
     </div>
-    {#    <div class="order-body">#}
-    {#        <div class="order-inf">#}
-    {#            <span>预约信息</span>#}
-    {#        </div>#}
-    {#        <div class="order-list">#}
-    {#            <div class="order-doing">#}
-    {#                <a class="but {% if not request.GET.s or request.GET.s == 'now' %}aactive{% endif %}"#}
-    {#                   href="?s=now">进行中</a>#}
-    {#            </div>#}
-    {#            <div class="order-done">#}
-    {#                <a class="but {% if request.GET.s == 'done' %}aactive{% endif %}" href="?s=done">已完成</a>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#        <div class="order-content">#}
-    {#            {% if request.GET.s == 'done' %}#}
-    {#                {% for order in user.get_done_order_list %}#}
-    {#                    <div class="order-div">#}
-    {#                        <div class="order-pj-z">#}
-    {#                            <span>{{ order.food.name }}</span>#}
-    {#                        </div>#}
-    {#                        <div class="order-time">#}
-    {#                            <span>{{ order.date_done }}</span>#}
-    {#                        </div>#}
-    {#                        {% if not order.is_comment %}#}
-    {#                            <div class="order-pj-y">#}
-    {#                                <button type="button" onclick="window.location.href='{% url 'comment' order.pk %}'">点评#}
-    {#                                </button>#}
-    {#                            </div>#}
-    {#                        {% endif %}#}
-    {#                    </div>#}
-    {#                {% endfor %}#}
-    {#            {% endif %}#}
-    {#        </div>#}
-    {#    </div>#}
-</article>
+</nav>
+<div class="content">
+    <div class="c-info">
+        <span>订单信息</span>
+    </div>
+    <div class="c-info-main">
+        <div class="ingOrdone">
+                <span id="clickUndo" class="ing-active">
+                    <span>待处理</span>
+                </span>
+            <span id="clickIng">
+                    <span>进行中</span>
+                </span>
+            <span id="clickDone">
+                    <span>已完成</span>
+                </span>
+        </div>
+        <div class="info-detail">
+            <ul id="undo">
+                {% for order in user.get_acc_order_list %}
+                    <li>
+                        <div class="detail-left">
+                            <span>订单号: {{ order.pk }}</span>
+                            <span>取餐时间: {{ order.date_pickup }}</span>
+                            <span>备注: {{ order.remark }}</span>
+                        </div>
+                        <div class="detail-right">
+                            <span>{{ order.food.name }}</span>
+                            <span class="undo" onclick="cancel({{ order.pk }})">取消预约</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <ul id="ing">
+                {% for order in user.get_now_order_list %}
+                    <li>
+                        <div class="detail-left">
+                            <span>订单号: {{ order.pk }}</span>
+                            <span>取餐时间: {{ order.date_pickup }}</span>
+                            <span>备注: {{ order.remark }}</span>
+                        </div>
+                        <div class="detail-right">
+                            <span>{{ order.food.name }}</span>
+                            <span class="ing">已接单，请及时取餐</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <ul id="done">
+                {% for order in user.get_done_order_list %}
+                    <li>
+                        <div class="detail-left">
+                            <span>订单号: {{ order.pk }}</span>
+                            <span>完成时间: {{ order.date_done |date:"H:m" }}</span>
 
-
+                        </div>
+                        <div class="detail-right">
+                            <span>{{ order.food.name }}</span>
+                            {% if not order.is_comment %}
+                            <span class="done" onclick="location.href='{% url 'comment' order.pk %}'">点评</span>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <ul class="c-info-bottom">
+        <li>
+            <i class="glyphicon glyphicon-star star-color"></i>
+            <span class="bottom-title">我的收藏</span>
+            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+        </li>
+        <li>
+            <i class="glyphicon glyphicon-thumbs-up up-color"></i>
+            <span class="bottom-title">我的评价</span>
+            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+        </li>
+        <li>
+            <i class="glyphicon glyphicon-gift gift-color"></i>
+            <span class="bottom-title">我的礼券</span>
+            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+        </li>
+        <li>
+            <i class="glyphicon glyphicon-earphone earphone-color"></i>
+            <span class="bottom-title">联系我们</span>
+            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+        </li>
+        <li>
+            <i class="glyphicon glyphicon-check check-color"></i>
+            <span class="bottom-title">使用协议</span>
+            <i class="glyphicon glyphicon-chevron-right buttom-right"></i>
+        </li>
+    </ul>
+</div>
+</body>
 <script>
-
-    function doneorder(id) {
-        window.location.href = "{% url 'orderdone' %}?id=" + id;
+    document.getElementById('clickUndo').onclick = function () {
+        document.getElementById('clickUndo').setAttribute('class', 'ing-active');
+        document.getElementById('clickIng').setAttribute('class', '');
+        document.getElementById('clickDone').setAttribute('class', '');
+        document.getElementById('undo').style.display = "block";
+        document.getElementById('ing').style.display = "none";
+        document.getElementById('done').style.display = "none";
     }
+    document.getElementById('clickIng').onclick = function () {
+        document.getElementById('clickUndo').setAttribute('class', '');
+        document.getElementById('clickIng').setAttribute('class', 'ing-active');
+        document.getElementById('clickDone').setAttribute('class', '');
+        document.getElementById('undo').style.display = "none";
+        document.getElementById('ing').style.display = "block";
+        document.getElementById('done').style.display = "none";
+    }
+    document.getElementById('clickDone').onclick = function () {
+        document.getElementById('clickUndo').setAttribute('class', '');
+        document.getElementById('clickIng').setAttribute('class', '');
+        document.getElementById('clickDone').setAttribute('class', 'ing-active');
+        document.getElementById('undo').style.display = "none";
+        document.getElementById('ing').style.display = "none";
+        document.getElementById('done').style.display = "block";
+    }
+
+    {% if not request.user.is_authenticated %}
+        $(document).ready(function () {
+            window.location.href = "{{ auth_url|safe }}";
+        });
+    {% endif %}
+
 
     function cancel(id) {
         $.post("{% url 'cancelorder' %}", {
@@ -208,13 +218,12 @@
                 }
             })
     }
-
-    {% if not request.user.is_authenticated %}
-        $(document).ready(function () {
-            window.location.href = "{{ auth_url|safe }}";
-        });
-    {% endif %}
 </script>
 
-</body>
 </html>
+{##}
+{#    function doneorder(id) {#}
+{#        window.location.href = "{% url 'orderdone' %}?id=" + id;#}
+{#    }#}
+{##}
+{##}

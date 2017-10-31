@@ -12,15 +12,87 @@
     <title>智慧食堂</title>
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+    <script src="{% static 'js/zepto.js' %}"></script>
+    <script src="{% static 'js/slider.js' %}"></script>
     <link href="{% static 'css/index/style.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/index/main.css' %}" rel="stylesheet" type="text/css">
+
+    <style>
+        * {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				list-style: none;
+			}
+
+			html,
+			body {
+				width: 100vw;
+				height: 100vh;
+				overflow: hidden;
+			}
+        #carousel {
+
+            position: relative;
+            width: 100vw;
+            height: 30vh;
+            background-color: red;
+        }
+
+        .inner {
+
+            position: absolute;
+            top: 0;
+            width: 300vw;
+            height: 30vh;
+        }
+
+        .animate1 {
+            transition: transform 0.5s;
+        }
+
+        #carousel .section {
+            float: left;
+            width: 100vw;
+            height: 30vh;
+        }
+
+        #carousel img {
+            width: 100vw;
+            height: 30vh;
+            background-color: #FF0000;
+        }
+
+        #indicators {
+            width: 65px;
+            height: 15px;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            margin-left: -32.5px;
+
+            z-index: 999;
+        }
+
+        #indicators li {
+            float: left;
+            width: 15px;
+            height: 15px;
+            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #indicators li:not(:last-child) {
+            margin-right: 10px;
+        }
+
+        #indicators .active {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
 </head>
 <body>
 <div id="block">
-
     <!--title_top-->
     <header>
         <div class="row">
@@ -42,13 +114,15 @@
                 <form action="{% url 'index' %}" method="get">
                     <label for="show"></label>
                     <input id="show" class="text-center" type="search" name="q"
-                           value="{% if is_search %}{{ is_search }}{% else %}欢迎使用智慧食堂{% endif %}" onfocus="this.value=''"
+                           value="{% if is_search %}{{ is_search }}{% else %}欢迎使用智慧食堂{% endif %}"
+                           onfocus="this.value=''"
                            required>
                     <input type="submit" style="display: none">
                 </form>
             </div>
 
-            <div class="col-xs-3  text-right" style="cursor: pointer" onclick="location.href={% url 'ucenterindex' %}">
+            <div class="col-xs-3  text-right" style="cursor: pointer"
+                 onclick="location.href='{% url 'ucenterindex' %}'">
                 <span class="glyphicon glyphicon-user"></span>
             </div>
         </div>
@@ -63,7 +137,7 @@
                         <img src="/media/{{ business.image }}" alt="">
                     </div>
                     <div class="col-xs-9">
-                        <h4{{ business.name }}</h4>
+                        <h4>{{ business.name }}</h4>
                         <span>
                                         <p>特色菜：{% for food in business.special.foods.all %}
                                             {{ food.name }}
@@ -83,41 +157,20 @@
     <!--slider-->
     <div style="overflow-y: hidden">
         <div id="search_Q">
-            <div id="slider">
-                <div class="row">
-                    <div id="carousel-example-generic" class="carousel slide col-xs-12" data-ride="carousel">
-                        <!-- Indicators -->
-                        {% get_banner as banner_list %}
-                        <ol class="carousel-indicators">
-                            {% for id in banner_list|length|crenumlist %}
-                                {% if id == 0 %}
-                                    <li data-target="#carousel-example-generic" data-slide-to="{{ id }}"
-                                        class="active"></li>
-                                {% else %}
-                                    <li data-target="#carousel-example-generic" data-slide-to="{{ id }}"></li>
-                                {% endif %}
-                            {% endfor %}
-                        </ol>
+        <div id="carousel">
 
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            {% for banner in banner_list %}
-                                {% if forloop.first %}
-                                    <div class="item active ">
-                                        <img src="media/{{ banner.image }}" alt="{{ banner.alttext }}">
-                                    </div>
-                                {% else %}
-                                    <div class="item ">
-                                        <img src="media/{{ banner.image }}" alt="{{ banner.alttext }}">
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
 
-                    </div>
-                </div>
+                <!-- Wrapper for slides -->
+                <ul class="inner" role="listbox">
+                    {% get_banner as banner_list %}
+                    {% for banner in banner_list %}
+                        <li class="section">
+                            <img src="media/{{ banner.image }}" alt="{{ banner.alttext }}">
+                        </li>
+                    {% endfor %}
+
+                </ul>
             </div>
-
             <!--content-->
             <main>
                 <div class="row" id="main_nav">
@@ -179,7 +232,8 @@
                                                 {{ food.name }}
                                             {% endfor %}
                                         {% endfor %}</p>
-                                                <span><p class="pull-left" style="margin-top: 5px">位置：{{ business.business.get_position_display }} {{ business.business.get_floor_display }}</p></span>
+                                                <span><p class="pull-left"
+                                                         style="margin-top: 5px">位置：{{ business.business.get_position_display }} {{ business.business.get_floor_display }}</p></span>
                                             <span><p class="text-right">人均消费：{{ business.business.average }}元</p></span>
                                 </span>
                                             </div>
@@ -218,7 +272,8 @@
                                             {% endfor %}
                                         {% endfor %}
                                             </p>
-                                                <span><p class="pull-left">位置：{{ business.get_position_display }} {{ business.get_floor_display }}</p></span>
+                                                <span><p
+                                                        class="pull-left">位置：{{ business.get_position_display }} {{ business.get_floor_display }}</p></span>
                                             <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
                                 </span>
                                             </div>
@@ -255,7 +310,8 @@
                                             {% endfor %}
                                         {% endfor %}
                                             </p>
-                                                <span><p class="pull-left">位置：{{ business.get_position_display }} {{ business.get_floor_display }}</p></span>
+                                                <span><p
+                                                        class="pull-left">位置：{{ business.get_position_display }} {{ business.get_floor_display }}</p></span>
                                             <span><p class="text-right">人均消费：{{ business.average }}元</p></span>
                                             </span>
                                             </div>
@@ -312,6 +368,10 @@
             tag1.css("background", "none");
             tag1.css("pointer-events", "auto");
         }
+    });
+
+    $("#carousel").myslider({
+        autoLoop: true
     });
 
 </script>
